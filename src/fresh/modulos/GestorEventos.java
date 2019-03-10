@@ -94,7 +94,7 @@ public class GestorEventos{
             for (ParCancionFecha par : cancionesAEliminar) {
                 if (fecha_actual.getTimeInMillis()-par.fecha.getTimeInMillis() > 3*msDia) {
                     //Eliminar cancion
-                    baseDeDatos.elminarCancion(par.cancion);
+                    baseDeDatos.eliminarCancion(par.cancion);
                 }
             }
 
