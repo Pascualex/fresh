@@ -6,14 +6,14 @@ package fresh.datos.tipos;
  */
 public abstract class ElementoReproducible {
     private String nombre;
-    private int duracion;
+    private long duracion;
 
     /**
      * Crea un elemento reproducible dadas sus características.
      * @param nombre Nombre del elemento reproducible
      * @param duracion Duración en segundos del elemento reproducible
      */
-    public ElementoReproducible(String nombre, int duracion) {
+    public ElementoReproducible(String nombre, long duracion) {
         this.nombre = nombre;
         this.duracion = duracion;
     }
@@ -30,7 +30,7 @@ public abstract class ElementoReproducible {
      * Devuelve la duración en segundos del elemento reproducible
      * @return Duración en segundos del elemento reproducible
      */
-    public int getDuracion() {
+    public long getDuracion() {
         return duracion;
     }
 }
