@@ -1,7 +1,7 @@
 package fresh.datos.tipos;
-import java.util.Calendar;
 import java.time.Period;
 import java.time.LocalDate;
+import java.util.*;
 
 /**
  * 
@@ -16,8 +16,9 @@ public class Usuario {
 	private String nombre;
 	private String nombreAutor;
 	private String contrasena;
-	private Calendar fechaNacimiento;
+	private LocalDate fechaNacimiento;
 	private int reproduccionesMensuales;
+	private boolean bloqueado;
 	
 	private List<Notificacion> notificaciones;
 	private List<ListaReproduccion> listasReproduccion;
@@ -34,13 +35,13 @@ public class Usuario {
 	 * @param fechaNacimiento, fecha de nacimento del usuario
 	 */
 	
-	public Usuario(boolean esPremium, String nombre, String nombreAutor, String contrasena, Date fechaNacimiento) {
+	public Usuario(boolean esPremium, String nombre, String nombreAutor, String contrasena, LocalDate fechaNacimiento) {
 		this.esPremium = esPremium;
 		this.nombre = nombre;
 		this.nombreAutor = nombreAutor;
 		this.contrasena = contrasena;
 		this.fechaNacimiento = fechaNacimiento;
-		
+		this. bloqueado = false;
 	}
 	
 	/**
@@ -50,6 +51,15 @@ public class Usuario {
 	 */
 	public boolean getEsPremium(){
 		return esPremium;
+	}
+
+	/**
+	 * Modifica si un usuario esPremium
+	 * 
+	 */
+	public void setEsPremium(boolean esPremium){
+		this.esPremium = esPremium;
+		return;
 	}
 	
 	/**
@@ -84,8 +94,24 @@ public class Usuario {
 	 * 
 	 * @return Calendar con la fecha de nacimiento del usuario
 	 */
-	public Calendar getFechaNacimiento(){
+	public LocalDate getFechaNacimiento(){
 		return fechaNacimiento;
+	}
+
+	/**
+	 * Devuelve si el usuario esta bloqueado o no
+	 * 
+	 * @return boolean con el estado del usuario, bloqueado o no
+	 */
+	public boolean getBloqueado(){
+		return bloqueado;
+	}
+	/**
+	 * Modifica el estado del usuario, bloqueado o no
+	 */
+	public void setBloqueado(boolean bloqueado){
+		this.bloqueado = bloqueado;
+		return;
 	}
 	
 	/**
@@ -154,7 +180,7 @@ public class Usuario {
     	Period periodo = Period.between(fechaNacimiento, ahora);
     	
     	if (periodo.getYears() > 18) {
-    		return true;;
+    		return true;
     	}
     	
     	return false;
