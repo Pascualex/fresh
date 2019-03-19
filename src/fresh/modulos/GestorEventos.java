@@ -105,24 +105,23 @@ public class GestorEventos{
         }
     }
 
-}
-
-class ParCancionFecha implements Comparable<ParCancionFecha> {
-    Cancion cancion;
-    GregorianCalendar fecha;
-
-    public ParCancionFecha(Cancion cancion) {
-        this.cancion = cancion;
-        fecha = new GregorianCalendar();
-    }
-
-    public ParCancionFecha(Cancion cancion, GregorianCalendar fecha) {
-        this.cancion = cancion;
-        this.fecha = fecha;
-    }
-
-    @Override
-    public int compareTo(ParCancionFecha par) {
-        return fecha.compareTo(par.fecha);
+    private class ParCancionFecha implements Comparable<ParCancionFecha> {
+        Cancion cancion;
+        GregorianCalendar fecha;
+    
+        public ParCancionFecha(Cancion cancion) {
+            this.cancion = cancion;
+            fecha = new GregorianCalendar();
+        }
+    
+        public ParCancionFecha(Cancion cancion, GregorianCalendar fecha) {
+            this.cancion = cancion;
+            this.fecha = fecha;
+        }
+    
+        @Override
+        public int compareTo(ParCancionFecha par) {
+            return fecha.compareTo(par.fecha);
+        }
     }
 }

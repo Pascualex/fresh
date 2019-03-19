@@ -1,5 +1,7 @@
 package fresh.datos.tipos;
 
+import java.util.Objects;
+
 /**
  * <p>Esta clase permite trabajar con canciones, que heredan de elemento 
  *    reproducible.</p>
@@ -7,17 +9,38 @@ package fresh.datos.tipos;
 public class Cancion extends ElementoReproducible {
     private long id;
     private int reproduccionesMensuales;
+    private Usuario autor;
+    private boolean bloqueado;
 
     /**
      * Crea una canción dadas sus características.
      * @param nombre Nombre de la canción
      * @param duracion Duración en segundos de la canción
+     * @param autor Usuario autor de la cancion
      * @param id Identificador único de la canción
      */
-    public Cancion(String nombre, long duracion, long id) {
+    public Cancion(String nombre, long duracion, Usuario autor, long id) {
         super(nombre, duracion);
+        this.autor = autor;
         this.id = id;
         reproduccionesMensuales = 0;
+        bloqueado = false;
+    }
+
+    /**
+     * Establece el estado de bloqueo de la canción.
+     * @param bloqueado Nuevo estado de bloqueo de la canción
+     */
+    public void setBloqueado(boolean bloqueado) {
+        this.bloqueado = bloqueado;
+    }
+
+    /**
+     * Devuelve el usuario autor de la canción.
+     * @return Usuario autor de la canción
+     */
+    public Usuario getAutor() {
+        return autor;
     }
 
     /**
@@ -34,6 +57,15 @@ public class Cancion extends ElementoReproducible {
      */
     public int getReproduccionesMensuales() {
         return reproduccionesMensuales;
+    }
+
+    /** 
+     * Devuelve el estado de bloqueo de la canción.
+     * @return Estado de bloqueo de la canción
+     */
+    @Override
+    public boolean getBloqueado() {
+        return bloqueado;
     }
 
     /**
@@ -56,6 +88,6 @@ public class Cancion extends ElementoReproducible {
         if (!(object instanceof Cancion)) return false;
 
         Cancion cancion = (Cancion) object;
-        return this.id == cancion.id;
+        return Objects.equals(cancion.getNombre(), getNombre());
     }
 }

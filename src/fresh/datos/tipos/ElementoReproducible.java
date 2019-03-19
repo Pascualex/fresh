@@ -18,8 +18,16 @@ public abstract class ElementoReproducible {
         this.duracion = duracion;
     }
 
+    /** 
+     * Establece la duración en segundos del elemento reproducible.
+     * @param duracion Duración en segundos del elemento reproducible
+     */
+    protected void setDuracion(long duracion) {
+        this.duracion = duracion;
+    }
+
     /**
-     * Devuelve el nombre del elemento reproducible
+     * Devuelve el nombre del elemento reproducible.
      * @return Nombre del elemento reproducible
      */
     public String getNombre() {
@@ -27,10 +35,16 @@ public abstract class ElementoReproducible {
     }
 
     /** 
-     * Devuelve la duración en segundos del elemento reproducible
+     * Devuelve la duración en segundos del elemento reproducible.
      * @return Duración en segundos del elemento reproducible
      */
     public long getDuracion() {
         return duracion;
     }
+
+    /** 
+     * Devuelve el estado de bloqueo del elemento reproducible.
+     * @return Estado de bloqueo del elemento reproducible
+     */
+    public abstract boolean getBloqueado();
 }
