@@ -54,7 +54,13 @@ public class BaseDeDatos implements Serializable {
     }
 
     public List<Usuario> buscaUsuarios(String nombre) {
-        //Por implementar
+        List<Usuario> lista = new ArrayList<>();
+        for (Usuario usuario : usuarios.values()) {
+            if (usuario.getNombre().contains(nombre)) {
+                lista.add(usuario);
+            }
+        }
+        return lista;
     }
 
 
@@ -73,7 +79,13 @@ public class BaseDeDatos implements Serializable {
     }
 
     public List<Cancion> buscarCanciones(String nombre) {
-        //Por implementar
+        List<Cancion> lista = new ArrayList<>();
+        for (Cancion cancion : canciones.values()) {
+            if (cancion.getNombre().contains(nombre)) {
+                lista.add(cancion);
+            }
+        }
+        return lista;
     }
 
     public void eliminarCancion(Cancion cancion) {
@@ -89,7 +101,13 @@ public class BaseDeDatos implements Serializable {
     }
 
     public List<Album> buscarAlbumes(String nombre) {
-        //Por implementar
+        List<Album> lista = new ArrayList<>();
+        for (Album album : albumes.values()) {
+            if (album.getNombre().contains(nombre)) {
+                lista.add(album);
+            }
+        }
+        return lista;
     }
 
     public void eliminarAlbum(Album album) {
