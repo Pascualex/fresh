@@ -12,11 +12,12 @@ import java.util.*;
 
 public class Usuario {
 	
-	private boolean esPremium;
 	private String nombre;
 	private String nombreAutor;
 	private String contrasena;
 	private LocalDate fechaNacimiento;
+
+	private boolean esPremium;
 	private int reproduccionesMensuales;
 	private boolean bloqueado;
 	
@@ -24,24 +25,25 @@ public class Usuario {
 	private List<ListaReproduccion> listasReproduccion;
 	private List<Cancion> canciones;
 	private List<Album> albumes;
+	private List<Usuario> seguidores;
 	
 	/**
 	 * Constructor de la clase Usuario
 	 * 
-	 * @param esPremium, indica si el usuario es Premium
 	 * @param nombre, nombre del Usuario
 	 * @param nombreAutor, nombre de autor del Usuario
 	 * @param contrasena, contraseña con la que se registra el Usuario
 	 * @param fechaNacimiento, fecha de nacimento del usuario
 	 */
 	
-	public Usuario(boolean esPremium, String nombre, String nombreAutor, String contrasena, LocalDate fechaNacimiento) {
-		this.esPremium = esPremium;
+	public Usuario(String nombre, String nombreAutor, String contrasena, LocalDate fechaNacimiento) {
 		this.nombre = nombre;
 		this.nombreAutor = nombreAutor;
 		this.contrasena = contrasena;
 		this.fechaNacimiento = fechaNacimiento;
-		this. bloqueado = false;
+		esPremium = false;
+		reproduccionesMensuales = 0;
+		bloqueado = false;
 	}
 	
 	/**
@@ -167,7 +169,17 @@ public class Usuario {
 	 */
     public List<Album> getAlbumes(){
     	return albumes;
-    }
+	}
+	
+	public List<Usuario> getSeguidores() {
+		return seguidores;
+	}
+
+	public void anadirSeguidor(Usuario usuario) {
+		if (seguidores.contains(usuario)) return;
+
+		seguidores.add(usuario);
+	}
     
     /**
      * Funcion que calcula si un Usuario es mayor de edad para reproducir contenido explicito
