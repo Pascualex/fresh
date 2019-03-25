@@ -1,14 +1,13 @@
 package fresh.datos.tipos;
 
 import java.util.List;
-import java.util.ArrayList;
 
 /**
  * <p>Esta clase permite trabajar con álbumes, que heredan de elemento
  *    reproducible.</p>
  */
 public class Album extends ElementoReproducible {
-    private List<Cancion> canciones = new ArrayList();
+    private List<Cancion> canciones;
     private Usuario autor;
     private int ano;
 
@@ -18,34 +17,11 @@ public class Album extends ElementoReproducible {
      * @param Autor Usuario autor del álbum
      * @param ano Año de publicación del álbum
      */
-    public Album(String nombre, Usuario autor, int ano) {
+    public Album(String nombre, Usuario autor, int ano, List<Cancion> canciones) {
         super(nombre, 0);
         this.autor = autor;
         this.ano = ano;
-    }
-
-    /**
-     * Añade al álbum la canción pasada por argumento, si no está ya presente, e
-     * incrementa la duración del álbum.
-     * @param cancion Canción a añadir al álbum
-     */
-    public void anadirCancion(Cancion cancion) {
-        if (!canciones.contains(cancion)) {
-            setDuracion(getDuracion()+cancion.getDuracion());
-            canciones.add(cancion);
-        }
-    }
-
-    /**
-     * Elimina del álbum la canción pasada por argumento, si está presente, y
-     * decrementa la duración del álbum.
-     * @param cancion Canción a eliminar del álbum
-     */
-    public void eliminarCancion(Cancion cancion) {
-        if (canciones.contains(cancion)) {
-            setDuracion(getDuracion()-cancion.getDuracion());
-            canciones.remove(cancion);
-        }
+        this.canciones = canciones;
     }
 
     /** 

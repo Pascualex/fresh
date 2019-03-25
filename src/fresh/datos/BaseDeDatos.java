@@ -17,6 +17,7 @@ import fresh.Status;
 
 public class BaseDeDatos implements Serializable {
     private String directorioDatos;
+    private long idSiguienteCancion;
 
     private Map<String, Usuario> usuarios = new HashMap<>();
     private List<Reporte> reportes = new ArrayList<>();
@@ -38,31 +39,30 @@ public class BaseDeDatos implements Serializable {
     }
 
     private BaseDeDatos(String ruta) {
-        this.directorioDatos = ruta;
+        directorioDatos = ruta;
+        idSiguienteCancion = 0;
     }
 
     public Status anadirUsuario(Usuario usuario) {
-        if (usuarios.get(usuario.getNombre()) != null) 
-            return Status.USUARIO_REPETIDO; 
+        if (usuarios.containsKey(usuario.getNombreAutor())) return Status.USUARIO_REPETIDO; 
 
-        usuarios.put(usuario.getNombre(), usuario);
+        usuarios.put(usuario.getNombreAutor(), usuario);
         return Status.OK;
     }
 
-    public Usuario buscarUsuario(String nombre) {
-        return usuarios.get(nombre);
+    public Usuario buscarUsuario(String nombreAutor) {
+        return usuarios.get(nombreAutor);
     }
 
-    public List<Usuario> buscaUsuarios(String nombre) {
+    public List<Usuario> buscarUsuarios(String nombreAutor) {
         List<Usuario> lista = new ArrayList<>();
         for (Usuario usuario : usuarios.values()) {
-            if (usuario.getNombre().contains(nombre)) {
+            if (usuario.getNombreAutor().contains(nombreAutor)) {
                 lista.add(usuario);
             }
         }
         return lista;
     }
-
 
     public void eliminarPremiumUsuarios() {
         for (Usuario usuario : usuarios.values()) {
@@ -71,10 +71,10 @@ public class BaseDeDatos implements Serializable {
     }
 
     public Status anadirCancion(Cancion cancion) {
-        if (canciones.get(cancion.getNombre()) != null) 
-            return Status.CANCION_REPETIDA;
+        if (canciones.containsKey(cancion.getNombre())) return Status.CANCION_REPETIDA;
 
         canciones.put(cancion.getNombre(), cancion);
+        idSiguienteCancion++;
         return Status.OK;
     }
 
@@ -93,8 +93,7 @@ public class BaseDeDatos implements Serializable {
     }
 
     public Status anadirAlbum(Album album) {
-        if (albumes.get(album.getNombre()) != null) 
-            return Status.ALBUM_REPETIDO;
+        if (albumes.containsKey(album.getNombre())) return Status.ALBUM_REPETIDO;
 
         albumes.put(album.getNombre(), album);
         return Status.OK;
@@ -134,5 +133,9 @@ public class BaseDeDatos implements Serializable {
         } catch (IOException e) {
             return Status.ERROR_CARGAR;
         }
+    }
+
+    public long getIdSiguienteCancion() {
+        return idSiguienteCancion;
     }
 }

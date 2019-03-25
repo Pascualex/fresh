@@ -5,6 +5,7 @@ import fresh.datos.tipos.*;
 import fresh.Status;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.List;
 
 public class Sistema {
     private ModoEjecucion modoEjecucion;
@@ -71,7 +72,9 @@ public class Sistema {
 
     // public Status pararCancion();
 
-    // public Status buscarAutores();
+    public List<Usuario> buscarAutores(String nombreAutor) {
+        return baseDeDatos.buscarUsuarios(nombreAutor);
+    }
 
     public Status seguirAutor(Usuario autor) {
         if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
@@ -81,27 +84,66 @@ public class Sistema {
         return Status.OK;
     }
 
-    // public Status buscarCanciones();
+    public List<Cancion> buscarCanciones(String nombre) {
+        return baseDeDatos.buscarCanciones(nombre);
+    }
 
-    // public Status subirCancion();
+    // HAY QUE ASOCIAR EL MP3
+    public Status subirCancion(String nombre) {
+        if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
 
-    // public Status eliminarCancion();
+        if (nombre.length() < 4) return Status.NOMBRE_INVALIDO;
+        long id = baseDeDatos.getIdSiguienteCancion();
+        long duracion = 0; // Actualizar utilizando el módulo MP3
+        Cancion cancion = new Cancion(nombre, duracion, usuarioActual, id);
+
+        return baseDeDatos.anadirCancion(cancion);
+    }
+
+    public void eliminarCancion(Cancion cancion) {
+        baseDeDatos.eliminarCancion(cancion);
+    }
 
     // public Status actualizarCancion();
 
-    // public Status buscarAlbumes();
+    public List<Album> buscarAlbumes(String nombre) {
+        return baseDeDatos.buscarAlbumes(nombre);
+    }
 
-    // public Status crearAlbum();
+    public Status crearAlbum(String nombre, int ano, List<Cancion> canciones) {
+        if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
 
-    // public Status eliminarAlbum();
+        if (nombre.length() < 4) return Status.NOMBRE_INVALIDO;
+        if (canciones.size() == 0) return Status.ALBUM_VACIO;
 
-    // public Status crearListaReproduccion();
+        Album album = new Album(nombre, usuarioActual, ano, canciones);
 
-    // public Status anadirAListaReproduccion();
+        return baseDeDatos.anadirAlbum(album);
+    }
 
-    // public Status eliminarDeListaReproduccion();
+    public void eliminarAlbum(Album album) {
+        baseDeDatos.eliminarAlbum(album);
+    }
 
-    // public Status eliminarListaReproduccion();
+    public Status crearListaReproduccion(String nombre) {
+        if (nombre.length() < 4) return Status.NOMBRE_INVALIDO;
+
+        ListaReproduccion listaReproduccion = new ListaReproduccion(nombre);
+
+        return usuarioActual.anadirListaReproduccion(listaReproduccion);
+    }
+
+    public Status anadirAListaReproduccion(ListaReproduccion listaReproduccion, ElementoReproducible elemento) {
+        return listaReproduccion.anadirElemento(elemento);
+    }
+
+    public void eliminarDeListaReproduccion(ListaReproduccion listaReproduccion, ElementoReproducible elemento) {
+        listaReproduccion.eliminarElemento(elemento);
+    }
+
+    public void eliminarListaReproduccion(ListaReproduccion listaReproduccion) {
+        usuarioActual.eliminarListaReproduccion(listaReproduccion);
+    }
 
     // public Status validarCancion();
 

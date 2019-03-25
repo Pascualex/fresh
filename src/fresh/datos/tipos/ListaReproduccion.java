@@ -1,6 +1,9 @@
 package fresh.datos.tipos;
 
 import java.util.List;
+
+import fresh.Status;
+
 import java.util.ArrayList;
 
 /**
@@ -22,12 +25,15 @@ public class ListaReproduccion extends ElementoReproducible {
      * Añade a la lista de reproducción el elemento pasado por argumento, si no 
      * está ya presente, e incrementa la duración de la lista.
      * @param elemento Elemento reproducible a añadir a la lista
+     * @return Status notificando posibles problemas en la ejecución.
      */
-    public void anadirCancion(ElementoReproducible elemento) {
-        if (!elementos.contains(elemento)) {
-            setDuracion(getDuracion()+elemento.getDuracion());
-            elementos.add(elemento);
-        }
+    public Status anadirElemento(ElementoReproducible elemento) {
+        if (elementos.contains(elemento)) return Status.ELEMENTO_REPETIDO;
+
+        setDuracion(getDuracion()+elemento.getDuracion());
+        elementos.add(elemento);
+
+        return Status.OK;
     }
 
     /**
@@ -35,7 +41,7 @@ public class ListaReproduccion extends ElementoReproducible {
      * está presente, y decrementa la duración de la lista
      * @param elemento Elemento reproducible a eliminar de la lista
      */
-    public void eliminarCancion(ElementoReproducible elemento) {
+    public void eliminarElemento(ElementoReproducible elemento) {
         if (elementos.contains(elemento)) {
             setDuracion(getDuracion()-elemento.getDuracion());
             elementos.remove(elemento);
