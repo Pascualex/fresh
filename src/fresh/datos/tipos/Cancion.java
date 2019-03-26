@@ -1,7 +1,7 @@
 package fresh.datos.tipos;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.Objects;
 
 /**
@@ -13,6 +13,7 @@ public class Cancion extends ElementoReproducible {
     private int reproduccionesMensuales;
     private Usuario autor;
     private boolean bloqueado;
+    private EstadoCancion estado;
 
     /**
      * Crea una canción dadas sus características.
@@ -27,6 +28,7 @@ public class Cancion extends ElementoReproducible {
         this.id = id;
         reproduccionesMensuales = 0;
         bloqueado = false;
+        estado = EstadoCancion.PENDIENTE_VALIDACION;
     }
 
     /**
@@ -83,10 +85,10 @@ public class Cancion extends ElementoReproducible {
      * @return Lista de canciones con la canción
      */
     @Override
-    public List<Cancion> getCanciones() {
-        List<Cancion> lista = new ArrayList<>();
-        lista.add(this);
-        return lista;
+    public Set<Cancion> getCanciones() {
+        Set<Cancion> canciones = new HashSet<>();
+        canciones.add(this);
+        return canciones;
     }
 
     /**

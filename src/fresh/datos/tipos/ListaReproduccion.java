@@ -1,7 +1,7 @@
 package fresh.datos.tipos;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 import fresh.Status;
 
@@ -10,7 +10,7 @@ import fresh.Status;
  * elemento reproducible.</p>
  */
 public class ListaReproduccion extends ElementoReproducible {
-    private List<ElementoReproducible> elementos = new ArrayList<>();
+    private Set<ElementoReproducible> elementos = new HashSet<>();
 
     /**
      * Crea una lista de reproducción dadas sus características.
@@ -26,13 +26,11 @@ public class ListaReproduccion extends ElementoReproducible {
      * @param elemento Elemento reproducible a añadir a la lista
      * @return Status notificando posibles problemas en la ejecución.
      */
-    public Status anadirElemento(ElementoReproducible elemento) {
-        if (elementos.contains(elemento)) return Status.ELEMENTO_REPETIDO;
+    public void anadirElemento(ElementoReproducible elemento) {
+        if (elementos.contains(elemento)) return;
 
         setDuracion(getDuracion()+elemento.getDuracion());
         elementos.add(elemento);
-
-        return Status.OK;
     }
 
     /**
@@ -41,10 +39,10 @@ public class ListaReproduccion extends ElementoReproducible {
      * @param elemento Elemento reproducible a eliminar de la lista
      */
     public void eliminarElemento(ElementoReproducible elemento) {
-        if (elementos.contains(elemento)) {
-            setDuracion(getDuracion()-elemento.getDuracion());
-            elementos.remove(elemento);
-        }
+        if (!elementos.contains(elemento)) return;
+
+        setDuracion(getDuracion()-elemento.getDuracion());
+        elementos.remove(elemento);
     }
 
     /** 
@@ -66,15 +64,11 @@ public class ListaReproduccion extends ElementoReproducible {
      * @return Lista con todas las canciones de la lista de reproducción
      */
     @Override
-    public List<Cancion> getCanciones() {
-        List<Cancion> lista = new ArrayList<>();
+    public Set<Cancion> getCanciones() {
+        Set<Cancion> canciones = new HashSet<>();
         for (ElementoReproducible e : elementos) {
-            for (Cancion cancion : e.getCanciones()) {
-                if (!lista.contains(cancion)) {
-                    lista.add(cancion);
-                }
-            }
+            canciones.addAll(e.getCanciones());
         }
-        return lista;
+        return canciones;
     }
 }

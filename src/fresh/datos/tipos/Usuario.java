@@ -1,11 +1,10 @@
 package fresh.datos.tipos;
-import java.time.Period;
+
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
-
-import fresh.Status;
-
-import java.util.*;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * 
@@ -25,11 +24,11 @@ public class Usuario {
 	private int reproduccionesMensuales;
 	private boolean bloqueado;
 	
-	private List<Notificacion> notificaciones;
-	private List<ListaReproduccion> listasReproduccion;
-	private List<Cancion> canciones;
-	private List<Album> albumes;
-	private List<Usuario> seguidores;
+	private Set<Notificacion> notificaciones = new HashSet<>();
+	private Set<ListaReproduccion> listasReproduccion = new HashSet<>();
+	private Set<Cancion> canciones = new HashSet<>();
+	private Set<Album> albumes = new HashSet<>();
+	private Set<Usuario> seguidores = new HashSet<>();
 	
 	/**
 	 * Constructor de la clase Usuario
@@ -111,6 +110,7 @@ public class Usuario {
 	public boolean getBloqueado(){
 		return bloqueado;
 	}
+
 	/**
 	 * Modifica el estado del usuario, bloqueado o no
 	 */
@@ -129,29 +129,28 @@ public class Usuario {
 	}
 	
 	/**
-	 * Modifica las reproducciones mensuales de un usuario
-	 * 
-	 * @return Usuario modificado
-	 */
-	public Usuario setReproduccionesMensuales(int reproduccionesMensuales) {
-		this.reproduccionesMensuales = reproduccionesMensuales;
-		return this;
-	}
-	
-	/**
 	 * Devuelve la lista de notificaciones de un usuario
 	 * 
 	 * @return Lista de notificaciones del usuario
 	 */
-	public List<Notificacion> getNotificaciones(){
-		return notificaciones;
+	public Set<Notificacion> getNotificaciones(){
+		return Collections.unmodifiableSet(notificaciones);
+	}
+
+	public void anadirNotificacion(Notificacion notificacion) {
+		notificaciones.add(notificacion);
+	}
+
+	public void eliminarNotificacion(Notificacion notificacion) {
+		notificaciones.remove(notificacion);
+	}
+
+	public Set<ListaReproduccion> getListasReproducion() {
+		return Collections.unmodifiableSet(listasReproduccion);
 	}
 	
-	public Status anadirListaReproduccion(ListaReproduccion listaReproduccion) {
-		if (listasReproduccion.contains(listaReproduccion)) return Status.LISTA_REPRODUCCION_REPETIDA;
-
+	public void anadirListaReproduccion(ListaReproduccion listaReproduccion) {
 		listasReproduccion.add(listaReproduccion);
-		return Status.OK;
 	}
 
 	public void eliminarListaReproduccion(ListaReproduccion listaReproduccion) {
@@ -163,27 +162,45 @@ public class Usuario {
 	 * 
 	 * @return Lista de canciones del usuario
 	 */
-	public List<Cancion> getCanciones(){
-		return canciones;
+	public Set<Cancion> getCanciones(){
+		return Collections.unmodifiableSet(canciones);
+	}
+
+	public void anadirCancion(Cancion cancion) {
+		canciones.add(cancion);
 	}
 	
+	public void eliminarCancion(Cancion cancion) {
+		canciones.remove(cancion);
+	}
+
 	/**
 	 * Devuelve la lista de canciones de un usuario
 	 * 
 	 * @return Lista de Albumes de un usuario
 	 */
-    public List<Album> getAlbumes(){
-    	return albumes;
+    public Set<Album> getAlbumes(){
+    	return Collections.unmodifiableSet(albumes);
+	}
+ 
+	public void anadirAlbum(Album album) {
+		albumes.add(album);
+	}
+
+	public void eliminarAlbum(Album album) {
+		albumes.remove(album);
 	}
 	
-	public List<Usuario> getSeguidores() {
-		return seguidores;
+	public Set<Usuario> getSeguidores() {
+		return Collections.unmodifiableSet(seguidores);
 	}
 
 	public void anadirSeguidor(Usuario usuario) {
-		if (seguidores.contains(usuario)) return;
-
 		seguidores.add(usuario);
+	}
+
+	public void eliminarSeguidor(Usuario usuario) {
+		seguidores.remove(usuario);
 	}
     
     /**

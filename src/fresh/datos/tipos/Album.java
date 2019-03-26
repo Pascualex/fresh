@@ -1,14 +1,14 @@
 package fresh.datos.tipos;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.Collections;
 
 /**
  * <p>Esta clase permite trabajar con álbumes, que heredan de elemento
  *    reproducible.</p>
  */
 public class Album extends ElementoReproducible {
-    private List<Cancion> canciones;
+    private Set<Cancion> canciones;
     private Usuario autor;
     private int ano;
 
@@ -18,7 +18,7 @@ public class Album extends ElementoReproducible {
      * @param Autor Usuario autor del álbum
      * @param ano Año de publicación del álbum
      */
-    public Album(String nombre, Usuario autor, int ano, List<Cancion> canciones) {
+    public Album(String nombre, Usuario autor, int ano, Set<Cancion> canciones) {
         super(nombre, 0);
         this.autor = autor;
         this.ano = ano;
@@ -60,9 +60,7 @@ public class Album extends ElementoReproducible {
      * @return Lista de canciones con todas las canciones del álbum
      */
     @Override
-    public List<Cancion> getCanciones() {
-        List<Cancion> lista = new ArrayList<>();
-        lista.addAll(canciones);
-        return lista;
+    public Set<Cancion> getCanciones() {
+        return Collections.unmodifiableSet(canciones);
     }
 }

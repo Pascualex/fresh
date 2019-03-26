@@ -1,6 +1,6 @@
 package fresh.datos.tipos;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * <p>Esta clase abstracta define los componentes elementales de todo elemento
@@ -51,9 +51,8 @@ public abstract class ElementoReproducible {
     public abstract boolean getBloqueado();
 
     /**
-     * Devuelve una lista con las canciones que contiene el elemento
-     * reproducible.
+     * Devuelve un set con las canciones que contiene el elemento reproducible.
      * @return Lista de canciones del elemento reproducible
      */
-    public abstract List<Cancion> getCanciones();
+    public abstract Set<Cancion> getCanciones();
 }

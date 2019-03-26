@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 import java.util.List;
+import java.util.Set;
 
 public class Sistema {
     private ModoEjecucion modoEjecucion;
@@ -102,11 +103,15 @@ public class Sistema {
         long duracion = 0; // Actualizar utilizando el módulo MP3
         Cancion cancion = new Cancion(nombre, duracion, usuarioActual, id);
 
-        return baseDeDatos.anadirCancion(cancion);
+        Status status = baseDeDatos.anadirCancion(cancion);
+        if (status == Status.OK) usuarioActual.anadirCancion(cancion);
+
+        return status;
     }
 
-    public void eliminarCancion(Cancion cancion) {
+    public void eliminarCancion(Cancion cancion) {        
         baseDeDatos.eliminarCancion(cancion);
+        usuarioActual.eliminarCancion(cancion);
     }
 
     // public Status actualizarCancion();
@@ -115,7 +120,7 @@ public class Sistema {
         return baseDeDatos.buscarAlbumes(nombre);
     }
 
-    public Status crearAlbum(String nombre, int ano, List<Cancion> canciones) {
+    public Status crearAlbum(String nombre, int ano, Set<Cancion> canciones) {
         if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
 
         if (nombre.length() < 4) return Status.NOMBRE_INVALIDO;
@@ -123,11 +128,15 @@ public class Sistema {
 
         Album album = new Album(nombre, usuarioActual, ano, canciones);
 
-        return baseDeDatos.anadirAlbum(album);
+        Status status = baseDeDatos.anadirAlbum(album);
+        if (status == Status.OK) usuarioActual.anadirAlbum(album);
+
+        return Status.OK;
     }
 
     public void eliminarAlbum(Album album) {
         baseDeDatos.eliminarAlbum(album);
+        usuarioActual.eliminarAlbum(album);
     }
 
     public Status crearListaReproduccion(String nombre) {
@@ -135,11 +144,12 @@ public class Sistema {
 
         ListaReproduccion listaReproduccion = new ListaReproduccion(nombre);
 
-        return usuarioActual.anadirListaReproduccion(listaReproduccion);
+        usuarioActual.anadirListaReproduccion(listaReproduccion);
+        return Status.OK;
     }
 
-    public Status anadirAListaReproduccion(ListaReproduccion listaReproduccion, ElementoReproducible elemento) {
-        return listaReproduccion.anadirElemento(elemento);
+    public void anadirAListaReproduccion(ListaReproduccion listaReproduccion, ElementoReproducible elemento) {
+        listaReproduccion.anadirElemento(elemento);
     }
 
     public void eliminarDeListaReproduccion(ListaReproduccion listaReproduccion, ElementoReproducible elemento) {
