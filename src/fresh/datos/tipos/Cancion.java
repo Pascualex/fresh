@@ -1,5 +1,7 @@
 package fresh.datos.tipos;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -74,6 +76,17 @@ public class Cancion extends ElementoReproducible {
      */
     public void setReproduccionesMensuales(int reproduccionesMensuales) {
         this.reproduccionesMensuales = reproduccionesMensuales;
+    }
+
+    /**
+     * Devuelve una lista con la canción.
+     * @return Lista de canciones con la canción
+     */
+    @Override
+    public List<Cancion> getCanciones() {
+        List<Cancion> lista = new ArrayList<>();
+        lista.add(this);
+        return lista;
     }
 
     /**

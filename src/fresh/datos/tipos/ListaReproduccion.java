@@ -1,17 +1,16 @@
 package fresh.datos.tipos;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import fresh.Status;
-
-import java.util.ArrayList;
 
 /**
  * <p>Esta clase permite trabajar con listas de reproducción, que heredan de 
  * elemento reproducible.</p>
  */
 public class ListaReproduccion extends ElementoReproducible {
-    private List<ElementoReproducible> elementos = new ArrayList();
+    private List<ElementoReproducible> elementos = new ArrayList<>();
 
     /**
      * Crea una lista de reproducción dadas sus características.
@@ -60,5 +59,22 @@ public class ListaReproduccion extends ElementoReproducible {
             if (elemento.getBloqueado()) return true;
         }
         return false;
+    }
+
+    /**
+     * Devuelve una lista con todas las canciones de la lista de reproducción.
+     * @return Lista con todas las canciones de la lista de reproducción
+     */
+    @Override
+    public List<Cancion> getCanciones() {
+        List<Cancion> lista = new ArrayList<>();
+        for (ElementoReproducible e : elementos) {
+            for (Cancion cancion : e.getCanciones()) {
+                if (!lista.contains(cancion)) {
+                    lista.add(cancion);
+                }
+            }
+        }
+        return lista;
     }
 }

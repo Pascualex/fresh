@@ -1,5 +1,6 @@
 package fresh.datos.tipos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,5 +53,16 @@ public class Album extends ElementoReproducible {
             if (cancion.getBloqueado()) return true;
         }
         return false;
+    }
+
+    /**
+     * Devuelve una lista de canciones con todas las canciones del álbum.
+     * @return Lista de canciones con todas las canciones del álbum
+     */
+    @Override
+    public List<Cancion> getCanciones() {
+        List<Cancion> lista = new ArrayList<>();
+        lista.addAll(canciones);
+        return lista;
     }
 }
