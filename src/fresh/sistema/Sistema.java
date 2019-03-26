@@ -3,7 +3,8 @@ package fresh.sistema;
 import fresh.datos.BaseDeDatos;
 import fresh.datos.tipos.*;
 import fresh.Status;
-import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 import java.util.List;
 
@@ -11,11 +12,13 @@ public class Sistema {
     private ModoEjecucion modoEjecucion;
     private Usuario usuarioActual;
     private BaseDeDatos baseDeDatos;
+    private Configuracion configuracion;
     private int reproduccionesSesion;
 
     public Sistema() {
         modoEjecucion = ModoEjecucion.DESCONECTADO;
         baseDeDatos = BaseDeDatos.cargarBaseDeDatos("./baseDedatos/baseDeDatos.bd");
+        configuracion = new Configuracion("./configuracion/configuracion.txt");
     }
 
     // FALTA COMPROBAR CREDENCIALES DEL ADMINISTRADOR
@@ -41,13 +44,15 @@ public class Sistema {
         return Status.OK;
     }
 
-    public Status registrarse(String nombre, String nombreAutor, String contrasena, LocalDate fechaNacimiento) {
+    public Status registrarse(String nombre, String nombreAutor, String contrasena, Calendar fechaNacimiento) {
         if (modoEjecucion != ModoEjecucion.DESCONECTADO) return Status.OPERACION_INACCESIBLE;
 
         if (nombre.length() < 4) return Status.NOMBRE_INVALIDO;
         if (nombreAutor.length() < 4) return Status. NOMBRE_AUTOR_INVALIDO;
         if (contrasena.length() < 4) return Status.CONTRASENA_INVALIDA;
-        if (false /*comprobación edad*/) return Status.EDAD_INVALIDA;
+        Calendar fechaNacimientoMinima = new GregorianCalendar();
+        fechaNacimientoMinima.add(Calendar.YEAR, -14);
+        if (fechaNacimiento.after(fechaNacimientoMinima)) return Status.EDAD_INVALIDA;
 
         if (baseDeDatos.buscarUsuario(nombre) != null) return Status.USUARIO_REPETIDO;
 

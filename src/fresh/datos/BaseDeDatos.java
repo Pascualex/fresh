@@ -16,7 +16,9 @@ import fresh.datos.tipos.*;
 import fresh.Status;
 
 public class BaseDeDatos implements Serializable {
-    private String directorioDatos;
+    static final long serialVersionUID = 0;
+    
+    private String ruta;
     private long idSiguienteCancion;
 
     private Map<String, Usuario> usuarios = new HashMap<>();
@@ -39,7 +41,7 @@ public class BaseDeDatos implements Serializable {
     }
 
     private BaseDeDatos(String ruta) {
-        directorioDatos = ruta;
+        this.ruta = ruta;
         idSiguienteCancion = 0;
     }
 
@@ -126,7 +128,7 @@ public class BaseDeDatos implements Serializable {
     }
 
     public Status guardarEnDisco() {
-        try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(directorioDatos))) {
+        try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(ruta))) {
             stream.writeObject(this);
             stream.close();
             return Status.OK;

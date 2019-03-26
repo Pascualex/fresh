@@ -1,6 +1,10 @@
 package fresh.datos.tipos;
 import java.time.Period;
-import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import fresh.Status;
+
 import java.util.*;
 
 /**
@@ -15,7 +19,7 @@ public class Usuario {
 	private String nombre;
 	private String nombreAutor;
 	private String contrasena;
-	private LocalDate fechaNacimiento;
+	private Calendar fechaNacimiento;
 
 	private boolean esPremium;
 	private int reproduccionesMensuales;
@@ -36,7 +40,7 @@ public class Usuario {
 	 * @param fechaNacimiento, fecha de nacimento del usuario
 	 */
 	
-	public Usuario(String nombre, String nombreAutor, String contrasena, LocalDate fechaNacimiento) {
+	public Usuario(String nombre, String nombreAutor, String contrasena, Calendar fechaNacimiento) {
 		this.nombre = nombre;
 		this.nombreAutor = nombreAutor;
 		this.contrasena = contrasena;
@@ -61,7 +65,6 @@ public class Usuario {
 	 */
 	public void setEsPremium(boolean esPremium){
 		this.esPremium = esPremium;
-		return;
 	}
 	
 	/**
@@ -96,7 +99,7 @@ public class Usuario {
 	 * 
 	 * @return Calendar con la fecha de nacimiento del usuario
 	 */
-	public LocalDate getFechaNacimiento(){
+	public Calendar getFechaNacimiento(){
 		return fechaNacimiento;
 	}
 
@@ -136,7 +139,7 @@ public class Usuario {
 	}
 	
 	/**
-	 * Devuelve la lista de notificaiones de un usuario
+	 * Devuelve la lista de notificaciones de un usuario
 	 * 
 	 * @return Lista de notificaciones del usuario
 	 */
@@ -144,13 +147,15 @@ public class Usuario {
 		return notificaciones;
 	}
 	
-	/**
-	 * Devuelve la lista de playlists del usuario
-	 * 
-	 * @return Listas de reproduccion de un usuario
-	 */
-	public List<ListaReproduccion> getListasReproduccion(){
-		return listasReproduccion;
+	public Status anadirListaReproduccion(ListaReproduccion listaReproduccion) {
+		if (listasReproduccion.contains(listaReproduccion)) return Status.LISTA_REPRODUCCION_REPETIDA;
+
+		listasReproduccion.add(listaReproduccion);
+		return Status.OK;
+	}
+
+	public void eliminarListaReproduccion(ListaReproduccion listaReproduccion) {
+		listasReproduccion.remove(listaReproduccion);
 	}
 	
 	/**
@@ -186,16 +191,12 @@ public class Usuario {
      * 
      * @return true si puede reproducir contenido explicito o false si no
      */
-    public boolean puedeContenidoExplicito() {
+    public boolean puedeContenidoExplicito() {    	
+    	Calendar fechaNacimientoMinima = new GregorianCalendar();
+    	fechaNacimientoMinima.add(Calendar.YEAR, -18);
     	
-    	LocalDate ahora = LocalDate.now();
-    	Period periodo = Period.between(fechaNacimiento, ahora);
+    	if (fechaNacimiento.after(fechaNacimientoMinima)) return false;
     	
-    	if (periodo.getYears() > 18) {
-    		return true;
-    	}
-    	
-    	return false;
-    	
+    	return true;   	
     }
 }
