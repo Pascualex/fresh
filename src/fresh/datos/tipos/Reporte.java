@@ -1,9 +1,9 @@
 package fresh.datos.tipos;
 
-/**cadena con la descripcion de un reporte
+/**
  * Implementacion de la clase Reporte
  *
- * @author 
+ * @author Ana Roa (ana.roa@estudiante.uam.es)
  */
 public class Reporte {
 
