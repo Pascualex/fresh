@@ -1,5 +1,4 @@
 package fresh.datos.tipos;
-
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
