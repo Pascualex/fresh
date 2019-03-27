@@ -41,19 +41,23 @@ public class ModuloMP3 implements Runnable {
 
     public synchronized void pause() {
         if (sig != null) sig.pause();
-        if (mediaPlayer != null) mediaPlayer.pause();
+        else if (mediaPlayer != null) mediaPlayer.pause();
     }
 
     public synchronized void play() {
         if (sig != null) sig.play();
-        if (mediaPlayer != null) mediaPlayer.play();
+        else if (mediaPlayer != null) mediaPlayer.play();
     }
 
     public synchronized void siguente() {
-        sig = new ModuloMP3();
-        mediaPlayer.stop();
-        sig.anadirAColaReproduccion(colaReproduccion);
-        sig.run();
+        if (sig != null) {
+            sig.siguente();
+        } else {
+            sig = new ModuloMP3();
+            mediaPlayer.stop();
+            sig.anadirAColaReproduccion(colaReproduccion);
+            sig.run();
+        }
     }
 
     public synchronized void exit() {
