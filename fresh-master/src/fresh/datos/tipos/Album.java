@@ -63,4 +63,12 @@ public class Album extends ElementoReproducible {
     public Set<Cancion> getCanciones() {
         return Collections.unmodifiableSet(canciones);
     }
+
+    /**
+     * Elimina una canción del album
+     * @param cancion Canción a eliminar
+     */
+    public void eliminarCancion(Cancion cancion) {
+        canciones.remove(cancion);
+    }
 }
