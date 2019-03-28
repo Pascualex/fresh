@@ -160,9 +160,18 @@ public class Sistema {
         usuarioActual.eliminarListaReproduccion(listaReproduccion);
     }
 
-    // public Status validarCancion();
+    public void cambiarEstadoCancion(Cancion cancion, EstadoCancion estado) {
+        cancion.setEstado(estado);
+    }
 
-    // public Status reportar();
+    public Status reportar(String descripcion, Cancion cancion) {
+        if (descripcion.length() < 4) return Status.DESCRIPCION_INVALIDA;
+
+        Reporte reporte = new Reporte(descripcion, usuarioActual, cancion);
+        
+        baseDeDatos.anadirReporte(reporte);
+        return Status.OK;
+    }
 
     // public Status valorarReporte();
 

@@ -91,6 +91,14 @@ public class Cancion extends ElementoReproducible {
         return canciones;
     }
 
+    public EstadoCancion getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoCancion estado) {
+        this.estado = estado;
+    }
+
     /**
      * Compara el objeto pasado como argumento con la instancia de la canción.
      * @param object Objeto a comparar con la instancia de la canción
