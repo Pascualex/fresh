@@ -1,6 +1,7 @@
 package fresh.datos.tipos;
 
-import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Collections;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Collections;
  *    reproducible.</p>
  */
 public class Album extends ElementoReproducible {
-    private Set<Cancion> canciones;
+    private List<Cancion> canciones;
     private Usuario autor;
     private int ano;
 
@@ -18,11 +19,17 @@ public class Album extends ElementoReproducible {
      * @param Autor Usuario autor del álbum
      * @param ano Año de publicación del álbum
      */
-    public Album(String nombre, Usuario autor, int ano, Set<Cancion> canciones) {
+    public Album(String nombre, Usuario autor, int ano, Cancion[] canciones) {
         super(nombre, 0);
         this.autor = autor;
         this.ano = ano;
-        this.canciones = canciones;
+        this.canciones = new ArrayList<>();
+
+        for (Cancion cancion : canciones) {
+            if (this.canciones.contains(cancion)) continue;
+            setDuracion(getDuracion()+cancion.getDuracion());            
+            this.canciones.add(cancion);
+        }
     }
 
     /** 
@@ -60,8 +67,8 @@ public class Album extends ElementoReproducible {
      * @return Lista de canciones con todas las canciones del álbum
      */
     @Override
-    public Set<Cancion> getCanciones() {
-        return Collections.unmodifiableSet(canciones);
+    public List<Cancion> getCanciones() {
+        return Collections.unmodifiableList(canciones);
     }
 
     /**

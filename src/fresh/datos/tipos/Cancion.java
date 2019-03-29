@@ -1,7 +1,7 @@
 package fresh.datos.tipos;
 
-import java.util.Set;
-import java.util.HashSet;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -26,7 +26,6 @@ public class Cancion extends ElementoReproducible {
         this.autor = autor;
         this.id = id;
         reproduccionesMensuales = 0;
-        bloqueado = false;
         estado = EstadoCancion.PENDIENTE_VALIDACION;
     }
 
@@ -63,6 +62,10 @@ public class Cancion extends ElementoReproducible {
         return estado != EstadoCancion.VALIDADA && estado != EstadoCancion.VALIDADA_EXPLICITA;
     }
 
+    public boolean getModificable() {
+        return estado == EstadoCancion.PENDIENTE_VALIDACION || estado == EstadoCancion.RECHAZADA_REVISABLE;
+    }
+
     /**
      * Establece el número de reproducciones mensuales de la canción.
      * @param reproduccionesMensuales Reproducciones mensuales de la canción
@@ -76,8 +79,8 @@ public class Cancion extends ElementoReproducible {
      * @return Lista de canciones con la canción
      */
     @Override
-    public Set<Cancion> getCanciones() {
-        Set<Cancion> canciones = new HashSet<>();
+    public List<Cancion> getCanciones() {
+        List<Cancion> canciones = new ArrayList<>();
         canciones.add(this);
         return canciones;
     }

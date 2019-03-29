@@ -17,7 +17,7 @@ public class Sistema {
     private GestorEventos gestorEventos;
     private ModuloMP3 moduloMP3;    
     private Configuracion configuracion;    
-    private int reproduccionesSesion;
+    private int reproduccionesSesion; // Falta controlar el número de reproducciones
 
     public Sistema() {
         modoEjecucion = ModoEjecucion.DESCONECTADO;
@@ -27,9 +27,16 @@ public class Sistema {
         configuracion = new Configuracion("./configuracion/configuracion.txt");
     }
 
-    // FALTA COMPROBAR CREDENCIALES DEL ADMINISTRADOR
     public Status iniciarSesion(String nombre, String contrasena) {
         if (modoEjecucion != ModoEjecucion.DESCONECTADO) return Status.OPERACION_INACCESIBLE;
+
+        if (Objects.equals(nombre, configuracion.getNombreAdministrador())) {
+            if (!Objects.equals(contrasena, configuracion.getContrasenaAdministrador())) return Status.CONTRASENA_INVALIDA;
+
+            modoEjecucion = ModoEjecucion.ADMINISTRADOR;
+
+            return Status.OK;
+        }
 
         Usuario usuario = baseDeDatos.buscarUsuario(nombre);
         if (usuario == null) return Status.NOMBRE_INVALIDO;
@@ -54,9 +61,9 @@ public class Sistema {
     public Status registrarse(String nombre, String nombreAutor, String contrasena, Calendar fechaNacimiento) {
         if (modoEjecucion != ModoEjecucion.DESCONECTADO) return Status.OPERACION_INACCESIBLE;
 
-        if (nombre.length() < 4) return Status.NOMBRE_INVALIDO;
-        if (nombreAutor.length() < 4) return Status. NOMBRE_AUTOR_INVALIDO;
-        if (contrasena.length() < 4) return Status.CONTRASENA_INVALIDA;
+        if (nombre.length() < configuracion.getCaracteresMinimos()) return Status.NOMBRE_INVALIDO;
+        if (nombreAutor.length() < configuracion.getCaracteresMinimos()) return Status. NOMBRE_AUTOR_INVALIDO;
+        if (contrasena.length() < configuracion.getCaracteresMinimos()) return Status.CONTRASENA_INVALIDA;
         Calendar fechaNacimientoMinima = new GregorianCalendar();
         fechaNacimientoMinima.add(Calendar.YEAR, -14);
         if (fechaNacimiento.after(fechaNacimientoMinima)) return Status.EDAD_INVALIDA;
@@ -76,13 +83,22 @@ public class Sistema {
         return Status.OK;
     }
 
-    // public Status reproducir();
+    public void reproducir(ElementoReproducible elemento) {
+        moduloMP3.anadirAColaReproduccion(elemento.getCanciones());
+        moduloMP3.run();
+    }
 
-    // public Status reanudarCancion();
+    public void reanudarCancion() {
+        moduloMP3.run();
+    }
 
-    // public Status pausarCancion();
+    public void pausarCancion() {
+        moduloMP3.pause();
+    }
 
-    // public Status pararCancion();
+    public void pararCancion() {
+        moduloMP3.stop(); // No sé cómo está implementado esto - Alex
+    }
 
     public List<Usuario> buscarAutores(String nombreAutor) {
         return baseDeDatos.buscarUsuarios(nombreAutor);
@@ -104,7 +120,7 @@ public class Sistema {
     public Status subirCancion(String nombre) {
         if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
 
-        if (nombre.length() < 4) return Status.NOMBRE_INVALIDO;
+        if (nombre.length() < configuracion.getCaracteresMinimos()) return Status.NOMBRE_INVALIDO;
         long id = baseDeDatos.getIdSiguienteCancion();
         long duracion = 0; // Actualizar utilizando el módulo MP3
         Cancion cancion = new Cancion(nombre, duracion, usuarioActual, id);
@@ -120,17 +136,23 @@ public class Sistema {
         usuarioActual.eliminarCancion(cancion);
     }
 
-    // public Status actualizarCancion();
+    public Status actualizarCancion(Cancion cancion, String ruta) {
+        if (!cancion.getModificable()) return Status.CANCION_NO_MODIFICABLE;
+
+        // Asociar nueva ruta
+
+        return Status.OK;
+    }
 
     public List<Album> buscarAlbumes(String nombre) {
         return baseDeDatos.buscarAlbumes(nombre);
     }
 
-    public Status crearAlbum(String nombre, int ano, Set<Cancion> canciones) {
+    public Status crearAlbum(String nombre, int ano, Cancion[] canciones) {
         if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
 
-        if (nombre.length() < 4) return Status.NOMBRE_INVALIDO;
-        if (canciones.size() == 0) return Status.ALBUM_VACIO;
+        if (nombre.length() < configuracion.getCaracteresMinimos()) return Status.NOMBRE_INVALIDO;
+        if (canciones.length == 0) return Status.ALBUM_VACIO;
 
         Album album = new Album(nombre, usuarioActual, ano, canciones);
 
@@ -150,7 +172,7 @@ public class Sistema {
     }
 
     public Status crearListaReproduccion(String nombre) {
-        if (nombre.length() < 4) return Status.NOMBRE_INVALIDO;
+        if (nombre.length() < configuracion.getCaracteresMinimos()) return Status.NOMBRE_INVALIDO;
 
         ListaReproduccion listaReproduccion = new ListaReproduccion(nombre);
 
@@ -170,6 +192,7 @@ public class Sistema {
         usuarioActual.eliminarListaReproduccion(listaReproduccion);
     }
 
+    // Tomar acciones en función del cambio
     public void cambiarEstadoCancion(Cancion cancion, EstadoCancion estado) {
         cancion.setEstado(estado);
     }
@@ -179,7 +202,7 @@ public class Sistema {
     }
 
     public Status reportar(String descripcion, Cancion cancion) {
-        if (descripcion.length() < 4) return Status.DESCRIPCION_INVALIDA;
+        if (descripcion.length() < configuracion.getCaracteresMinimos()) return Status.DESCRIPCION_INVALIDA;
         if (cancion.getBloqueado()) return Status.CANCION_NO_REPORTABLE;
 
         Reporte reporte = new Reporte(descripcion, usuarioActual, cancion);
@@ -214,28 +237,58 @@ public class Sistema {
 
     // public Status pagarPremium();
 
-    public void modificarMaxReproduccionesAnonimo(int maxReproduccionesAnonimo) {
+    public Status modificarCredencialesAdministrador(String nombre, String contrasena) {
+        if (nombre.length() < configuracion.getCaracteresMinimos()) return Status.NOMBRE_INVALIDO;
+        if (contrasena.length() < configuracion.getCaracteresMinimos()) return Status.CONTRASENA_INVALIDA;
+
+        configuracion.setNombreAdministrador(nombre);
+        configuracion.setContrasenaAdministrador(contrasena);
+
+        return Status.OK;
+    }
+
+    public Status modificarMaxReproduccionesAnonimo(int maxReproduccionesAnonimo) {
+        if (maxReproduccionesAnonimo <= 0) return Status.CONFIGURACION_INVALIDA;
+
         configuracion.setMaxReproduccionesAnonimo(maxReproduccionesAnonimo);
         configuracion.guardarConfiguracion();
+
+        return Status.OK;
     }
 
-    public void modificarMaxReproduccionesRegistrado(int maxReproduccionesRegistrado) {
+    public Status modificarMaxReproduccionesRegistrado(int maxReproduccionesRegistrado) {
+        if (maxReproduccionesRegistrado <= 0) return Status.CONFIGURACION_INVALIDA;
+
         configuracion.setMaxReproduccionesRegistrado(maxReproduccionesRegistrado);
         configuracion.guardarConfiguracion();
+
+        return Status.OK;
     }
 
-    public void modificarCuotaPremium(float cuotaPremium) {
+    public Status modificarCuotaPremium(float cuotaPremium) {
+        if (cuotaPremium <= 0) return Status.CONFIGURACION_INVALIDA;
+
         configuracion.setCuotaPremium(cuotaPremium);
         configuracion.guardarConfiguracion();
+
+        return Status.OK;
     }
 
-    public void modificarMinReproduccionesPremium(int minReproduccionesPremium) {
+    public Status modificarMinReproduccionesPremium(int minReproduccionesPremium) {
+        if (minReproduccionesPremium <= 0) return Status.CONFIGURACION_INVALIDA;
+
         configuracion.setMinReproduccionesPremium(minReproduccionesPremium);
         configuracion.guardarConfiguracion();
+
+        return Status.OK;
     }
 
-    public void modificarCaracteresMinimos(int caracteresMinimos) {
+    public Status modificarCaracteresMinimos(int caracteresMinimos) {
+        if (caracteresMinimos <= 0) return Status.CONFIGURACION_INVALIDA;
+
         configuracion.setCaracteresMinimos(caracteresMinimos);
         configuracion.guardarConfiguracion();
+
+        return Status.OK;
     }
 }

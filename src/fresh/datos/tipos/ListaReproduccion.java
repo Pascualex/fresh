@@ -1,16 +1,14 @@
 package fresh.datos.tipos;
 
-import java.util.Set;
-import java.util.HashSet;
-
-import fresh.Status;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * <p>Esta clase permite trabajar con listas de reproducción, que heredan de 
  * elemento reproducible.</p>
  */
 public class ListaReproduccion extends ElementoReproducible {
-    private Set<ElementoReproducible> elementos = new HashSet<>();
+    private List<ElementoReproducible> elementos = new ArrayList<>();
 
     /**
      * Crea una lista de reproducción dadas sus características.
@@ -64,8 +62,8 @@ public class ListaReproduccion extends ElementoReproducible {
      * @return Lista con todas las canciones de la lista de reproducción
      */
     @Override
-    public Set<Cancion> getCanciones() {
-        Set<Cancion> canciones = new HashSet<>();
+    public List<Cancion> getCanciones() {
+        List<Cancion> canciones = new ArrayList<>();
         for (ElementoReproducible e : elementos) {
             canciones.addAll(e.getCanciones());
         }

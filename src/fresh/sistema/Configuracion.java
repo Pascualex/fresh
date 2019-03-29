@@ -8,6 +8,8 @@ import fresh.Status;
 public class Configuracion {
     private String ruta;
 
+    private String nombreAdministrador;
+    private String contrasenaAdministrador;
     private int maxReproduccionesAnonimo;
     private int maxReproduccionesRegistrado;
     private float cuotaPremium;
@@ -18,6 +20,8 @@ public class Configuracion {
         this.ruta = ruta;
         if (cargarConfiguracion() == Status.OK) return;
 
+        nombreAdministrador = "admin";
+        contrasenaAdministrador = "admin";
         maxReproduccionesAnonimo = 20;
         maxReproduccionesRegistrado = 100;
         cuotaPremium = 9.99f;
@@ -25,6 +29,22 @@ public class Configuracion {
         caracteresMinimos = 4;
 
         guardarConfiguracion();
+    }
+
+    public String getNombreAdministrador() {
+        return nombreAdministrador;
+    }
+
+    public void setNombreAdministrador(String nombreAdministrador) {
+        this.nombreAdministrador = nombreAdministrador;
+    }
+
+    public String getContrasenaAdministrador() {
+        return contrasenaAdministrador;
+    }
+
+    public void setContrasenaAdministrador(String contrasenaAdministrador) {
+        this.contrasenaAdministrador = contrasenaAdministrador;
     }
 
     public int getMaxReproduccionesAnonimo() {
@@ -72,9 +92,30 @@ public class Configuracion {
              InputStreamReader reader = new InputStreamReader(stream);
              BufferedReader buffer = new BufferedReader(reader);) {
 
-            String linea = buffer.readLine();
+            String linea;
+            String[] palabras;
+
+            linea = buffer.readLine();
             if (linea == null) throw new IOException();
-            String[] palabras = linea.split(" ");
+            palabras = linea.split(" ");
+            if (!Objects.equals(palabras[0], "NOMBRE_ADMINISTRADOR")) throw new IOException();
+            nombreAdministrador = palabras[1];
+
+            linea = buffer.readLine();
+            if (linea == null) throw new IOException();
+            palabras = linea.split(" ");
+            if (!Objects.equals(palabras[0], "CONTRASENA_ADMINISTRADOR")) throw new IOException();
+            contrasenaAdministrador = palabras[1];
+
+            linea = buffer.readLine();
+            if (linea == null) throw new IOException();
+            palabras = linea.split(" ");
+            if (!Objects.equals(palabras[0], "MAX_REPRODUCCIONES_ANONIMO")) throw new IOException();
+            maxReproduccionesAnonimo = Integer.parseInt(palabras[1]);
+
+            linea = buffer.readLine();
+            if (linea == null) throw new IOException();
+            palabras = linea.split(" ");
             if (!Objects.equals(palabras[0], "MAX_REPRODUCCIONES_ANONIMO")) throw new IOException();
             maxReproduccionesAnonimo = Integer.parseInt(palabras[1]);
 
@@ -115,6 +156,8 @@ public class Configuracion {
              OutputStreamWriter writer = new OutputStreamWriter(stream);
              BufferedWriter buffer = new BufferedWriter(writer);) {
 
+            buffer.write("NOMBRE_ADMINISTRADOR " + nombreAdministrador + "\n");
+            buffer.write("CONTRASENA_ADMINISTRADOR " + contrasenaAdministrador + "\n");
             buffer.write("MAX_REPRODUCCIONES_ANONIMO " + maxReproduccionesAnonimo + "\n");
             buffer.write("MAX_REPRODUCCIONES_REGISTRADO " + maxReproduccionesRegistrado + "\n");
             buffer.write("CUOTA_PREMIUM " + cuotaPremium + "\n");
