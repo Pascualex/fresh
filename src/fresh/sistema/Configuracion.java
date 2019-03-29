@@ -27,6 +27,46 @@ public class Configuracion {
         guardarConfiguracion();
     }
 
+    public int getMaxReproduccionesAnonimo() {
+        return maxReproduccionesAnonimo;
+    }
+
+    public void setMaxReproduccionesAnonimo(int maxReproduccionesAnonimo) {
+        this.maxReproduccionesAnonimo = maxReproduccionesAnonimo;
+    }
+
+    public int getMaxReproduccionesRegistrado() {
+        return maxReproduccionesRegistrado;
+    }
+
+    public void setMaxReproduccionesRegistrado(int maxReproduccionesRegistrado) {
+        this.maxReproduccionesRegistrado = maxReproduccionesRegistrado;
+    }
+
+    public float getCuotaPremium() {
+        return cuotaPremium;
+    }
+
+    public void setCuotaPremium(float cuotaPremium) {
+        this.cuotaPremium = cuotaPremium;
+    }
+
+    public int getMinReproduccionesPremium() {
+        return minReproduccionesPremium;
+    }
+
+    public void setMinReproduccionesPremium(int minReproduccionesPremium) {
+        this.minReproduccionesPremium = minReproduccionesPremium;
+    } 
+
+    public int getCaracteresMinimos() {
+        return caracteresMinimos;
+    }
+
+    public void setCaracteresMinimos(int caracteresMinimos) {
+        this.caracteresMinimos = caracteresMinimos;
+    }
+
     private Status cargarConfiguracion() {
         try (FileInputStream stream = new FileInputStream(ruta);
              InputStreamReader reader = new InputStreamReader(stream);
@@ -70,7 +110,7 @@ public class Configuracion {
         }
     }
 
-    private void guardarConfiguracion() {
+    public void guardarConfiguracion() {
         try (FileOutputStream stream = new FileOutputStream(ruta);
              OutputStreamWriter writer = new OutputStreamWriter(stream);
              BufferedWriter buffer = new BufferedWriter(writer);) {

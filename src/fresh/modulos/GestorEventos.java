@@ -56,12 +56,12 @@ public class GestorEventos{
      * especificada para que pueda ser más tarde cargada.
      * @param ruta Ruta en la que guardar la información del gestor.
      */
-    public boolean GuargarInformacion(String ruta) {
+    public boolean guargarInformacion(String ruta) {
         //Tenemos que especificar como vamos a guardar la información en disco
         return false;
     }
 
-    public boolean ProgramarEliminacionCancion(Cancion cancion) {
+    public boolean programarEliminacionCancion(Cancion cancion) {
         return cancionesAEliminar.add(new ParCancionFecha(cancion));
     }
     
@@ -69,7 +69,7 @@ public class GestorEventos{
      * Inicia el proceso de comprobar las canciones a eliminar y degradar a los
      * usuarios a usuarios normales quitándoles el premium a inicio de mes.
      */
-    public void Iniciar() throws InterruptedException {
+    public void iniciar() throws InterruptedException {
         while (true) {
             //Calculo la fecha actual
             GregorianCalendar fecha_actual = new GregorianCalendar();

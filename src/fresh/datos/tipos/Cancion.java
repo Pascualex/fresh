@@ -12,7 +12,6 @@ public class Cancion extends ElementoReproducible {
     private long id;
     private int reproduccionesMensuales;
     private Usuario autor;
-    private boolean bloqueado;
     private EstadoCancion estado;
 
     /**
@@ -29,14 +28,6 @@ public class Cancion extends ElementoReproducible {
         reproduccionesMensuales = 0;
         bloqueado = false;
         estado = EstadoCancion.PENDIENTE_VALIDACION;
-    }
-
-    /**
-     * Establece el estado de bloqueo de la canción.
-     * @param bloqueado Nuevo estado de bloqueo de la canción
-     */
-    public void setBloqueado(boolean bloqueado) {
-        this.bloqueado = bloqueado;
     }
 
     /**
@@ -69,7 +60,7 @@ public class Cancion extends ElementoReproducible {
      */
     @Override
     public boolean getBloqueado() {
-        return bloqueado;
+        return estado != EstadoCancion.VALIDADA && estado != EstadoCancion.VALIDADA_EXPLICITA;
     }
 
     /**

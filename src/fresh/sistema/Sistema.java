@@ -2,6 +2,7 @@ package fresh.sistema;
 
 import fresh.datos.BaseDeDatos;
 import fresh.datos.tipos.*;
+import fresh.modulos.*;
 import fresh.Status;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -13,12 +14,16 @@ public class Sistema {
     private ModoEjecucion modoEjecucion;
     private Usuario usuarioActual;
     private BaseDeDatos baseDeDatos;
-    private Configuracion configuracion;
+    private GestorEventos gestorEventos;
+    private ModuloMP3 moduloMP3;    
+    private Configuracion configuracion;    
     private int reproduccionesSesion;
 
     public Sistema() {
         modoEjecucion = ModoEjecucion.DESCONECTADO;
         baseDeDatos = BaseDeDatos.cargarBaseDeDatos("./baseDedatos/baseDeDatos.bd");
+        gestorEventos = new GestorEventos(baseDeDatos);
+        moduloMP3 = new ModuloMP3();
         configuracion = new Configuracion("./configuracion/configuracion.txt");
     }
 
@@ -28,6 +33,7 @@ public class Sistema {
 
         Usuario usuario = baseDeDatos.buscarUsuario(nombre);
         if (usuario == null) return Status.NOMBRE_INVALIDO;
+        if (usuario.getBloqueado()) return Status.USUARIO_BLOQUEADO;
         if (!Objects.equals(contrasena, usuario.getContrasena())) return Status.CONTRASENA_INVALIDA;
 
         modoEjecucion = ModoEjecucion.REGISTRADO;
@@ -139,6 +145,10 @@ public class Sistema {
         usuarioActual.eliminarAlbum(album);
     }
 
+    public Set<ListaReproduccion> obtenerListasReproduccion() {
+        return usuarioActual.getListasReproducion();
+    }
+
     public Status crearListaReproduccion(String nombre) {
         if (nombre.length() < 4) return Status.NOMBRE_INVALIDO;
 
@@ -164,18 +174,68 @@ public class Sistema {
         cancion.setEstado(estado);
     }
 
+    public List<Reporte> obtenerReportes() {
+        return baseDeDatos.obtenerReportes();
+    }
+
     public Status reportar(String descripcion, Cancion cancion) {
         if (descripcion.length() < 4) return Status.DESCRIPCION_INVALIDA;
+        if (cancion.getBloqueado()) return Status.CANCION_NO_REPORTABLE;
 
         Reporte reporte = new Reporte(descripcion, usuarioActual, cancion);
+        if (cancion.getEstado() == EstadoCancion.VALIDADA) {
+            cancion.setEstado(EstadoCancion.BLOQUEADA_TEMPORAL);
+        } else {
+            cancion.setEstado(EstadoCancion.BLOQUEADA_TEMPORAL_EXPLICITA);
+        }
         
         baseDeDatos.anadirReporte(reporte);
         return Status.OK;
     }
 
-    // public Status valorarReporte();
+    public void aceptarReporte(Reporte reporte) {
+        Usuario reportado = reporte.getCancionReportada().getAutor();
+        reportado.setBloqueado(true);
+        for (Cancion cancion : reportado.getCanciones()) {
+            cancion.setEstado(EstadoCancion.BOQUEADA_PERMANENTE);
+        }
+    }
+
+    public void rechazarReporte(Reporte reporte) {
+        Cancion cancion = reporte.getCancionReportada();
+        if (cancion.getEstado() == EstadoCancion.BLOQUEADA_TEMPORAL) {
+            cancion.setEstado(EstadoCancion.VALIDADA);
+        } else if (cancion.getEstado() == EstadoCancion.BLOQUEADA_TEMPORAL_EXPLICITA) {
+            cancion.setEstado(EstadoCancion.VALIDADA_EXPLICITA);
+        }
+        reporte.getReportador().setBloqueado(true);
+        gestorEventos.programarDesbloqueoUsuario(reporte.getReportador());
+    }
 
     // public Status pagarPremium();
 
-    // public Status modificarConfiguracion();
+    public void modificarMaxReproduccionesAnonimo(int maxReproduccionesAnonimo) {
+        configuracion.setMaxReproduccionesAnonimo(maxReproduccionesAnonimo);
+        configuracion.guardarConfiguracion();
+    }
+
+    public void modificarMaxReproduccionesRegistrado(int maxReproduccionesRegistrado) {
+        configuracion.setMaxReproduccionesRegistrado(maxReproduccionesRegistrado);
+        configuracion.guardarConfiguracion();
+    }
+
+    public void modificarCuotaPremium(float cuotaPremium) {
+        configuracion.setCuotaPremium(cuotaPremium);
+        configuracion.guardarConfiguracion();
+    }
+
+    public void modificarMinReproduccionesPremium(int minReproduccionesPremium) {
+        configuracion.setMinReproduccionesPremium(minReproduccionesPremium);
+        configuracion.guardarConfiguracion();
+    }
+
+    public void modificarCaracteresMinimos(int caracteresMinimos) {
+        configuracion.setCaracteresMinimos(caracteresMinimos);
+        configuracion.guardarConfiguracion();
+    }
 }
