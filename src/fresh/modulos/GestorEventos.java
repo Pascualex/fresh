@@ -66,7 +66,7 @@ public class GestorEventos implements Runnable, Serializable {
      * correctamente, o ERROR_CARGAR, en caso de que se haya producido una 
      * excepción en el guardado 
      */
-    public Status guargarInformacion() {
+    public Status guardarInformacion() {
         try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(ruta))) {
             stream.writeObject(this);
             stream.close();
@@ -164,7 +164,7 @@ public class GestorEventos implements Runnable, Serializable {
                 ultimoDiaComprobado = new GregorianCalendar();
             }
         } catch (InterruptedException e) {
-            guargarInformacion();
+            guardarInformacion();
         } 
     }
 
