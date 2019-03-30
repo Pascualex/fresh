@@ -34,7 +34,7 @@ public class Sistema {
         modoEjecucion = ModoEjecucion.DESCONECTADO;
         baseDeDatos = BaseDeDatos.cargarBaseDeDatos(rutaBaseDeDatos);
         gestorEventos = GestorEventos.cargarGestorEventos(baseDeDatos, rutaGestorEventos);
-        moduloMP3 = new ModuloMP3();
+        moduloMP3 = new ModuloMP3(baseDeDatos);
         configuracion = new Configuracion(rutaConfiguracion);
     }
 

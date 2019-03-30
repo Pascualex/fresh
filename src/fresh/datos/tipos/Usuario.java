@@ -108,6 +108,15 @@ public class Usuario {
 	public int getReproduccionesMensuales(){
 		return reproduccionesMensuales;
 	}
+	
+	/**
+	 * Actualiza las reproducciones mensuales del usuario.
+	 * @param reproduccionesMensuales Reproducciones mensuales del usuario
+	 */
+	public void setReproduccionesMensuales(int reproduccionesMensuales) {
+		this.reproduccionesMensuales = reproduccionesMensuales;
+	}
+	
 	/**
 	 * Devuelve la lista de notificaciones de un usuario
 	 * @return Lista de notificaciones del usuario
