@@ -59,9 +59,9 @@ public class BaseDeDatosTest {
         bd.anadirCancion(c2);
         bd.anadirCancion(c3);
 
-        l2.add(bd.buscarCanciones("nombre1").get(0));
-        l2.add(bd.buscarCanciones("nombre2").get(0));
-        l2.add(bd.buscarCanciones("nombre3").get(0));
+        l2.add(bd.buscarCanciones("nombre1", true).get(0));
+        l2.add(bd.buscarCanciones("nombre2", true).get(0));
+        l2.add(bd.buscarCanciones("nombre3", true).get(0));
 
         assertEquals(l1, l2);
     }
