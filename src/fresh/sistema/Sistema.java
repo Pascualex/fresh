@@ -38,7 +38,7 @@ public class Sistema {
     public Sistema() {
         modoEjecucion = ModoEjecucion.DESCONECTADO;
         baseDeDatos = BaseDeDatos.cargarBaseDeDatos(rutaBaseDeDatos);
-        moduloMP3 = new ModuloMP3(baseDeDatos);
+        moduloMP3 = new ModuloMP3();
         configuracion = new Configuracion(rutaConfiguracion);
         gestorEventos = GestorEventos.cargarGestorEventos(baseDeDatos, configuracion, rutaGestorEventos);
     }
@@ -148,10 +148,6 @@ public class Sistema {
 
     public void pausarCancion() {
         moduloMP3.pause();
-    }
-
-    public void pararCancion() {
-        moduloMP3.stop(); // No sé cómo está implementado esto - Alex
     }
 
     /**

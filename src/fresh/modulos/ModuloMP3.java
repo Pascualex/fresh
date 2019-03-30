@@ -30,11 +30,6 @@ public class ModuloMP3 implements Runnable {
     @SuppressWarnings("unused")
 	private final JFXPanel fxPanel = new JFXPanel();
     private ModuloMP3 sig = null;
-    private BaseDeDatos baseDeDatos;
-
-    public ModuloMP3(BaseDeDatos baseDeDatos) {
-    	this.baseDeDatos = baseDeDatos;
-    }
     
     /**
      * Añade una lista de canciones a la cola de reproducción.
@@ -93,7 +88,7 @@ public class ModuloMP3 implements Runnable {
         if (sig != null) {
             sig.siguiente();
         } else {
-            sig = new ModuloMP3(baseDeDatos);
+            sig = new ModuloMP3();
             mediaPlayer.stop();
             sig.anadirAColaReproduccion(colaReproduccion);
             sig.run();
