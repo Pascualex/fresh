@@ -13,6 +13,7 @@ import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
 import fresh.datos.tipos.*;
+import fresh.sistema.Configuracion;
 import fresh.Status;
 import fresh.datos.*;
 
@@ -25,6 +26,7 @@ public class GestorEventos implements Runnable, Serializable {
     private SortedSet<ParCancionFecha> cancionesAEliminar = new TreeSet<>();
     private SortedSet<ParUsuarioFecha> usuariosADesbloquear = new TreeSet<>();
     private BaseDeDatos baseDeDatos;
+    private Configuracion configuracion;
     private String ruta;
     static final long msDia = 86400000;
 
@@ -36,13 +38,13 @@ public class GestorEventos implements Runnable, Serializable {
      * @param ruta Ruta del gestor de eventos
      * @return Gestor de eventos con la información cargada
      */
-    public static GestorEventos cargarGestorEventos(BaseDeDatos baseDeDatos, String ruta) {
+    public static GestorEventos cargarGestorEventos(BaseDeDatos baseDeDatos, Configuracion configuracion, String ruta) {
         try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(ruta))) {
             GestorEventos gestorEventos = (GestorEventos) stream.readObject();
             stream.close();
             return gestorEventos;
         } catch (FileNotFoundException e) {
-            return new GestorEventos(baseDeDatos, ruta);
+            return new GestorEventos(baseDeDatos, configuracion, ruta);
         } catch (IOException e) {
             return null;
         } catch (ClassNotFoundException e) {
@@ -50,8 +52,9 @@ public class GestorEventos implements Runnable, Serializable {
         }
     }
 
-    private GestorEventos(BaseDeDatos baseDeDatos, String ruta) {
+    private GestorEventos(BaseDeDatos baseDeDatos, Configuracion configuracion, String ruta) {
         this.baseDeDatos = baseDeDatos;
+        this.configuracion = configuracion;
         this.ruta = ruta;
         ultimoDiaComprobado = new GregorianCalendar();
     }
@@ -122,10 +125,18 @@ public class GestorEventos implements Runnable, Serializable {
                 //-----------
                 //Operaciones
                 fecha_actual = new GregorianCalendar();
-                //Degradar a todos los usuarios (en caso de que sea necesario)
+                //Si es un mes nuevo...
                 if (fecha_actual.get(fecha_actual.MONTH) != 
                     ultimoDiaComprobado.get(ultimoDiaComprobado.MONTH)) {
+                    //Degrado a todos los usuarios
                     baseDeDatos.eliminarPremiumUsuarios();
+                    //Actualizo el premium y las reproducciones mensuales de los usuarios
+                    for (Usuario u : baseDeDatos.getUsuarios()) {
+                        if (u.getReproduccionesMensuales() >= configuracion.getMinReproduccionesPremium()) {
+                            u.setEsPremium(true);
+                        }
+                        u.setReproduccionesMensuales(0);
+                    }
                 }
 
                 //Eliminar todas las canciones necesarias

@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -121,13 +122,15 @@ public class BaseDeDatos implements Serializable {
     /**
      * Busca canciones en la base de datos a partir de su nombre.
      * @param nombre Nombre a partir del cual buscar
+     * @param explicito "true" si los resultados pueden ser de contenido explícito,
+     * "false" si no
      * @return Lista de canciones con las canciones cuyo nombre contiene el pasado
      * por argumento
      */
-    public List<Cancion> buscarCanciones(String nombre) {
+    public List<Cancion> buscarCanciones(String nombre, boolean explicito) {
         List<Cancion> lista = new ArrayList<>();
         for (Cancion cancion : canciones.values()) {
-            if (cancion.getNombre().contains(nombre)) {
+            if (cancion.getNombre().contains(nombre) && (explicito || (cancion.getEstado() != EstadoCancion.VALIDADA_EXPLICITA))) {
                 lista.add(cancion);
             }
         }
@@ -235,6 +238,10 @@ public class BaseDeDatos implements Serializable {
         } catch (IOException e) {
             return Status.ERROR_CARGAR;
         }
+    }
+
+    public Collection<Usuario> getUsuarios() {
+        return usuarios.values();
     }
 
     /**

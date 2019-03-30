@@ -38,9 +38,9 @@ public class Sistema {
     public Sistema() {
         modoEjecucion = ModoEjecucion.DESCONECTADO;
         baseDeDatos = BaseDeDatos.cargarBaseDeDatos(rutaBaseDeDatos);
-        gestorEventos = GestorEventos.cargarGestorEventos(baseDeDatos, rutaGestorEventos);
         moduloMP3 = new ModuloMP3(baseDeDatos);
         configuracion = new Configuracion(rutaConfiguracion);
+        gestorEventos = GestorEventos.cargarGestorEventos(baseDeDatos, configuracion, rutaGestorEventos);
     }
 
     /**
@@ -186,7 +186,7 @@ public class Sistema {
      * argumento.
      */
     public List<Cancion> buscarCanciones(String nombre) {
-        return baseDeDatos.buscarCanciones(nombre);
+        return baseDeDatos.buscarCanciones(nombre, usuarioActual.puedeContenidoExplicito());
     }
 
     /**
