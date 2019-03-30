@@ -3,6 +3,9 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Set;
+
+import fresh.Status;
+
 import java.util.HashSet;
 /**
  * 
@@ -29,7 +32,6 @@ public class Usuario {
 
 	/**
 	 * Constructor de la clase Usuario
-	 * 
 	 * @param nombre, nombre del Usuario
 	 * @param nombreAutor, nombre de autor del Usuario
 	 * @param contrasena, contraseña con la que se registra el Usuario
@@ -99,6 +101,13 @@ public class Usuario {
 	 */
 	public void setBloqueado(boolean bloqueado){
 		this.bloqueado = bloqueado;
+
+		if (bloqueado) {
+			for (Cancion cancion : canciones) {
+				cancion.setEstado(EstadoCancion.BOQUEADA_PERMANENTE);
+			}
+		}
+
 		return;
 	}
 	/**
@@ -149,8 +158,11 @@ public class Usuario {
 	 * Añade una lista de reproduccion al conjunto del usuario
 	 * @param listaReproduccion lista a añadir
 	 */
-	public void anadirListaReproduccion(ListaReproduccion listaReproduccion) {
+	public Status anadirListaReproduccion(ListaReproduccion listaReproduccion) {
+		if (listasReproduccion.contains(listaReproduccion)) return Status.LISTA_REPRODUCCION_REPETIDA;
+
 		listasReproduccion.add(listaReproduccion);
+		return Status.OK;
 	}
 	/**
 	 * Elimina una lista del conjunto del usuario
@@ -233,5 +245,6 @@ public class Usuario {
     	if (fechaNacimiento.after(fechaNacimientoMinima)) return false;
     	
     	return true;
-    }
+	}
+	
 }
