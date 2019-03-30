@@ -13,6 +13,7 @@ import java.util.Set;
 
 public class Sistema {
     private static final String rutaBaseDeDatos = "./baseDedatos/baseDeDatos.bd";
+    private static final String rutaGestorEventos = "./gestorEventos/gestorEventos";
     private static final String rutaConfiguracion = "./configuracion/configuracion.txt";
     private static final String rutaFicherosMP3 = "./canciones/";
 
@@ -32,7 +33,7 @@ public class Sistema {
     public Sistema() {
         modoEjecucion = ModoEjecucion.DESCONECTADO;
         baseDeDatos = BaseDeDatos.cargarBaseDeDatos(rutaBaseDeDatos);
-        gestorEventos = new GestorEventos(baseDeDatos);
+        gestorEventos = GestorEventos.cargarGestorEventos(baseDeDatos, rutaGestorEventos);
         moduloMP3 = new ModuloMP3();
         configuracion = new Configuracion(rutaConfiguracion);
     }
