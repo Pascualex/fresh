@@ -21,7 +21,7 @@ public class UsuarioTest {
 	ListaReproduccion lr = new ListaReproduccion("lista1");
 	Cancion c = new Cancion("Cancion1", 18, u1, 01);
 	Cancion c2 = new Cancion("Cancion2", 12, u1, 01);
-	Set<Cancion> s = new HashSet<>();
+	List<Cancion> s = new ArrayList<>();
 	Album a = new Album("album1", u1, 2019, s);
 	
 	@Test

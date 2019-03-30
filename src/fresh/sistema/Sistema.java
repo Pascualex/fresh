@@ -4,6 +4,11 @@ import fresh.datos.BaseDeDatos;
 import fresh.datos.tipos.*;
 import fresh.modulos.*;
 import fresh.Status;
+import es.uam.eps.padsof.telecard.FailedInternetConnectionException;
+import es.uam.eps.padsof.telecard.InvalidCardNumberException;
+import es.uam.eps.padsof.telecard.OrderRejectedException;
+import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
+
 import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -21,7 +26,7 @@ public class Sistema {
     private Usuario usuarioActual;
     private BaseDeDatos baseDeDatos;
     private GestorEventos gestorEventos;
-    private ModuloMP3 moduloMP3;    
+    private ModuloMP3 moduloMP3;
     private Configuracion configuracion;    
     private int reproduccionesSesion; // Falta controlar el número de reproducciones por sesión (si es anónimo)
                                       // También falta controlar las reproducciones mensuales (si está registrado)
@@ -455,7 +460,33 @@ public class Sistema {
         return Status.OK;
     }
 
-    // public Status pagarPremium();
+    /**
+     * Realiza la transacción a través del módulo externo de pagos.
+     * @param tarjeta Tarjeta con la que realiza el pago
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de usuario registrado.
+     * "YA_ES_PREMIUM" si el usuario actual ya es premium.
+     * "TARJETA_INVALIDA" si el módulo indica que la tarjeta es invalida.
+     * "FALLO_INTERNET" si el módulo notifica un problema en la conexión.
+     * "PAGO_RECHAZADO" si el módulo notifica que el pago ha sido rechazado.
+     * "OK" si no se da ninguna de las anteriores.
+     */
+    public Status pagarPremium(String tarjeta) {
+        if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
+
+        if (usuarioActual.getEsPremium()) return Status.YA_ES_PREMIUM;
+
+        try {
+            TeleChargeAndPaySystem.charge(tarjeta, "Pago premium", configuracion.getCuotaPremium());
+        } catch (InvalidCardNumberException e) {
+            return Status.TARJETA_INVALIDA;
+        } catch (FailedInternetConnectionException e) {
+            return Status.FALLO_INTERNET;
+        } catch (OrderRejectedException e) {
+            return Status.PAGO_RECHAZADO;
+        }
+        
+        return Status.OK;
+    }
 
     /**
      * Modifica el archivo de configuración, estableciendo unos nuevos
