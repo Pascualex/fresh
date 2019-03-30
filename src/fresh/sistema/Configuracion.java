@@ -10,6 +10,7 @@ public class Configuracion {
 
     private String nombreAdministrador;
     private String contrasenaAdministrador;
+    private int edadMinima;
     private int maxReproduccionesAnonimo;
     private int maxReproduccionesRegistrado;
     private float cuotaPremium;
@@ -22,6 +23,7 @@ public class Configuracion {
 
         nombreAdministrador = "admin";
         contrasenaAdministrador = "admin";
+        edadMinima = 14;
         maxReproduccionesAnonimo = 20;
         maxReproduccionesRegistrado = 100;
         cuotaPremium = 9.99f;
@@ -45,6 +47,14 @@ public class Configuracion {
 
     public void setContrasenaAdministrador(String contrasenaAdministrador) {
         this.contrasenaAdministrador = contrasenaAdministrador;
+    }
+
+    public int getEdadMinima() {
+        return edadMinima;
+    }
+
+    public void setEdadMinima(int edadMinima) {
+        this.edadMinima = edadMinima;
     }
 
     public int getMaxReproduccionesAnonimo() {
@@ -110,6 +120,12 @@ public class Configuracion {
             linea = buffer.readLine();
             if (linea == null) throw new IOException();
             palabras = linea.split(" ");
+            if (!Objects.equals(palabras[0], "EDAD_MINIMA")) throw new IOException();
+            edadMinima = Integer.parseInt(palabras[1]);
+
+            linea = buffer.readLine();
+            if (linea == null) throw new IOException();
+            palabras = linea.split(" ");
             if (!Objects.equals(palabras[0], "MAX_REPRODUCCIONES_ANONIMO")) throw new IOException();
             maxReproduccionesAnonimo = Integer.parseInt(palabras[1]);
 
@@ -158,6 +174,7 @@ public class Configuracion {
 
             buffer.write("NOMBRE_ADMINISTRADOR " + nombreAdministrador + "\n");
             buffer.write("CONTRASENA_ADMINISTRADOR " + contrasenaAdministrador + "\n");
+            buffer.write("EDAD_MINIMA " + edadMinima + "\n");
             buffer.write("MAX_REPRODUCCIONES_ANONIMO " + maxReproduccionesAnonimo + "\n");
             buffer.write("MAX_REPRODUCCIONES_REGISTRADO " + maxReproduccionesRegistrado + "\n");
             buffer.write("CUOTA_PREMIUM " + cuotaPremium + "\n");
