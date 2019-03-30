@@ -150,10 +150,10 @@ public class Sistema {
     }
 
     /**
-     * Busca autores en el sistema dado un nombre nombre.
+     * Busca autores en el sistema dado un nombre.
      * @param nombreAutor Nombre a partir del que se buscará
      * @return Lista con los usuarios cuyos nombres de autor contienen el pasado
-     * por argumento 
+     * como argumento.
      */
     public List<Usuario> buscarAutores(String nombreAutor) {
         return baseDeDatos.buscarUsuarios(nombreAutor);
@@ -163,8 +163,7 @@ public class Sistema {
      * Añade al usuario actual a la lista de seguidores del autor pasado por
      * argumento.
      * @param autor Autor que debe seguir el usuario a actual.
-     * @return "OPERACION_INACCESIBLE" si el sistema no tiene abierta una sesión
-     * de un usuario registrado.
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de usuario registrado.
      * "OK" en caso contrario.
      */
     public Status seguirAutor(Usuario autor) {
@@ -175,10 +174,27 @@ public class Sistema {
         return Status.OK;
     }
 
+    /**
+     * Busca canciones en el sistema dado un nombre.
+     * @param nombre Nombre a partir del que se buscará
+     * @return Lista con las canciones cuyos nombres contienen el pasado como 
+     * argumento.
+     */
     public List<Cancion> buscarCanciones(String nombre) {
         return baseDeDatos.buscarCanciones(nombre);
     }
 
+    /**
+     * Recibe los datos necesarios para subir una canción, comprueba que sean
+     * validos y añade la canción a la base de datos.
+     * @param nombre Nombre de la canción
+     * @param ruta Ruta del fichero MP3
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de usuario registrado.
+     * "NOMBRE_INVALIDO" si este no tiene el número mínimo de caracteres.
+     * "FICHERO_INVALIDO" si el fichero no existe o no es válido.
+     * "CANCION_REPETIDA" si esta está ya presente en la base de datos.
+     * "OK" si no se da ninguna de las anteriores.
+     */
     public Status subirCancion(String nombre, String ruta) {
         if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
 
@@ -199,11 +215,23 @@ public class Sistema {
         return status;
     }
 
+    /**
+     * Elimina la canción indicada de la base de datos
+     * @param cancion Canción a eliminar
+     */
     public void eliminarCancion(Cancion cancion) {        
         baseDeDatos.eliminarCancion(cancion);
         usuarioActual.eliminarCancion(cancion);
     }
 
+    /**
+     * Actualiza el fichero MP3 de la canción indicada
+     * @param cancion Cancion a modificar
+     * @param ruta Ruta del nuevo fichero MP3
+     * @return "NO_MODIFICABLE" si la canción no se puede modificar.
+     * "FICHERO_INVALIDO" si el nuevo fichero MP3 no existe o no es válido.
+     * "OK" si no se da ninguna de las anteriores
+     */
     public Status actualizarCancion(Cancion cancion, String ruta) {
         if (!cancion.getModificable()) return Status.CANCION_NO_MODIFICABLE;
 
@@ -215,15 +243,33 @@ public class Sistema {
         return Status.OK;
     }
 
+    /**
+     * Busca álbumes en el sistema dado un nombre.
+     * @param nombre Nombre a partir del que se buscará
+     * @return Lista con los álbumes cuyos nombres contienen el pasado como
+     * argumento.
+     */
     public List<Album> buscarAlbumes(String nombre) {
         return baseDeDatos.buscarAlbumes(nombre);
     }
 
-    public Status crearAlbum(String nombre, int ano, Cancion[] canciones) {
+    /**
+     * Recibe los datos necesarios para crear un álbum, comprueba que son 
+     * válidos y lo añade a la base de datos.
+     * @param nombre Nombre del álbum
+     * @param ano Año de publicación del álbum
+     * @param canciones Lista de canciones que componen el álbum
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de usuario registrado.
+     * "NOMBRE_INVALIDO" si este no tiene el número mínimo de caracteres.
+     * "ALBUM_VACIO" si el lista de canciones está vacía.
+     * "ALBUM_REPETIDO" si el album ya está presente en la base de datos.
+     * "OK" si no se da ninguna de las anteriores. 
+     */
+    public Status crearAlbum(String nombre, int ano, List<Cancion> canciones) {
         if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
 
         if (nombre.length() < configuracion.getCaracteresMinimos()) return Status.NOMBRE_INVALIDO;
-        if (canciones.length == 0) return Status.ALBUM_VACIO;
+        if (canciones.size() == 0) return Status.ALBUM_VACIO;
 
         Album album = new Album(nombre, usuarioActual, ano, canciones);
 
@@ -233,50 +279,129 @@ public class Sistema {
         return Status.OK;
     }
 
+    /**
+     * Eliminar el álbum indicado de la base de datos y del usuario actual.
+     * @param album Álbum a eliminar
+     */
     public void eliminarAlbum(Album album) {
         baseDeDatos.eliminarAlbum(album);
         usuarioActual.eliminarAlbum(album);
     }
 
+    /**
+     * Devuelve las listas de reproducción del usuario actual.
+     * @return Listas de reproducción del usuario actual.
+     */
     public Set<ListaReproduccion> obtenerListasReproduccion() {
         return usuarioActual.getListasReproducion();
     }
 
+    /**
+     * Recibe el nombre de una nueva lista, comprueba que sea válido y la añade
+     * al usuario actual.
+     * @param nombre Nombre de la lista de reproducción
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de usuario registrado.
+     * "NOMBRE_INVALIDO" si este no tiene el número mínimo de caracteres.
+     * "LISTA_REPRODUCCION_REPETIDA" si la lista de reproducción ya está 
+     * presente en el usuario actual.
+     * "OK" si no se da ninguna de las anteriores.
+     */
     public Status crearListaReproduccion(String nombre) {
+        if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
+
         if (nombre.length() < configuracion.getCaracteresMinimos()) return Status.NOMBRE_INVALIDO;
 
         ListaReproduccion listaReproduccion = new ListaReproduccion(nombre);
+        
+        return usuarioActual.anadirListaReproduccion(listaReproduccion);
+    }
 
-        usuarioActual.anadirListaReproduccion(listaReproduccion);
+    /**
+     * Añade un nuevo elemento reproducible a la lista de reproducción indicada.
+     * @param listaReproduccion Lista de reproducción a modificar
+     * @param elemento Elemento reproducible a añadir a la lista
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de usuario registrado.
+     * "OK" en caso contrario.
+     */ 
+    public Status anadirAListaReproduccion(ListaReproduccion listaReproduccion, ElementoReproducible elemento) {
+        if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
+        
+        listaReproduccion.anadirElemento(elemento);
+
         return Status.OK;
     }
 
-    public void anadirAListaReproduccion(ListaReproduccion listaReproduccion, ElementoReproducible elemento) {
-        listaReproduccion.anadirElemento(elemento);
-    }
+    /**
+     * Elimina un elemento reproducible de la lista de reproducción indicada.
+     * @param listaReproduccion Lista de reproducción a modificar
+     * @param elemento Elemento reproducible a eleminar de la lista
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de usuario registrado.
+     * "OK" en caso contrario.
+     */
+    public Status eliminarDeListaReproduccion(ListaReproduccion listaReproduccion, ElementoReproducible elemento) {
+        if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
 
-    public void eliminarDeListaReproduccion(ListaReproduccion listaReproduccion, ElementoReproducible elemento) {
         listaReproduccion.eliminarElemento(elemento);
+
+        return Status.OK;
     }
 
-    public void eliminarListaReproduccion(ListaReproduccion listaReproduccion) {
+    /**
+     * Elimina una lista de reproducción del usuario actual.
+     * @param listaReproduccion Lista de reproducción a eliminar
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de usuario registrado.
+     * "OK" en caso contrario.
+     */
+    public Status eliminarListaReproduccion(ListaReproduccion listaReproduccion) {
+        if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
+
         usuarioActual.eliminarListaReproduccion(listaReproduccion);
+
+        return Status.OK;
     }
 
-    public void cambiarEstadoCancion(Cancion cancion, EstadoCancion estado) {
+    /**
+     * Modifica el estado de la canción indicada, tomando las medidas
+     * correspondientes a ese cambio.
+     * @param cancion Canción cuyo estado se ha de modificar
+     * @param estado Nuevo estado de la canción
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de administrador.
+     * "OK" en caso contrario.
+     */
+    public Status cambiarEstadoCancion(Cancion cancion, EstadoCancion estado) {
+        if (modoEjecucion != ModoEjecucion.ADMINISTRADOR) return Status.OPERACION_INACCESIBLE;
+
         cancion.setEstado(estado);
         gestorEventos.cancelarEliminacionCancion(cancion);
 
         if (estado == EstadoCancion.RECHAZADA_REVISABLE) {
             gestorEventos.programarEliminacionCancion(cancion);
         }
+
+        return Status.OK;
     }
 
+    /**
+     * Devuelve la lista con todos los reportes pendientes de valorar.
+     * @return Lista con todos los reportes pendientes de valorar.
+     */
     public List<Reporte> obtenerReportes() {
         return baseDeDatos.obtenerReportes();
     }
 
+    /**
+     * Recibe la información necesaria para generar un reporte, comprueba que es
+     * válida y lo añade a la base de datos.
+     * @param descripcion Descripción del motivo del reporte
+     * @param cancion Canción reportada
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de usuario registrado.
+     * "DESCRIPCION_INVALIDA" si esta no tiene los caracteres mínimos.
+     * "CANCION_NO_REPORTABLE" si la canción ya está bloqueada.
+     * "OK" si no se da ninguna de las anteriores.
+     */
     public Status reportar(String descripcion, Cancion cancion) {
+        if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
+
         if (descripcion.length() < configuracion.getCaracteresMinimos()) return Status.DESCRIPCION_INVALIDA;
         if (cancion.getBloqueado()) return Status.CANCION_NO_REPORTABLE;
 
@@ -291,28 +416,60 @@ public class Sistema {
         return Status.OK;
     }
 
-    public void aceptarReporte(Reporte reporte) {
+    /**
+     * Toma las medidas correspondientes a aceptar un reporte, bloqueando al
+     * autor de la canción reportada, así como a todas sus canciones.
+     * @param reporte Reporte a aceptar
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de administrador.
+     * "OK" en caso contrario
+     */
+    public Status aceptarReporte(Reporte reporte) {
+        if (modoEjecucion != ModoEjecucion.ADMINISTRADOR) return Status.OPERACION_INACCESIBLE;
+
         Usuario reportado = reporte.getCancionReportada().getAutor();
         reportado.setBloqueado(true);
-        for (Cancion cancion : reportado.getCanciones()) {
-            cancion.setEstado(EstadoCancion.BOQUEADA_PERMANENTE);
-        }
+
+        return Status.OK;
     }
 
-    public void rechazarReporte(Reporte reporte) {
+    /**
+     * Toma las medidas correspondientes a rechazar un reporte, bloqueando al
+     * autor del reporte durante un mes.
+     * @param reporte Reporte a rechazar
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de administrador.
+     * "OK" en caso contrario
+     */
+    public Status rechazarReporte(Reporte reporte) {
+        if (modoEjecucion != ModoEjecucion.ADMINISTRADOR) return Status.OPERACION_INACCESIBLE;
+
         Cancion cancion = reporte.getCancionReportada();
         if (cancion.getEstado() == EstadoCancion.BLOQUEADA_TEMPORAL) {
             cancion.setEstado(EstadoCancion.VALIDADA);
         } else if (cancion.getEstado() == EstadoCancion.BLOQUEADA_TEMPORAL_EXPLICITA) {
             cancion.setEstado(EstadoCancion.VALIDADA_EXPLICITA);
         }
+
         reporte.getReportador().setBloqueado(true);
         gestorEventos.programarDesbloqueoUsuario(reporte.getReportador());
+
+        return Status.OK;
     }
 
     // public Status pagarPremium();
 
+    /**
+     * Modifica el archivo de configuración, estableciendo unos nuevos
+     * credenciales para iniciar sesión como administrador.
+     * @param nombre Nuevo nombre del administrador
+     * @param contrasena Nueva contraseña del administrador
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de administrador.
+     * "NOMBRE_INVALIDO" si este no tiene el número mínimo de caracteres.
+     * "CONTRASENA_INVALIDA" si esta no tiene el número mínimo de caracteres.
+     * "OK" si no se da ninguna de las anteriores.
+     */
     public Status modificarCredencialesAdministrador(String nombre, String contrasena) {
+        if (modoEjecucion != ModoEjecucion.ADMINISTRADOR) return Status.OPERACION_INACCESIBLE;
+
         if (nombre.length() < configuracion.getCaracteresMinimos()) return Status.NOMBRE_INVALIDO;
         if (contrasena.length() < configuracion.getCaracteresMinimos()) return Status.CONTRASENA_INVALIDA;
 
@@ -322,7 +479,17 @@ public class Sistema {
         return Status.OK;
     }
 
+    /**
+     * Modifica el archivo de configuración, estableciendo un nuevo límite
+     * de reproducciones máximas por sesión para un usuario anónimo.
+     * @param maxReproduccionesAnonimo Nuevo límite
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de administrador.
+     * "CONFIGURACION_INVALIDA" si el nuevo límite es menor o igual a 0.
+     * "OK" si no se da ninguna de las anteriores.
+     */
     public Status modificarMaxReproduccionesAnonimo(int maxReproduccionesAnonimo) {
+        if (modoEjecucion != ModoEjecucion.ADMINISTRADOR) return Status.OPERACION_INACCESIBLE;
+
         if (maxReproduccionesAnonimo <= 0) return Status.CONFIGURACION_INVALIDA;
 
         configuracion.setMaxReproduccionesAnonimo(maxReproduccionesAnonimo);
@@ -331,7 +498,17 @@ public class Sistema {
         return Status.OK;
     }
 
+    /**
+     * Modifica el archivo de configuración, estableciendo un nuevo límite
+     * de reproducciones mensuales máximas para un usuario registrado.
+     * @param maxReproduccionesRegistrado Nuevo límite
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de administrador.
+     * "CONFIGURACION_INVALIDA" si el nuevo límite es menor o igual a 0.
+     * "OK" si no se da ninguna de las anteriores.
+     */
     public Status modificarMaxReproduccionesRegistrado(int maxReproduccionesRegistrado) {
+        if (modoEjecucion != ModoEjecucion.ADMINISTRADOR) return Status.OPERACION_INACCESIBLE;
+
         if (maxReproduccionesRegistrado <= 0) return Status.CONFIGURACION_INVALIDA;
 
         configuracion.setMaxReproduccionesRegistrado(maxReproduccionesRegistrado);
@@ -340,7 +517,17 @@ public class Sistema {
         return Status.OK;
     }
 
+    /**
+     * Modifica el archivo de configuración, estableciendo una nueva cuota
+     * mensual para el servicio premium.
+     * @param cuotaPremium Nueva cuota mensual
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de administrador.
+     * "CONFIGURACION_INVALIDA" si la nueva cuota mensual es menor o igual a 0.
+     * "OK" si no se da ninguna de las anteriores.
+     */
     public Status modificarCuotaPremium(float cuotaPremium) {
+        if (modoEjecucion != ModoEjecucion.ADMINISTRADOR) return Status.OPERACION_INACCESIBLE;
+
         if (cuotaPremium <= 0) return Status.CONFIGURACION_INVALIDA;
 
         configuracion.setCuotaPremium(cuotaPremium);
@@ -349,7 +536,18 @@ public class Sistema {
         return Status.OK;
     }
 
+    /**
+     * Modifica el archivo de configuración, estableciendo un nuevo límite
+     * de reproducciones mensuales mínimas, en las canciones propias, para
+     * recibir gratuitamente el servicio premium.
+     * @param minReproduccionesPremium Nuevo límite
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de administrador.
+     * "CONFIGURACION_INVALIDA" si el nuevo límite es menor o igual a 0.
+     * "OK" si no se da ninguna de las anteriores.
+     */
     public Status modificarMinReproduccionesPremium(int minReproduccionesPremium) {
+        if (modoEjecucion != ModoEjecucion.ADMINISTRADOR) return Status.OPERACION_INACCESIBLE;
+
         if (minReproduccionesPremium <= 0) return Status.CONFIGURACION_INVALIDA;
 
         configuracion.setMinReproduccionesPremium(minReproduccionesPremium);
@@ -358,7 +556,17 @@ public class Sistema {
         return Status.OK;
     }
 
+    /**
+     * Modifica el archivo de configuración, estableciendo un nuevo límite
+     * de caracteres mínimos que deben tener los campos de texto.
+     * @param caracteresMinimos Nuevo límite
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de administrador.
+     * "CONFIGURACION_INVALIDA" si el nuevo límite es menor o igual a 0.
+     * "OK" si no se da ninguna de las anteriores.
+     */
     public Status modificarCaracteresMinimos(int caracteresMinimos) {
+        if (modoEjecucion != ModoEjecucion.ADMINISTRADOR) return Status.OPERACION_INACCESIBLE;
+
         if (caracteresMinimos <= 0) return Status.CONFIGURACION_INVALIDA;
 
         configuracion.setCaracteresMinimos(caracteresMinimos);

@@ -19,7 +19,7 @@ public class Album extends ElementoReproducible {
      * @param Autor Usuario autor del álbum
      * @param ano Año de publicación del álbum
      */
-    public Album(String nombre, Usuario autor, int ano, Cancion[] canciones) {
+    public Album(String nombre, Usuario autor, int ano, List<Cancion> canciones) {
         super(nombre, 0);
         this.autor = autor;
         this.ano = ano;
