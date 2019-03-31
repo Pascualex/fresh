@@ -1,6 +1,8 @@
 package fresh.modulos;
 
 import fresh.datos.tipos.*;
+import fresh.sistema.Configuracion;
+import fresh.sistema.ModoEjecucion;
 import fresh.datos.*;
 import java.io.File;
 import java.io.IOException;
@@ -22,15 +24,22 @@ import javafx.application.Platform;
 
 /**
  * <p>Esta clase permite trabajar con reproductores MP3.</p>
- * @author Víctor Yrazusta (victor.yrazusta@estudiante.uam.es)
  */
 public class ModuloMP3 implements Runnable {
+    private Configuracion configuracion;
+    private Usuario usuarioActual;
     private MediaPlayer mediaPlayer = null;
     private List<Cancion> colaReproduccion = new ArrayList<>();
     @SuppressWarnings("unused")
 	private final JFXPanel fxPanel = new JFXPanel();
     private ModuloMP3 sig = null;
+    private ModoEjecucion modoEjecucion;
+    private int reproduccionesSesion;
     
+    public ModuloMP3(Configuracion configuracion) {
+        this.configuracion = configuracion;
+    }
+
     /**
      * Añade una lista de canciones a la cola de reproducción.
      * @param canciones Lista de canciones a añadir a la cola de reproducción
@@ -48,7 +57,18 @@ public class ModuloMP3 implements Runnable {
      * directamente, sino en un hilo de ejecución propio.
      */
     public void run() {
-        while(colaReproduccion.isEmpty());
+        while (colaReproduccion.isEmpty());
+
+        if (modoEjecucion == ModoEjecucion.REGISTRADO) {
+            int reproduccionesMensuales = usuarioActual.getReproduccionesMensuales();
+            if (!usuarioActual.getPremium()) {
+                if (reproduccionesMensuales >= configuracion.getMaxReproduccionesRegistrado()) return;
+            }
+            usuarioActual.setReproduccionesMensuales(reproduccionesMensuales+1);
+        } else if (modoEjecucion == ModoEjecucion.ANONIMO) {
+            if (reproduccionesSesion >= configuracion.getMaxReproduccionesAnonimo()) return;
+            reproduccionesSesion++;
+        }
 
         Cancion cancion = colaReproduccion.get(0);
         colaReproduccion.remove(0);
@@ -88,7 +108,13 @@ public class ModuloMP3 implements Runnable {
         if (sig != null) {
             sig.siguiente();
         } else {
-            sig = new ModuloMP3();
+            sig = new ModuloMP3(configuracion);
+            if (modoEjecucion == ModoEjecucion.REGISTRADO) {
+                sig.nuevaSesionRegistrado(usuarioActual);
+            } else if (modoEjecucion == ModoEjecucion.ANONIMO) {
+                sig.nuevaSesionAnonimo(reproduccionesSesion);
+            }
+
             mediaPlayer.stop();
             sig.anadirAColaReproduccion(colaReproduccion);
             sig.run();
@@ -150,5 +176,34 @@ public class ModuloMP3 implements Runnable {
     public synchronized void exit() {
         if (sig != null) sig.exit();
         Platform.exit();
+    }
+
+    /**
+     * Establece el modo de ejecución de usuario anónimo y reinicia las
+     * reproducciones de la sesión.
+     */
+    public void nuevaSesionAnonimo() {
+        modoEjecucion = ModoEjecucion.ANONIMO;
+        reproduccionesSesion = 0;
+    }
+
+    /**
+     * Establece el modo de ejecución de usuario anónimo y establece las
+     * reproducciones actuales de la sesión.
+     * @param reproduccionesSesion Reproducciones actuales de la sesión
+     */
+    public void nuevaSesionAnonimo(int reproduccionesSesion) {
+        modoEjecucion = ModoEjecucion.ANONIMO;
+        this.reproduccionesSesion = reproduccionesSesion;
+    }
+
+    /**
+     * Establece el modo de ejecución de usuario registrado y actualiza al
+     * usuario actual
+     * @param usuarioActual Nuevo usuario actual
+     */
+    public void nuevaSesionRegistrado(Usuario usuarioActual) {
+        modoEjecucion = ModoEjecucion.REGISTRADO;
+        this.usuarioActual = usuarioActual;
     }
 }

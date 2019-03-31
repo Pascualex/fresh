@@ -19,7 +19,6 @@ import fresh.datos.*;
 
 /**
  * Gestiona los eventos del sistema, realizando operaciones en la base de datos.
- * @author Víctor Yrazusta (victor.yrazusta@estudiante.uam.es)
  */
 public class GestorEventos implements Runnable, Serializable {
     private GregorianCalendar ultimoDiaComprobado;
@@ -133,7 +132,7 @@ public class GestorEventos implements Runnable, Serializable {
                     //Actualizo el premium y las reproducciones mensuales de los usuarios
                     for (Usuario u : baseDeDatos.getUsuarios()) {
                         if (u.getReproduccionesMensuales() >= configuracion.getMinReproduccionesPremium()) {
-                            u.setEsPremium(true);
+                            u.setPremium(true);
                         }
                         u.setReproduccionesMensuales(0);
                     }

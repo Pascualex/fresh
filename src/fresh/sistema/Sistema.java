@@ -16,6 +16,11 @@ import java.util.Objects;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * <p>Esta es la clase principal de la funcionalidad de la aplicación. Permite
+ *    interactuar con el sistema y llevar a cabo todas las acciones
+ *    necesarias para su uso.</p>
+ */
 public class Sistema {
     private static final String rutaBaseDeDatos = "./baseDedatos/baseDeDatos.bd";
     private static final String rutaGestorEventos = "./gestorEventos/gestorEventos";
@@ -27,9 +32,7 @@ public class Sistema {
     private BaseDeDatos baseDeDatos;
     private GestorEventos gestorEventos;
     private ModuloMP3 moduloMP3;
-    private Configuracion configuracion;    
-    private int reproduccionesSesion; // Falta controlar el número de reproducciones por sesión (si es anónimo)
-                                      // También falta controlar las reproducciones mensuales (si está registrado)
+    private Configuracion configuracion;
 
     /**
      * Crea el sistema. Sus características vienen definidas en constantes y en
@@ -37,9 +40,9 @@ public class Sistema {
      */
     public Sistema() {
         modoEjecucion = ModoEjecucion.DESCONECTADO;
-        baseDeDatos = BaseDeDatos.cargarBaseDeDatos(rutaBaseDeDatos);
-        moduloMP3 = new ModuloMP3();
+        baseDeDatos = BaseDeDatos.cargarBaseDeDatos(rutaBaseDeDatos);        
         configuracion = new Configuracion(rutaConfiguracion);
+        moduloMP3 = new ModuloMP3(configuracion);
         gestorEventos = GestorEventos.cargarGestorEventos(baseDeDatos, configuracion, rutaGestorEventos);
     }
 
@@ -74,6 +77,7 @@ public class Sistema {
 
         modoEjecucion = ModoEjecucion.REGISTRADO;
         usuarioActual = usuario;
+        moduloMP3.nuevaSesionRegistrado(usuarioActual);
         
         return Status.OK;
     }
@@ -87,7 +91,7 @@ public class Sistema {
         if (modoEjecucion != ModoEjecucion.DESCONECTADO) return Status.OPERACION_INACCESIBLE;
 
         modoEjecucion = ModoEjecucion.ANONIMO;
-        reproduccionesSesion = 0;
+        moduloMP3.nuevaSesionAnonimo();
 
         return Status.OK;
     }
@@ -182,7 +186,7 @@ public class Sistema {
      * argumento.
      */
     public List<Cancion> buscarCanciones(String nombre) {
-        return baseDeDatos.buscarCanciones(nombre, usuarioActual.puedeContenidoExplicito());
+        return baseDeDatos.buscarCanciones(nombre, usuarioActual.getPremium() && usuarioActual.puedeContenidoExplicito());
     }
 
     /**
@@ -240,6 +244,7 @@ public class Sistema {
         if (!moduloMP3.validar(fichero)) return Status.FICHERO_INVALIDO;
 
         fichero.renameTo(new File(rutaFicherosMP3 + cancion.getId()));
+        cancion.setEstado(EstadoCancion.PENDIENTE_VALIDACION);
 
         return Status.OK;
     }
@@ -469,7 +474,7 @@ public class Sistema {
     public Status pagarPremium(String tarjeta) {
         if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
 
-        if (usuarioActual.getEsPremium()) return Status.YA_ES_PREMIUM;
+        if (usuarioActual.getPremium()) return Status.YA_ES_PREMIUM;
 
         try {
             TeleChargeAndPaySystem.charge(tarjeta, "Pago premium", configuracion.getCuotaPremium());

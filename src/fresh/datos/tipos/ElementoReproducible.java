@@ -20,14 +20,6 @@ public abstract class ElementoReproducible {
         this.duracion = duracion;
     }
 
-    /** 
-     * Establece la duración en segundos del elemento reproducible.
-     * @param duracion Duración en segundos del elemento reproducible
-     */
-    protected void setDuracion(long duracion) {
-        this.duracion = duracion;
-    }
-
     /**
      * Devuelve el nombre del elemento reproducible.
      * @return Nombre del elemento reproducible
@@ -45,14 +37,22 @@ public abstract class ElementoReproducible {
     }
 
     /** 
+     * Establece la duración en segundos del elemento reproducible.
+     * @param duracion Duración en segundos del elemento reproducible
+     */
+    protected void setDuracion(long duracion) {
+        this.duracion = duracion;
+    }
+
+    /** 
      * Devuelve el estado de bloqueo del elemento reproducible.
      * @return Estado de bloqueo del elemento reproducible
      */
     public abstract boolean getBloqueado();
 
     /**
-     * Devuelve una lista con las canciones que contiene el elemento reproducible.
-     * @return Lista de canciones del elemento reproducible
+     * Devuelve una lista con las canciones del elemento reproducible.
+     * @return Lista con las canciones del elemento reproducible
      */
     public abstract List<Cancion> getCanciones();
 }

@@ -31,7 +31,7 @@ public class Cancion extends ElementoReproducible {
 
     /**
      * Devuelve el usuario autor de la canción.
-     * @return Usuario autor de la canción
+     * @return Usuario autor de la canción.
      */
     public Usuario getAutor() {
         return autor;
@@ -39,31 +39,18 @@ public class Cancion extends ElementoReproducible {
 
     /**
      * Devuelve el identificador único de la canción.
-     * @return Identificador único de la canción
+     * @return Identificador único de la canción.
      */
     public long getId() {
         return id;
     }
 
     /** 
-     * Devuelve el número de reproducciones mensuales de la canción.
+     * Devuelve las reproducciones mensuales de la canción.
      * @return Reproducciones mensuales de la canción
      */
     public int getReproduccionesMensuales() {
         return reproduccionesMensuales;
-    }
-
-    /** 
-     * Devuelve el estado de bloqueo de la canción.
-     * @return Estado de bloqueo de la canción
-     */
-    @Override
-    public boolean getBloqueado() {
-        return estado != EstadoCancion.VALIDADA && estado != EstadoCancion.VALIDADA_EXPLICITA;
-    }
-
-    public boolean getModificable() {
-        return estado == EstadoCancion.PENDIENTE_VALIDACION || estado == EstadoCancion.RECHAZADA_REVISABLE;
     }
 
     /**
@@ -74,31 +61,59 @@ public class Cancion extends ElementoReproducible {
         this.reproduccionesMensuales = reproduccionesMensuales;
     }
 
+    /** 
+     * Indica el estado de bloqueo de la canción.
+     * @return "true" si no es "VALIDADA" ni "VALIDADA_EXPLICITA".
+     * "false" en caso contrario.
+     */
+    @Override
+    public boolean getBloqueado() {
+        return estado != EstadoCancion.VALIDADA && estado != EstadoCancion.VALIDADA_EXPLICITA;
+    }
+
     /**
-     * Devuelve una lista con la canción.
+     * Indica si el fichero asociado a la canción puede ser modificado.
+     * @return "true" si es "PENDIENTE_VALIDACION" o "RECHAZADA_REVISABLE".
+     * "false" en caso contrario.
+     */
+    public boolean getModificable() {
+        return estado == EstadoCancion.PENDIENTE_VALIDACION || estado == EstadoCancion.RECHAZADA_REVISABLE;
+    }    
+
+    /**
+     * Devuelve el estado de la canción.
+     * @return Estado de la canción.
+     */
+    public EstadoCancion getEstado() {
+        return estado;
+    }
+
+    /**
+     * Establece el estado de la canción.
+     * @param estado Estado de la canción.
+     */
+    public void setEstado(EstadoCancion estado) {
+        this.estado = estado;
+    }
+
+    /**
+     * Devuelve una lista con la canción si no está bloqueada y una lista vacía
+     * si lo está.
      * @return Lista de canciones con la canción
      */
     @Override
     public List<Cancion> getCanciones() {
         List<Cancion> canciones = new ArrayList<>();
-        canciones.add(this);
+        if (!getBloqueado()) canciones.add(this);
         return canciones;
-    }
-
-    public EstadoCancion getEstado() {
-        return estado;
-    }
-
-    public void setEstado(EstadoCancion estado) {
-        this.estado = estado;
     }
 
     /**
      * Compara el objeto pasado como argumento con la instancia de la canción.
      * @param object Objeto a comparar con la instancia de la canción
      * @return "true" si el objeto pasado como argumento es una instancia de la
-     *         clase Cancion y su id es la misma que la de esta instancia.
-     *         "false" en caso contrario
+     * clase Cancion y su nombre es la mismo que el de esta instancia.
+     * "false" en caso contrario.
      */
     @Override
     public boolean equals(Object object) {

@@ -18,6 +18,7 @@ public class Album extends ElementoReproducible {
      * @param nombre Nombre del álbum
      * @param Autor Usuario autor del álbum
      * @param ano Año de publicación del álbum
+     * @param canciones Lista de canciones que componen el álbum
      */
     public Album(String nombre, Usuario autor, int ano, List<Cancion> canciones) {
         super(nombre, 0);
@@ -34,7 +35,7 @@ public class Album extends ElementoReproducible {
 
     /** 
      * Devuelve el usuario autor del álbum.
-     * @return Usuario autor del álbum
+     * @return Usuario autor del álbum.
      */
     public Usuario getAutor() {
         return autor;
@@ -42,7 +43,7 @@ public class Album extends ElementoReproducible {
 
     /**
      * Devuelve el año de publicación del álbum.
-     * @return Año de publicación del álbum
+     * @return Año de publicación del álbum.
      */
     public int getAno() {
         return ano;
@@ -52,7 +53,7 @@ public class Album extends ElementoReproducible {
      * Devuelve el estado de bloqueo del álbum. Basado en el estado de bloqueo
      * de las canciones que lo componen.
      * @return "true" si alguna de sus canciones está bloqueada. "false" en caso
-     * contrario
+     * contrario.
      */
     @Override
     public boolean getBloqueado() {
@@ -63,8 +64,8 @@ public class Album extends ElementoReproducible {
     }
 
     /**
-     * Devuelve una lista de canciones con todas las canciones del álbum.
-     * @return Lista de canciones con todas las canciones del álbum
+     * Devuelve una lista con todas las canciones del álbum.
+     * @return Lista con todas las canciones del álbum.
      */
     @Override
     public List<Cancion> getCanciones() {
@@ -72,7 +73,7 @@ public class Album extends ElementoReproducible {
     }
 
     /**
-     * Elimina una canción del album
+     * Elimina una canción del album.
      * @param cancion Canción a eliminar
      */
     public void eliminarCancion(Cancion cancion) {

@@ -6,12 +6,8 @@ import java.util.GregorianCalendar;
 import java.util.*;
 
 /**
- * 
  * 	Clase que prueba las funciones de Usuario
- * 
- * 	@author Ana Roa (ana.roa@estudiante.uam.es)
  */
-
 public class UsuarioTest {
 	
 	Calendar fecha = new GregorianCalendar(1999, 1, 3);
@@ -149,5 +145,4 @@ public class UsuarioTest {
 		u2.eliminarSeguidor(uprueba);
 		assertEquals(u1.getSeguidores(), u2.getSeguidores());
 	}
-	
 }

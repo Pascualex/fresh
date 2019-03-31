@@ -1,9 +1,7 @@
 package fresh.datos.tipos;
 
 /**
- * Permite trabajar con notificaciones relacionadas con una canción y un autor
- * en el sistema.
- * @author Víctor Yrazusta (victor.yrazusta@estudiante.uam.es)
+ * Permite trabajar con notificaciones relacionadas con una canción y un autor.
  */
 public class NotificacionCancionAutor extends NotificacionCancion {
     private Usuario autor;

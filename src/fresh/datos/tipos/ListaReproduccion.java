@@ -19,10 +19,9 @@ public class ListaReproduccion extends ElementoReproducible {
     }
 
     /**
-     * Añade a la lista de reproducción el elemento pasado por argumento, si no 
-     * está ya presente, e incrementa la duración de la lista.
+     * Añade a la lista de reproducción el elemento pasado por argumento e 
+     * incrementa la duración de esta, si el elemento no está ya presente.
      * @param elemento Elemento reproducible a añadir a la lista
-     * @return Status notificando posibles problemas en la ejecución.
      */
     public void anadirElemento(ElementoReproducible elemento) {
         if (elementos.contains(elemento)) return;
@@ -32,8 +31,8 @@ public class ListaReproduccion extends ElementoReproducible {
     }
 
     /**
-     * Elimina de la lista de reproducción el elemento pasado por argumento, si 
-     * está presente, y decrementa la duración de la lista
+     * Elimina de la lista de reproducción el elemento pasado por argumento y 
+     * decrementa la duración de la lista, si el elemento está presente.
      * @param elemento Elemento reproducible a eliminar de la lista
      */
     public void eliminarElemento(ElementoReproducible elemento) {
@@ -47,7 +46,7 @@ public class ListaReproduccion extends ElementoReproducible {
      * Devuelve el estado de bloqueo de la lista de reproducción. Basado en el 
      * estado de bloqueo de los elementos que la componen.
      * @return "true" si alguno de sus elementos reproducibles está bloqueado. 
-     * "false" en caso contrario
+     * "false" en caso contrario.
      */
     @Override
     public boolean getBloqueado() {
@@ -59,7 +58,7 @@ public class ListaReproduccion extends ElementoReproducible {
 
     /**
      * Devuelve una lista con todas las canciones de la lista de reproducción.
-     * @return Lista con todas las canciones de la lista de reproducción
+     * @return Lista con todas las canciones de la lista de reproducción.
      */
     @Override
     public List<Cancion> getCanciones() {

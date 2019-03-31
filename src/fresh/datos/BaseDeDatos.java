@@ -19,7 +19,6 @@ import fresh.Status;
 /**
  * <p>Esta clase permite trabajar con una base de datos de la mayoría de información 
  * relavante de la aplicación.</p>
- * @author Víctor Yrazusta (victor.yrazusta@estudiante.uam.es)
  */
 public class BaseDeDatos implements Serializable {
     static final long serialVersionUID = 0;
@@ -87,9 +86,9 @@ public class BaseDeDatos implements Serializable {
     public List<Usuario> buscarUsuarios(String nombreAutor) {
         List<Usuario> lista = new ArrayList<>();
         for (Usuario usuario : usuarios.values()) {
-            if (usuario.getNombreAutor().contains(nombreAutor)) {
-                lista.add(usuario);
-            }
+            if (usuario.getBloqueado()) continue;
+            if (!usuario.getNombreAutor().contains(nombreAutor)) continue;
+            lista.add(usuario);
         }
         return lista;
     }
@@ -99,7 +98,7 @@ public class BaseDeDatos implements Serializable {
      */
     public void eliminarPremiumUsuarios() {
         for (Usuario usuario : usuarios.values()) {
-            usuario.setEsPremium(false);
+            usuario.setPremium(false);
         }
     }
 
@@ -130,9 +129,10 @@ public class BaseDeDatos implements Serializable {
     public List<Cancion> buscarCanciones(String nombre, boolean explicito) {
         List<Cancion> lista = new ArrayList<>();
         for (Cancion cancion : canciones.values()) {
-            if (cancion.getNombre().contains(nombre) && (explicito || (cancion.getEstado() != EstadoCancion.VALIDADA_EXPLICITA))) {
-                lista.add(cancion);
-            }
+            if (cancion.getBloqueado()) continue;
+            if (!cancion.getNombre().contains(nombre)) continue;
+            if (cancion.getEstado() == EstadoCancion.VALIDADA_EXPLICITA && !explicito) continue;
+            lista.add(cancion);
         }
         return lista;
     }

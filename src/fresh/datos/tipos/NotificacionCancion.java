@@ -1,17 +1,15 @@
 package fresh.datos.tipos;
 
 /**
- * Permite trabajar con notificaciones relacionadas con una canción 
- * en el sistema.
- * @author Víctor Yrazusta (victor.yrazusta@estudiante.uam.es)
+ * Permite trabajar con notificaciones relacionadas con una canción.
  */
 public class NotificacionCancion extends Notificacion {
     private Cancion cancion;
 
     /**
      * Instancia una notificación dado su tipo y canción relacionada.
-     * @param tipoNotificacion Tipo de la notificación.
-     * @param cancion Canción relacionada con la notificación.
+     * @param tipoNotificacion Tipo de la notificación
+     * @param cancion Canción relacionada con la notificación
      */
     public NotificacionCancion(TipoNotificacion tipoNotificacion, Cancion cancion) {
         super(tipoNotificacion);
