@@ -1,19 +1,21 @@
 package fresh.datos.tipos;
 
 /**
- * Posibles tipos de notificación:
- * <li>{@link #LIMITE_PREMIUM}</li>
- * <li>{@link #PAGA_PREMIUM}</li>
- * <li>{@link #CANCION_VALIDADA}</li>
- * <li>{@link #CANCION_EXPLICITO}</li>
- * <li>{@link #CANCION_BLOQUEADA_TEMPORAL}</li>
- * <li>{@link #CANCION_DESBLOQUADA}</li>
- * <li>{@link #REPORTE_ACEPTADO}</li>
- * <li>{@link #CANCION_SEGUIDO}</li>
+ * Esta enumeración define los posibles tipos de notificación que puede recibir
+ * un usuario.
  */
 public enum TipoNotificacion {
-    LIMITE_PREMIUM, // Está complicado saberlo en el momento exacto
-    PAGA_PREMIUM, // No sé cuando se usa esta
+
+    /**
+     * Notifica la obtención gratuita del servicio premium como recompensa por
+     * las reproducciones obtenidas el mes anterior.
+     */ 
+    PREMIUM_GRATUITO,   
+
+    /**
+     * Notifica la pérdida del servicio premium al final del mes.
+     */
+    PREMIUM_CADUCADO,
 
     /**
      * Notifica que una de las canciones del usuario ha sido validada sin
@@ -25,7 +27,13 @@ public enum TipoNotificacion {
      * Notifica que una de las canciones del usuario ha sido validada detectando
      * contenido explícito.
      */
-    CANCION_EXPLICITO,
+    CANCION_VALIDADA_EXPLICITA,
+
+    /**
+     * Notifica que una de las canciones del usuario ha sido rechazada, dandole
+     * la posibilidad de modificar el fichero ligado a dicha canción.
+     */
+    CANCION_RECHAZADA,
 
     /**
      * Notifica que una de las canciones del usuario ha sido reporta y, por lo 
@@ -38,6 +46,12 @@ public enum TipoNotificacion {
      * desbloqueada al ser rechazado el reporte que la había bloqueado.
      */
     CANCION_DESBLOQUEADA,
+
+    /**
+     * Notifica que una de las canciones rechazadas revisables del usuario ha
+     * sido eliminada automáticamente por el sistema.
+     */
+    CANCION_ELIMINADA,
 
     /**
      * Notifica que uno de los reportes realizados por el usuario ha sido 

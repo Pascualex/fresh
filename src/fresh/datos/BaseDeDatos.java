@@ -1,5 +1,8 @@
 package fresh.datos;
 
+import fresh.datos.tipos.*;
+import fresh.Status;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -13,8 +16,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
-import fresh.datos.tipos.*;
-import fresh.Status;
 
 /**
  * <p>Esta clase permite trabajar con una base de datos de la mayoría de información 
@@ -99,6 +100,7 @@ public class BaseDeDatos implements Serializable {
     public void eliminarPremiumUsuarios() {
         for (Usuario usuario : usuarios.values()) {
             usuario.setPremium(false);
+            usuario.anadirNotificacion(new Notificacion(TipoNotificacion.PREMIUM_CADUCADO));
         }
     }
 

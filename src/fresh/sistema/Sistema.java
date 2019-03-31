@@ -367,8 +367,19 @@ public class Sistema {
     }
 
     /**
+     * Devuelve el set de notificaciones del usuario actual.
+     * @return El set de notifcaciones del usuario actual si la sesión es de 
+     * usuario registrado y "null" en caso contrario.
+     */
+    public Set<Notificacion> obtenerNotificaciones() {
+        if (modoEjecucion != ModoEjecucion.REGISTRADO) return null;
+        return usuarioActual.getNotificaciones();
+    }
+
+    /**
      * Modifica el estado de la canción indicada, tomando las medidas
-     * correspondientes a ese cambio.
+     * correspondientes a ese cambio y notificando al autor y, si corresponde,
+     * a los seguidores del autor.
      * @param cancion Canción cuyo estado se ha de modificar
      * @param estado Nuevo estado de la canción
      * @return "OPERACION_INACCESIBLE" si la sesión no es de administrador.
@@ -379,9 +390,27 @@ public class Sistema {
 
         cancion.setEstado(estado);
         gestorEventos.cancelarEliminacionCancion(cancion);
+        
+        if (estado == EstadoCancion.VALIDADA || estado == EstadoCancion.VALIDADA_EXPLICITA) {
+            NotificacionCancion notificacionAutor;
+            if (estado == EstadoCancion.VALIDADA) {
+                notificacionAutor = new NotificacionCancion(TipoNotificacion.CANCION_VALIDADA, cancion);
+            } else {
+                notificacionAutor = new NotificacionCancion(TipoNotificacion.CANCION_VALIDADA_EXPLICITA, cancion);
+            }
+            cancion.getAutor().anadirNotificacion(notificacionAutor);
 
-        if (estado == EstadoCancion.RECHAZADA_REVISABLE) {
+            for (Usuario seguidor : cancion.getAutor().getSeguidores()) {
+                NotificacionCancion notificacionSeguidor = new NotificacionCancion(TipoNotificacion.CANCION_SEGUIDO, cancion);
+                seguidor.anadirNotificacion(notificacionSeguidor);
+            }
+        } else if (estado == EstadoCancion.RECHAZADA_REVISABLE) {
             gestorEventos.programarEliminacionCancion(cancion);
+            NotificacionCancion notificacion = new NotificacionCancion(TipoNotificacion.CANCION_RECHAZADA, cancion);
+            cancion.getAutor().anadirNotificacion(notificacion);
+        } else if (estado == EstadoCancion.BLOQUEADA_TEMPORAL || estado == EstadoCancion.BLOQUEADA_TEMPORAL_EXPLICITA) {
+            NotificacionCancion notificacion = new NotificacionCancion(TipoNotificacion.CANCION_BLOQUEADA_TEMPORAL, cancion);
+            cancion.getAutor().anadirNotificacion(notificacion);
         }
 
         return Status.OK;
@@ -434,6 +463,9 @@ public class Sistema {
 
         Usuario reportado = reporte.getCancionReportada().getAutor();
         reportado.setBloqueado(true);
+
+        NotificacionCancion notificacion = new NotificacionCancion(TipoNotificacion.REPORTE_ACEPTADO, reporte.getCancionReportada());
+        reporte.getReportador().anadirNotificacion(notificacion);
 
         return Status.OK;
     }
