@@ -118,7 +118,7 @@ public class Sistema {
         if (nombreAutor.length() < configuracion.getCaracteresMinimos()) return Status. NOMBRE_AUTOR_INVALIDO;
         if (contrasena.length() < configuracion.getCaracteresMinimos()) return Status.CONTRASENA_INVALIDA;
         Calendar fechaNacimientoMinima = new GregorianCalendar();
-        fechaNacimientoMinima.add(Calendar.YEAR, -14);
+        fechaNacimientoMinima.add(Calendar.YEAR, -configuracion.getEdadMinima());
         if (fechaNacimiento.after(fechaNacimientoMinima)) return Status.EDAD_INVALIDA;
 
         if (baseDeDatos.buscarUsuario(nombre) != null) return Status.USUARIO_REPETIDO;
@@ -141,15 +141,25 @@ public class Sistema {
         return Status.OK;
     }
 
+    /**
+     * Reproduce el elemento reproducible pasado como argumento.
+     * @param elemento Elemento reproducible a reproducir
+     */
     public void reproducir(ElementoReproducible elemento) {
         moduloMP3.anadirAColaReproduccion(elemento.getCanciones());
         moduloMP3.run();
     }
 
+    /**
+     * Reanuda la reproducción de canciones.
+     */
     public void reanudarCancion() {
         moduloMP3.run();
     }
 
+    /**
+     * Pausa la reproducción de canciones.
+     */
     public void pausarCancion() {
         moduloMP3.pause();
     }
@@ -196,7 +206,7 @@ public class Sistema {
      * @param ruta Ruta del fichero MP3
      * @return "OPERACION_INACCESIBLE" si la sesión no es de usuario registrado.
      * "NOMBRE_INVALIDO" si este no tiene el número mínimo de caracteres.
-     * "FICHERO_INVALIDO" si el fichero no existe o no es válido.
+     * "MP3_INVALIDO" si el fichero no existe o no es válido.
      * "CANCION_REPETIDA" si esta está ya presente en la base de datos.
      * "OK" si no se da ninguna de las anteriores.
      */
@@ -205,7 +215,7 @@ public class Sistema {
 
         File fichero = new File(ruta);
         if (nombre.length() < configuracion.getCaracteresMinimos()) return Status.NOMBRE_INVALIDO;
-        if (!moduloMP3.validar(fichero)) return Status.FICHERO_INVALIDO;
+        if (!moduloMP3.validar(fichero)) return Status.MP3_INVALIDO;
 
         long id = baseDeDatos.getIdSiguienteCancion();
         long duracion = moduloMP3.obtenerDuracion(fichero);
@@ -234,14 +244,14 @@ public class Sistema {
      * @param cancion Cancion a modificar
      * @param ruta Ruta del nuevo fichero MP3
      * @return "NO_MODIFICABLE" si la canción no se puede modificar.
-     * "FICHERO_INVALIDO" si el nuevo fichero MP3 no existe o no es válido.
+     * "MP3_INVALIDO" si el nuevo fichero MP3 no existe o no es válido.
      * "OK" si no se da ninguna de las anteriores
      */
     public Status actualizarCancion(Cancion cancion, String ruta) {
         if (!cancion.getModificable()) return Status.CANCION_NO_MODIFICABLE;
 
         File fichero = new File(ruta);
-        if (!moduloMP3.validar(fichero)) return Status.FICHERO_INVALIDO;
+        if (!moduloMP3.validar(fichero)) return Status.MP3_INVALIDO;
 
         fichero.renameTo(new File(rutaFicherosMP3 + cancion.getId()));
         cancion.setEstado(EstadoCancion.PENDIENTE_VALIDACION);
@@ -373,6 +383,7 @@ public class Sistema {
      */
     public Set<Notificacion> obtenerNotificaciones() {
         if (modoEjecucion != ModoEjecucion.REGISTRADO) return null;
+        
         return usuarioActual.getNotificaciones();
     }
 
@@ -448,6 +459,7 @@ public class Sistema {
         }
         
         baseDeDatos.anadirReporte(reporte);
+
         return Status.OK;
     }
 

@@ -35,7 +35,7 @@ public class GestorEventos implements Runnable, Serializable {
      * en la ruta especificada devuelve un nuevo gestor de eventos.
      * @param baseDeDatos Base de datos asociada con el gestor
      * @param ruta Ruta del gestor de eventos
-     * @return Gestor de eventos con la información cargada
+     * @return Gestor de eventos con la información cargada.
      */
     public static GestorEventos cargarGestorEventos(BaseDeDatos baseDeDatos, Configuracion configuracion, String ruta) {
         try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(ruta))) {
@@ -61,17 +61,13 @@ public class GestorEventos implements Runnable, Serializable {
     /**
      * Guarda la información relacionada con el gestor de eventos en la ruta 
      * especificada para que pueda ser más tarde cargada.
-     * @return Status que puede ser OK en caso de que el guardado se haya realizado
-     * correctamente, o ERROR_CARGAR, en caso de que se haya producido una 
-     * excepción en el guardado 
      */
-    public Status guardarInformacion() {
+    public void guardarInformacion() {
         try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(ruta))) {
             stream.writeObject(this);
             stream.close();
-            return Status.OK;
         } catch (IOException e) {
-            return Status.ERROR_CARGAR;
+            return;
         }
     }
 
@@ -84,7 +80,7 @@ public class GestorEventos implements Runnable, Serializable {
     }
 
     /**
-     * Cancela la eliminación de una canción.
+     * Cancela la eliminación de una canción..
      * @param cancion Canción cuya eliminación quiere ser cancelada
      */
     public void cancelarEliminacionCancion(Cancion cancion) {

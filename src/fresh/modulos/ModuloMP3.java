@@ -3,7 +3,6 @@ package fresh.modulos;
 import fresh.datos.tipos.*;
 import fresh.sistema.Configuracion;
 import fresh.sistema.ModoEjecucion;
-import fresh.datos.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,7 +80,6 @@ public class ModuloMP3 implements Runnable {
         Media media = new Media(new File(nombre).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
 
-        //Operaciones con la canción
         cancion.setReproduccionesMensuales(cancion.getReproduccionesMensuales()+1);
         cancion.getAutor().setReproduccionesMensuales(cancion.getAutor().getReproduccionesMensuales()+1);
 
@@ -128,7 +126,7 @@ public class ModuloMP3 implements Runnable {
     /**
      * Calcula la duración de un fichero de audio.
      * @param f Archivo de audio
-     * @return Duración del fichero de audio (en segundos)
+     * @return Duración del fichero de audio en segundos.
      */
     public long obtenerDuracion(File f) {
     	long sec;
@@ -153,9 +151,9 @@ public class ModuloMP3 implements Runnable {
     }
     
     /**
-     * Valida un fichero de audio
+     * Valida un fichero de audio.
      * @param f Archivo a validar
-     * @return "true" si el archivo de audio es correcto, "false" si no lo es
+     * @return "true" si el archivo de audio es correcto y "false" si no lo es.
      */
     public boolean validar(File f) {
     	AudioFileFormat fileFormat;
@@ -203,7 +201,7 @@ public class ModuloMP3 implements Runnable {
 
     /**
      * Establece el modo de ejecución de usuario registrado y actualiza al
-     * usuario actual
+     * usuario actual.
      * @param usuarioActual Nuevo usuario actual
      */
     public void nuevaSesionRegistrado(Usuario usuarioActual) {

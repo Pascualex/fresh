@@ -5,6 +5,10 @@ import java.util.Objects;
 
 import fresh.Status;
 
+/**
+ * <p>Esta clase permite cargar el fichero de configuración, acceder fácilmente
+ *    a sus datos y guardarlo cuando se modifica.</p>
+ */
 public class Configuracion {
     private String ruta;
 
@@ -17,6 +21,11 @@ public class Configuracion {
     private int minReproduccionesPremium;
     private int caracteresMinimos;
 
+    /**
+     * Instancia la configuración dada la ruta del archivo. Si se produce algún
+     * error, se creará un nuevo fichero con los parámetros predeterminados.
+     * @param ruta Ruta del archivo de configuración
+     */
     public Configuracion(String ruta) {
         this.ruta = ruta;
         if (cargarConfiguracion() == Status.OK) return;
@@ -33,70 +42,139 @@ public class Configuracion {
         guardarConfiguracion();
     }
 
+    /**
+     * Devuelve el nombre del administrador.
+     * @return Nombre del administrador.
+     */
     public String getNombreAdministrador() {
         return nombreAdministrador;
     }
 
+    /**
+     * Establece el nombre del administrador.
+     * @param nombreAdministrador Nuevo nombre del administrador
+     */
     public void setNombreAdministrador(String nombreAdministrador) {
         this.nombreAdministrador = nombreAdministrador;
     }
 
+    /**
+     * Devuelve la contraseña del administrador.
+     * @return Contraseña del administrador
+     */
     public String getContrasenaAdministrador() {
         return contrasenaAdministrador;
     }
 
+    /**
+     * Establece la contraseña del administrador.
+     * @param contrasenaAdministrador Nueva contraseña del administrador
+     */
     public void setContrasenaAdministrador(String contrasenaAdministrador) {
         this.contrasenaAdministrador = contrasenaAdministrador;
     }
 
+    /**
+     * Devuelve la edad mínima para registrarse en la aplicación.
+     * @return Edad mínima para registrarse en la aplicación.
+     */
     public int getEdadMinima() {
         return edadMinima;
     }
 
+    /**
+     * Establece la edad mínima para registrarse en la aplicación.
+     * @param edadMinima Nueva edad mínima para registrarse en la aplicación
+     */
     public void setEdadMinima(int edadMinima) {
         this.edadMinima = edadMinima;
     }
 
+    /**
+     * Devuelve el máximo de reproducciones por sesión de un usuario anónimo.
+     * @return Máximo de reproducciones por sesión de un usuario anónimo.
+     */
     public int getMaxReproduccionesAnonimo() {
         return maxReproduccionesAnonimo;
     }
 
+    /**
+     * Establece el máximo de reproducciones por sesión de un usuario anónimo.
+     * @param maxReproduccionesAnonimo Máximo de reproducciones por sesión.
+     */
     public void setMaxReproduccionesAnonimo(int maxReproduccionesAnonimo) {
         this.maxReproduccionesAnonimo = maxReproduccionesAnonimo;
     }
 
+    /**
+     * Devuelve el máximo de reproducciones mensuales de un usuario registrado.
+     * @return Máximo de reproducciones mensuales de un usuario registrado.
+     */
     public int getMaxReproduccionesRegistrado() {
         return maxReproduccionesRegistrado;
     }
 
+    /**
+     * Establece el máximo de reproducciones mensuales de un usuario registrado.
+     * @param maxReproduccionesRegistrado Máximo de reproducciones mensuales
+     */
     public void setMaxReproduccionesRegistrado(int maxReproduccionesRegistrado) {
         this.maxReproduccionesRegistrado = maxReproduccionesRegistrado;
     }
 
+    /**
+     * Devuelve la cuota mensual del servicio premium de la aplicación.
+     * @return Cuota mensual del servicio premium de la aplicación.
+     */
     public float getCuotaPremium() {
         return cuotaPremium;
     }
 
+    /**
+     * Establece la cuota mensual del servicio premium de la aplicación.
+     * @param cuotaPremium Cuota mensual del servicio premium de la aplicación
+     */
     public void setCuotaPremium(float cuotaPremium) {
         this.cuotaPremium = cuotaPremium;
     }
 
+    /**
+     * Devuelve el mínimo número de reproducciones mensuales para obtener el 
+     * servicio premium de manera gratuita.
+     * @return Mínimo número de reproducciones mensuales.
+     */
     public int getMinReproduccionesPremium() {
         return minReproduccionesPremium;
     }
 
+    /**
+     * Establece el mínimo número de reproducciones mensuales para obtener el 
+     * servicio premium de manera gratuita.
+     * @param minReproduccionesPremium Mínimo número de reproducciones mensuales
+     */
     public void setMinReproduccionesPremium(int minReproduccionesPremium) {
         this.minReproduccionesPremium = minReproduccionesPremium;
     } 
 
+    /**
+     * Devuelve el mímino número de caracteres necesarios en los campos de
+     * texto que deben proporcionar los usuarios.
+     * @return Mínimo número de caracteres.
+     */
     public int getCaracteresMinimos() {
         return caracteresMinimos;
     }
 
+    /**
+     * Establece el mímino número de caracteres necesarios en los campos de
+     * texto que deben proporcionar los usuarios.
+     * @param caracteresMinimos Mínimo número de caracteres
+     */
     public void setCaracteresMinimos(int caracteresMinimos) {
         this.caracteresMinimos = caracteresMinimos;
     }
 
+    // Carga del fichero de configuración la información necesaria
     private Status cargarConfiguracion() {
         try (FileInputStream stream = new FileInputStream(ruta);
              InputStreamReader reader = new InputStreamReader(stream);
@@ -167,6 +245,9 @@ public class Configuracion {
         }
     }
 
+    /**
+     * Guarda en el fichero de configuración los nuevos parámetros.
+     */
     public void guardarConfiguracion() {
         try (FileOutputStream stream = new FileOutputStream(ruta);
              OutputStreamWriter writer = new OutputStreamWriter(stream);
