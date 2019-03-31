@@ -1,5 +1,10 @@
 package fresh.modulos;
 
+import fresh.datos.BaseDeDatos;
+import fresh.datos.tipos.*;
+import fresh.sistema.Configuracion;
+import fresh.Status;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,11 +16,6 @@ import java.util.GregorianCalendar;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
-
-import fresh.datos.tipos.*;
-import fresh.sistema.Configuracion;
-import fresh.Status;
-import fresh.datos.*;
 
 /**
  * Gestiona los eventos del sistema, realizando operaciones en la base de datos.
@@ -111,55 +111,42 @@ public class GestorEventos implements Runnable, Serializable {
     public void run() {
         try {
             while (true) {
-                //Calculo la fecha actual
                 GregorianCalendar fecha_actual = new GregorianCalendar();
-                //Si no ha pasado un día aún espero a que sea el día que viene
-                if (fecha_actual.getTimeInMillis()-
-                    ultimoDiaComprobado.getTimeInMillis() < msDia) {
-                    TimeUnit.SECONDS.sleep(2000+(fecha_actual.getTimeInMillis()-msDia)/1000);
+                
+                if (fecha_actual.getTimeInMillis()-ultimoDiaComprobado.getTimeInMillis() < msDia) {
+                    TimeUnit.SECONDS.sleep(5*60+(fecha_actual.getTimeInMillis()-msDia)/1000);
                 }
                 
-                //He de realizar las operaciones
-
-                //-----------
-                //Operaciones
                 fecha_actual = new GregorianCalendar();
-                //Si es un mes nuevo...
-                if (fecha_actual.get(fecha_actual.MONTH) != 
-                    ultimoDiaComprobado.get(ultimoDiaComprobado.MONTH)) {
-                    //Degrado a todos los usuarios
+                
+                if (fecha_actual.get(GregorianCalendar.MONTH) != ultimoDiaComprobado.get(GregorianCalendar.MONTH)) {                        
                     baseDeDatos.eliminarPremiumUsuarios();
-                    //Actualizo el premium y las reproducciones mensuales de los usuarios
-                    for (Usuario u : baseDeDatos.getUsuarios()) {
-                        if (u.getReproduccionesMensuales() >= configuracion.getMinReproduccionesPremium()) {
-                            u.setPremium(true);
+                    
+                    for (Usuario usuario : baseDeDatos.getUsuarios()) {
+                        if (usuario.getReproduccionesMensuales() >= configuracion.getMinReproduccionesPremium()) {
+                            usuario.setPremium(true);
+                            usuario.anadirNotificacion(new Notificacion(TipoNotificacion.PREMIUM_GRATUITO));
                         }
-                        u.setReproduccionesMensuales(0);
+                        usuario.setReproduccionesMensuales(0);
                     }
                 }
 
-                //Eliminar todas las canciones necesarias
                 for (ParCancionFecha par : cancionesAEliminar) {
                     if (fecha_actual.getTimeInMillis()-par.fecha.getTimeInMillis() > 3*msDia) {
-                        //Eliminar cancion
                         baseDeDatos.eliminarCancion(par.cancion);
+                        NotificacionCancion notificacion = new NotificacionCancion(TipoNotificacion.CANCION_ELIMINADA, par.cancion);
+                        par.cancion.getAutor().anadirNotificacion(notificacion);
                         cancionesAEliminar.remove(par);
                     }
                 }
 
-                //Desbloquear usuarios
                 for (ParUsuarioFecha par : usuariosADesbloquear) {
                     if (fecha_actual.getTimeInMillis()-par.fecha.getTimeInMillis() > 30*msDia) {
-                        //Desbloquear usuario
                         par.usuario.setBloqueado(false);
                         usuariosADesbloquear.remove(par);
                     }
                 }
 
-
-                //-----------
-
-                //Reestablezco el tiempo
                 ultimoDiaComprobado = new GregorianCalendar();
             }
         } catch (InterruptedException e) {

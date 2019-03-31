@@ -32,7 +32,7 @@ public class UsuarioTest {
 	@Test
 	public void testeliminarNotificacion() {
 		
-		Notificacion aux = new Notificacion(TipoNotificacion.PAGA_PREMIUM);
+		Notificacion aux = new Notificacion(TipoNotificacion.PREMIUM_CADUCADO);
 		
 		u1.anadirNotificacion(n1);
 		u1.anadirNotificacion(aux);
