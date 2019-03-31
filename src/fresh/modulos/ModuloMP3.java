@@ -36,6 +36,10 @@ public class ModuloMP3 implements Runnable {
     private ModoEjecucion modoEjecucion;
     private int reproduccionesSesion;
     
+    /**
+     * Instancia un módulo MP3 con la configuración especificada.
+     * @param configuracion Configuración de la aplicación
+     */
     public ModuloMP3(Configuracion configuracion) {
         this.configuracion = configuracion;
     }
