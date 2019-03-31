@@ -61,6 +61,9 @@ public class BaseDeDatos implements Serializable {
     /**
      * Añade un usuario a la base de datos
      * @param usuario Usuario a añadir
+     * @return OK en caso de que se haya podido añadir el usuario a la base de
+     * datos, o USUARIO_REPETIDO, en caso de que ya hubiese un usuario con el
+     * mismo nombre en la base de datos
      */
     public Status anadirUsuario(Usuario usuario) {
         if (usuarios.containsKey(usuario.getNombreAutor())) return Status.USUARIO_REPETIDO; 
@@ -242,6 +245,10 @@ public class BaseDeDatos implements Serializable {
         }
     }
 
+    /**
+     * Devuelve la colección de usuarios registrados en la base de datos.
+     * @return Usuarios registrados
+     */
     public Collection<Usuario> getUsuarios() {
         return usuarios.values();
     }
