@@ -153,7 +153,7 @@ public class ModuloMP3 implements Runnable {
      * @param fichero Archivo de audio
      * @return Duración del fichero de audio en segundos.
      */
-    public long obtenerDuracion(File fichero) {
+    public static long obtenerDuracion(File fichero) {
     	long sec;
     	try {
 	    	AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(fichero);
@@ -180,7 +180,7 @@ public class ModuloMP3 implements Runnable {
      * @param fichero Archivo a validar
      * @return "true" si el archivo de audio es correcto y "false" si no lo es.
      */
-    public boolean validar(File fichero) {
+    public static boolean validar(File fichero) {
     	AudioFileFormat fileFormat;
     	try {
     		fileFormat = AudioSystem.getAudioFileFormat(fichero);

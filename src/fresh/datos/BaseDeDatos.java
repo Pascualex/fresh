@@ -32,27 +32,6 @@ public class BaseDeDatos implements Serializable {
     private Map<String, Cancion> canciones = new HashMap<>();
     private Map<String, Album> albumes = new HashMap<>();
 
-    /**
-     * Inicializa una base de datos dada la ruta de la que debería cargar los 
-     * datos. Si no puede cargar los datos en la ruta especificada devuelve
-     * una base de datos nueva.
-     * @param ruta Ruta de la base de datos
-     * @return Base de datos con la información cargada.
-     */
-    public static BaseDeDatos cargarBaseDeDatos(String ruta) {
-        try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(ruta))) {
-            BaseDeDatos baseDeDatos = (BaseDeDatos) stream.readObject();
-            stream.close();
-            return baseDeDatos;
-        } catch (FileNotFoundException e) {
-            return new BaseDeDatos(ruta);
-        } catch (IOException e) {
-            return null;
-        } catch (ClassNotFoundException e) {
-            return null;
-        }
-    }
-
     private BaseDeDatos(String ruta) {
         this.ruta = ruta;
         idSiguienteCancion = 0;
@@ -104,6 +83,14 @@ public class BaseDeDatos implements Serializable {
             usuario.setPremium(false);
             usuario.anadirNotificacion(new Notificacion(TipoNotificacion.PREMIUM_CADUCADO));
         }
+    }
+
+    /**
+     * Devuelve la colección de usuarios registrados en la base de datos.
+     * @return Usuarios registrados.
+     */
+    public Collection<Usuario> obtenerUsuarios() {
+        return usuarios.values();
     }
 
     /**
@@ -225,6 +212,35 @@ public class BaseDeDatos implements Serializable {
     }
 
     /**
+     * Devuelve la id de la siguiente canción.
+     * @return Id de la siguiente canción.
+     */
+    public long getIdSiguienteCancion() {
+        return idSiguienteCancion;
+    }
+
+    /**
+     * Inicializa una base de datos dada la ruta de la que debería cargar los 
+     * datos. Si no puede cargar los datos en la ruta especificada devuelve
+     * una base de datos nueva.
+     * @param ruta Ruta de la base de datos
+     * @return Base de datos con la información cargada.
+     */
+    public static BaseDeDatos cargarBaseDeDatos(String ruta) {
+        try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(ruta))) {
+            BaseDeDatos baseDeDatos = (BaseDeDatos) stream.readObject();
+            stream.close();
+            return baseDeDatos;
+        } catch (FileNotFoundException e) {
+            return new BaseDeDatos(ruta);
+        } catch (IOException e) {
+            return null;
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+    }
+
+    /**
      * Guarda en disco la información de la base de datos. Lo hace en la ruta 
      * especificada en el momento de la construcción de la misma.
      */
@@ -235,21 +251,5 @@ public class BaseDeDatos implements Serializable {
         } catch (IOException e) {
             return;
         }
-    }
-
-    /**
-     * Devuelve la colección de usuarios registrados en la base de datos.
-     * @return Usuarios registrados.
-     */
-    public Collection<Usuario> getUsuarios() {
-        return usuarios.values();
-    }
-
-    /**
-     * Devuelve la id de la siguiente canción.
-     * @return Id de la siguiente canción.
-     */
-    public long getIdSiguienteCancion() {
-        return idSiguienteCancion;
     }
 }

@@ -20,8 +20,8 @@ public class Usuario implements Serializable {
 	private Calendar fechaNacimiento;
 
 	private boolean premium;
-	private int reproduccionesMensuales;
 	private boolean bloqueado;
+	private int reproduccionesMensuales;
 	
 	private Set<Notificacion> notificaciones = new HashSet<>();
 	private Set<ListaReproduccion> listasReproduccion = new HashSet<>();

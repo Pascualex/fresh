@@ -21,54 +21,19 @@ import java.util.concurrent.TimeUnit;
  * Gestiona los eventos del sistema, realizando operaciones en la base de datos.
  */
 public class GestorEventos implements Runnable, Serializable {
+    private String ruta;
     private GregorianCalendar ultimoDiaComprobado;
     private SortedSet<ParCancionFecha> cancionesAEliminar = new TreeSet<>();
     private SortedSet<ParUsuarioFecha> usuariosADesbloquear = new TreeSet<>();
     private BaseDeDatos baseDeDatos;
     private Configuracion configuracion;
-    private String ruta;
     static final long msDia = 86400000;
-
-    /**
-     * Inicializa un gestor de eventos dada la ruta de la que debería cargar los 
-     * datos y la base de datos asociada al gestor. Si no puede cargar los datos 
-     * en la ruta especificada devuelve un nuevo gestor de eventos.
-     * @param baseDeDatos Base de datos asociada con el gestor
-     * @param ruta Ruta del gestor de eventos
-     * @return Gestor de eventos con la información cargada.
-     */
-    public static GestorEventos cargarGestorEventos(BaseDeDatos baseDeDatos, Configuracion configuracion, String ruta) {
-        try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(ruta))) {
-            GestorEventos gestorEventos = (GestorEventos) stream.readObject();
-            stream.close();
-            return gestorEventos;
-        } catch (FileNotFoundException e) {
-            return new GestorEventos(baseDeDatos, configuracion, ruta);
-        } catch (IOException e) {
-            return null;
-        } catch (ClassNotFoundException e) {
-            return null;
-        }
-    }
 
     private GestorEventos(BaseDeDatos baseDeDatos, Configuracion configuracion, String ruta) {
         this.baseDeDatos = baseDeDatos;
         this.configuracion = configuracion;
         this.ruta = ruta;
         ultimoDiaComprobado = new GregorianCalendar();
-    }
-
-    /**
-     * Guarda la información relacionada con el gestor de eventos en la ruta 
-     * especificada para que pueda ser más tarde cargada.
-     */
-    public void guardarInformacion() {
-        try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(ruta))) {
-            stream.writeObject(this);
-            stream.close();
-        } catch (IOException e) {
-            return;
-        }
     }
 
     /**
@@ -118,7 +83,7 @@ public class GestorEventos implements Runnable, Serializable {
                 if (fecha_actual.get(GregorianCalendar.MONTH) != ultimoDiaComprobado.get(GregorianCalendar.MONTH)) {                        
                     baseDeDatos.eliminarPremiumUsuarios();
                     
-                    for (Usuario usuario : baseDeDatos.getUsuarios()) {
+                    for (Usuario usuario : baseDeDatos.obtenerUsuarios()) {
                         if (usuario.getReproduccionesMensuales() >= configuracion.getMinReproduccionesPremium()) {
                             usuario.setPremium(true);
                             usuario.anadirNotificacion(new Notificacion(TipoNotificacion.PREMIUM_GRATUITO));
@@ -133,14 +98,14 @@ public class GestorEventos implements Runnable, Serializable {
                         NotificacionCancion notificacion = new NotificacionCancion(TipoNotificacion.CANCION_ELIMINADA, par.cancion);
                         par.cancion.getAutor().anadirNotificacion(notificacion);
                         cancionesAEliminar.remove(par);
-                    }
+                    } else break;
                 }
 
                 for (ParUsuarioFecha par : usuariosADesbloquear) {
                     if (fecha_actual.getTimeInMillis()-par.fecha.getTimeInMillis() > 30*msDia) {
                         par.usuario.setBloqueado(false);
                         usuariosADesbloquear.remove(par);
-                    }
+                    } else break;
                 }
 
                 ultimoDiaComprobado = new GregorianCalendar();
@@ -148,6 +113,41 @@ public class GestorEventos implements Runnable, Serializable {
         } catch (InterruptedException e) {
             guardarInformacion();
         } 
+    }
+
+    /**
+     * Inicializa un gestor de eventos dada la ruta de la que debería cargar los 
+     * datos y la base de datos asociada al gestor. Si no puede cargar los datos 
+     * en la ruta especificada devuelve un nuevo gestor de eventos.
+     * @param baseDeDatos Base de datos asociada con el gestor
+     * @param ruta Ruta del gestor de eventos
+     * @return Gestor de eventos con la información cargada.
+     */
+    public static GestorEventos cargarGestorEventos(BaseDeDatos baseDeDatos, Configuracion configuracion, String ruta) {
+        try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(ruta))) {
+            GestorEventos gestorEventos = (GestorEventos) stream.readObject();
+            stream.close();
+            return gestorEventos;
+        } catch (FileNotFoundException e) {
+            return new GestorEventos(baseDeDatos, configuracion, ruta);
+        } catch (IOException e) {
+            return null;
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Guarda la información relacionada con el gestor de eventos en la ruta 
+     * especificada para que pueda ser más tarde cargada.
+     */
+    public void guardarInformacion() {
+        try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(ruta))) {
+            stream.writeObject(this);
+            stream.close();
+        } catch (IOException e) {
+            return;
+        }
     }
 
     private class ParCancionFecha implements Serializable, Comparable<ParCancionFecha> {
