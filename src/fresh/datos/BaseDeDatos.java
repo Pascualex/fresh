@@ -119,10 +119,12 @@ public class BaseDeDatos implements Serializable {
     public List<Cancion> buscarCanciones(String nombre, boolean explicito) {
         List<Cancion> lista = new ArrayList<>();
         for (Cancion cancion : canciones.values()) {
-            if (cancion.getBloqueado()) continue;
             if (!cancion.getNombre().contains(nombre)) continue;
-            if (cancion.getEstado() == EstadoCancion.VALIDADA_EXPLICITA && !explicito) continue;
-            lista.add(cancion);
+            if (cancion.getEstado() == EstadoCancion.VALIDADA) {
+            	lista.add(cancion);
+            } else if (cancion.getEstado() == EstadoCancion.VALIDADA_EXPLICITA && explicito) {
+            	lista.add(cancion);
+            }
         }
         return lista;
     }
