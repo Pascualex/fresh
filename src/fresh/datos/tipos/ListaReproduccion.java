@@ -34,7 +34,6 @@ public class ListaReproduccion extends ElementoReproducible {
 
         setDuracion(getDuracion()+elemento.getDuracion());
         elementos.add(elemento);
-        System.out.println("print en anadirElemento"+elementos);
     }
 
     /**
@@ -84,7 +83,7 @@ public class ListaReproduccion extends ElementoReproducible {
     public List<Cancion> getCanciones(Set<ElementoReproducible> elementosExcluidos) {
         if (elementosExcluidos.contains(this)) return new ArrayList<>();
         elementosExcluidos.add(this);
-
+        
         List<Cancion> canciones = new ArrayList<>();
         for (ElementoReproducible e : elementos) {        	
             canciones.addAll(e.getCanciones());

@@ -23,9 +23,9 @@ public class ListaReproduccionTest {
 
 	@Test
 	public void testAnadirElemento() {
-		
 		List<Cancion> lista = new ArrayList<>();
 		
+		c.setEstado(EstadoCancion.VALIDADA);
 		lr.anadirElemento(c);
 		lista.add(c);
 	
@@ -37,9 +37,11 @@ public class ListaReproduccionTest {
 
 	@Test
 	public void testEliminarElemento() {
-		
 		Cancion aux = new Cancion("CancionAux", 28, u1, 02);
 		List<Cancion> lista = new ArrayList<>();
+
+		c.setEstado(EstadoCancion.VALIDADA);
+		aux.setEstado(EstadoCancion.VALIDADA);
 		
 		lr.anadirElemento(c);
 		lr.anadirElemento(aux);

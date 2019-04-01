@@ -19,8 +19,7 @@ public class UsuarioTest {
 	Album a = new Album("album1", u1, 2019, lc);
 
 	@Test
-	public void testanadirNotificacion() {
-		
+	public void testAnadirNotificacion() {
 		Set<Notificacion> s = new HashSet<>();
 		
 		u1.anadirNotificacion(n);
@@ -30,8 +29,7 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void testeliminarNotificacion() {
-		
+	public void testEliminarNotificacion() {
 		Notificacion aux = new Notificacion(TipoNotificacion.PREMIUM_CADUCADO);
 		Set<Notificacion> s = new HashSet<>();
 		
@@ -47,8 +45,7 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void testanadirListaReproduccion() {
-		
+	public void testAnadirListaReproduccion() {
 		Set<ListaReproduccion> s = new HashSet<>();
 		
 		u1.anadirListaReproduccion(lr);
@@ -57,8 +54,7 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void testeliminarListaReproduccion() {
-		
+	public void testEliminarListaReproduccion() {
 		ListaReproduccion lraux = new ListaReproduccion("listaAux");
 		Set<ListaReproduccion> s = new HashSet<>();
 		
@@ -74,8 +70,7 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void testanadirCancion() {
-		
+	public void testAnadirCancion() {
 		Set<Cancion> s = new HashSet<>();
 		
 		u1.anadirCancion(c);
@@ -85,8 +80,7 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void testeliminarCancion() {
-		
+	public void testEliminarCancion() {
 		Cancion caux = new Cancion("Caux", 33, u1, 02);
 		Set<Cancion> s = new HashSet<>();
 		
@@ -99,8 +93,7 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void testanadirAlbum() {
-		
+	public void testAnadirAlbum() {
 		Set<Album> s = new HashSet<>();
 				
 		lc.add(c);
@@ -112,8 +105,7 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void testeliminarAlbum() {
-		
+	public void testEliminarAlbum() {
 		Album aux = new Album("album1", u1, 2017, lc);
 		Set<Album> s = new HashSet<>();
 		
@@ -129,8 +121,7 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void testanadirSeguidor() {
-		
+	public void testAnadirSeguidor() {
 		Usuario uaux = new Usuario("Lola", "LL", "cll", fecha);
 		Set<Usuario> s = new HashSet<>();
 				
@@ -141,8 +132,7 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void testeliminarSeguidor() {
-		
+	public void testEliminarSeguidor() {
 		Usuario uaux = new Usuario("Lola", "LL", "cll", fecha);
 		Usuario uprueba = new Usuario("Sergio", "SS", "css", fecha);
 		Set<Usuario> s = new HashSet<>();
