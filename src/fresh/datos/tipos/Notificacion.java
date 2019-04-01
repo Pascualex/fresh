@@ -1,9 +1,11 @@
 package fresh.datos.tipos;
 
+import java.io.Serializable;
+
 /**
  * Permite trabajar con notificaciones.
  */
-public class Notificacion {
+public class Notificacion implements Serializable {
     private TipoNotificacion tipoNotificacion;
 
     /**
