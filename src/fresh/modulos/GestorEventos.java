@@ -13,6 +13,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
@@ -51,10 +53,14 @@ public class GestorEventos implements Runnable, Serializable {
      * @param cancion Canción cuya eliminación quiere ser cancelada
      */
     public void cancelarEliminacionCancion(Cancion cancion) {
+        Set<ParCancionFecha> canciones = new HashSet<>();
         for (ParCancionFecha p : cancionesAEliminar) {
             if (p.cancion == cancion) {
-                cancionesAEliminar.remove(p);
+                canciones.add(p);
             }
+        }
+        for (ParCancionFecha par : canciones) {
+            cancionesAEliminar.remove(par);
         }
     }
     
@@ -94,20 +100,28 @@ public class GestorEventos implements Runnable, Serializable {
                     }
                 }
 
+                Set<ParCancionFecha> canciones = new HashSet<>();
                 for (ParCancionFecha par : cancionesAEliminar) {
                     if (fecha_actual.getTimeInMillis()-par.fecha.getTimeInMillis() > 3*msDia) {
                         baseDeDatos.eliminarCancion(par.cancion);
                         NotificacionCancion notificacion = new NotificacionCancion(TipoNotificacion.CANCION_ELIMINADA, par.cancion);
                         par.cancion.getAutor().anadirNotificacion(notificacion);
-                        cancionesAEliminar.remove(par);
+                        cancionesAEliminar.add(par);
                     } else break;
                 }
+                for (ParCancionFecha par : canciones) {
+                    cancionesAEliminar.remove(par);
+                }
 
+                Set<ParUsuarioFecha> usuarios = new HashSet<>();
                 for (ParUsuarioFecha par : usuariosADesbloquear) {
                     if (fecha_actual.getTimeInMillis()-par.fecha.getTimeInMillis() > 30*msDia) {
                         par.usuario.setBloqueado(false);
-                        usuariosADesbloquear.remove(par);
+                        usuarios.add(par);
                     } else break;
+                }
+                for (ParUsuarioFecha par : usuarios) {
+                    usuariosADesbloquear.remove(par);
                 }
 
                 ultimoDiaComprobado = new GregorianCalendar();
