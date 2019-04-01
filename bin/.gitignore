@@ -1,6 +1,2 @@
 *.class
-/.classpath
-/.gitignore
-/.project
 /fresh/
-/lib/

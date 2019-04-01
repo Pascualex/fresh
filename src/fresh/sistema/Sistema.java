@@ -25,8 +25,8 @@ import java.lang.Thread;
 public class Sistema {
     public static final long numeroVersion = 1;
 
-    private static final String rutaBaseDeDatos = "./baseDedatos/baseDeDatos.bd";
-    private static final String rutaGestorEventos = "./gestorEventos/gestorEventos";
+    private static final String rutaBaseDeDatos = "./baseDedatos/baseDeDatos.ser";
+    private static final String rutaGestorEventos = "./gestorEventos/gestorEventos.ser";
     private static final String rutaConfiguracion = "./configuracion/configuracion.txt";
     private static final String rutaFicherosMP3 = "./canciones/";
 

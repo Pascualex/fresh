@@ -3,7 +3,6 @@ package fresh.datos.tipos;
 import fresh.sistema.Sistema;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Set;
 import java.io.Serializable;
 
