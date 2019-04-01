@@ -7,12 +7,13 @@ import java.util.HashSet;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.io.Serializable;
 
 /**
  * Permite trabajar con usuarios, conservando sus credenciales, su propio 
  * contenido y sus preferencias en el contenido de otros usuarios.
  */
-public class Usuario {	
+public class Usuario implements Serializable {	
 	private String nombre;
 	private String nombreAutor;
 	private String contrasena;

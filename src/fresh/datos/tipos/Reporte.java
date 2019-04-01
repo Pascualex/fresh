@@ -1,10 +1,12 @@
 package fresh.datos.tipos;
 
+import java.io.Serializable;
+
 /**
  * Permite trabajar con reportes, que permiten a los usuarios notificar
  * infracciones de copyright por parte de otros usuarios.
  */
-public class Reporte {
+public class Reporte implements Serializable {
     private String descripcion;
     private Usuario reportador;
     private Cancion cancionReportada;

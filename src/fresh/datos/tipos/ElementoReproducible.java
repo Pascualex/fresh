@@ -1,12 +1,13 @@
 package fresh.datos.tipos;
 
 import java.util.List;
+import java.io.Serializable;
 
 /**
  * <p>Esta clase abstracta define los componentes elementales de todo elemento
  *    reproducible.</p>
  */
-public abstract class ElementoReproducible {
+public abstract class ElementoReproducible implements Serializable {
     private String nombre;
     private long duracion;
 
