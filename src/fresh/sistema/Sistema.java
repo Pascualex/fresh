@@ -244,10 +244,10 @@ public class Sistema {
 
         File fichero = new File(ruta);
         if (nombre.length() < configuracion.getCaracteresMinimos()) return Status.NOMBRE_INVALIDO;
-        if (!moduloMP3.validar(fichero)) return Status.MP3_INVALIDO;
+        if (!ModuloMP3.validar(fichero)) return Status.MP3_INVALIDO;
 
         long id = baseDeDatos.getIdSiguienteCancion();
-        long duracion = moduloMP3.obtenerDuracion(fichero);
+        long duracion = ModuloMP3.obtenerDuracion(fichero);
         Cancion cancion = new Cancion(nombre, duracion, usuarioActual, id);
 
         Status status = baseDeDatos.anadirCancion(cancion);
@@ -280,7 +280,7 @@ public class Sistema {
         if (!cancion.getModificable()) return Status.CANCION_NO_MODIFICABLE;
 
         File fichero = new File(ruta);
-        if (!moduloMP3.validar(fichero)) return Status.MP3_INVALIDO;
+        if (!ModuloMP3.validar(fichero)) return Status.MP3_INVALIDO;
 
         fichero.renameTo(new File(rutaFicherosMP3 + cancion.getId()));
         cancion.setEstado(EstadoCancion.PENDIENTE_VALIDACION);
