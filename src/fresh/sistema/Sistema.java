@@ -15,6 +15,7 @@ import java.util.GregorianCalendar;
 import java.util.Objects;
 import java.util.List;
 import java.util.Set;
+import java.lang.Thread;
 
 /**
  * <p>Esta es la clase principal de la funcionalidad de la aplicación. Permite
@@ -27,23 +28,30 @@ public class Sistema {
     private static final String rutaConfiguracion = "./configuracion/configuracion.txt";
     private static final String rutaFicherosMP3 = "./canciones/";
 
-    private ModoEjecucion modoEjecucion;
-    private Usuario usuarioActual;
+    private final Thread hiloGestorEventos;
+    private final Thread hiloModuloMP3;
+
+    private Configuracion configuracion;
     private BaseDeDatos baseDeDatos;
     private GestorEventos gestorEventos;
     private ModuloMP3 moduloMP3;
-    private Configuracion configuracion;
+    private ModoEjecucion modoEjecucion;
+    private Usuario usuarioActual;
 
     /**
      * Crea el sistema. Sus características vienen definidas en constantes y en
      * el fichero de configuración, por lo que no recibe argumentos.
      */
     public Sistema() {
-        modoEjecucion = ModoEjecucion.DESCONECTADO;
-        baseDeDatos = BaseDeDatos.cargarBaseDeDatos(rutaBaseDeDatos);        
         configuracion = new Configuracion(rutaConfiguracion);
-        moduloMP3 = new ModuloMP3(configuracion);
+        baseDeDatos = BaseDeDatos.cargarBaseDeDatos(rutaBaseDeDatos);        
         gestorEventos = GestorEventos.cargarGestorEventos(baseDeDatos, configuracion, rutaGestorEventos);
+        hiloGestorEventos = new Thread(gestorEventos);
+        hiloGestorEventos.start();
+        moduloMP3 = new ModuloMP3(rutaFicherosMP3, configuracion);
+        hiloModuloMP3 = new Thread(moduloMP3);
+        hiloModuloMP3.start();
+        modoEjecucion = ModoEjecucion.DESCONECTADO;
     }
 
     /**
@@ -146,22 +154,43 @@ public class Sistema {
      * @param elemento Elemento reproducible a reproducir
      */
     public void reproducir(ElementoReproducible elemento) {
-        moduloMP3.anadirAColaReproduccion(elemento.getCanciones());
-        moduloMP3.run();
+        moduloMP3.anadirCanciones(elemento.getCanciones());
+        moduloMP3.reproducir();
     }
 
     /**
      * Reanuda la reproducción de canciones.
      */
     public void reanudarCancion() {
-        moduloMP3.run();
+        moduloMP3.reproducir();
     }
 
     /**
      * Pausa la reproducción de canciones.
      */
     public void pausarCancion() {
-        moduloMP3.pause();
+        moduloMP3.pausar();
+    }
+
+    /**
+     * Reiniciar la reproducción de la canción actual.
+     */
+    public void reiniciarCancion() {
+        moduloMP3.reiniciar();
+    }
+    
+    /**
+     * Avanza, si es posible, a la siguiente canción del reproductor.
+     */
+    public void avanzarCancion() {
+        moduloMP3.avanzar();
+    }
+
+    /**
+     * Retrocede, si es posible, a la anterior canción del reproductor.
+     */
+    public void retrocederCancion() {
+        moduloMP3.retroceder();
     }
 
     /**
@@ -224,7 +253,7 @@ public class Sistema {
         Status status = baseDeDatos.anadirCancion(cancion);
         if (status == Status.OK) {
             usuarioActual.anadirCancion(cancion);
-            fichero.renameTo(new File(rutaFicherosMP3 + id));
+            fichero.renameTo(new File(rutaFicherosMP3 + id + ".mp3"));
         }
 
         return status;
@@ -649,5 +678,12 @@ public class Sistema {
         configuracion.guardarConfiguracion();
 
         return Status.OK;
+    }
+
+    public void cerrarSistema() {
+        baseDeDatos.guardarEnDisco();
+        gestorEventos.guardarInformacion();
+        hiloGestorEventos.stop();
+        hiloModuloMP3.stop();        
     }
 }

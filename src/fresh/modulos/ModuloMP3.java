@@ -1,13 +1,17 @@
 package fresh.modulos;
 
-import fresh.datos.tipos.*;
 import fresh.sistema.Configuracion;
 import fresh.sistema.ModoEjecucion;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+import fresh.datos.tipos.*;
+
+import javazoom.jl.player.Player;
+
 import java.util.List;
 import java.util.Map;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.io.IOException;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioSystem;
@@ -15,169 +19,104 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.tritonus.share.sampled.file.TAudioFileFormat;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.embed.swing.JFXPanel;
-import javafx.application.Platform;
-
-
-/**
- * <p>Esta clase permite trabajar con reproductores MP3.</p>
- */
 public class ModuloMP3 implements Runnable {
+    private String ruta;
     private Configuracion configuracion;
-    private Usuario usuarioActual;
-    private MediaPlayer mediaPlayer = null;
-    private List<Cancion> colaReproduccion = new ArrayList<>();
-    @SuppressWarnings("unused")
-	private final JFXPanel fxPanel = new JFXPanel();
-    private ModuloMP3 sig = null;
     private ModoEjecucion modoEjecucion;
+    private Usuario usuarioActual;
     private int reproduccionesSesion;
-    
+    private List<Cancion> canciones;
+    private boolean reproduciendo;
+    private boolean nuevaCancion;
+    private int posicionActual;
+    private Cancion cancionActual;
+    private Player player;
+
     /**
      * Instancia un módulo MP3 con la configuración especificada.
      * @param configuracion Configuración de la aplicación
      */
-    public ModuloMP3(Configuracion configuracion) {
+    public ModuloMP3(String ruta, Configuracion configuracion) {
+        this.ruta = ruta;
         this.configuracion = configuracion;
+        canciones = new ArrayList<>();
+        posicionActual = -1;
+        reproduciendo = false;
+        nuevaCancion = false;
     }
 
-    /**
-     * Añade una lista de canciones a la cola de reproducción.
-     * @param canciones Lista de canciones a añadir a la cola de reproducción
-     */
-    public void anadirAColaReproduccion(List<Cancion> canciones) {
-        if (sig != null) {
-            sig.anadirAColaReproduccion(canciones);
-        } else {
-            colaReproduccion.addAll(canciones);
-        }
-    }
-
-    /**
-     * Función principal de ejecución del módulo. No debería ser llamada
-     * directamente, sino en un hilo de ejecución propio.
-     */
+    @Override
     public void run() {
-        while (colaReproduccion.isEmpty());
+        try {
+            while (true) {       
+                if (reproduciendo) {
+                    if (player.play(1)) {
+                        reproduciendo = false;
+                        nuevaCancion = true;
+                    }
+                } else {
+                    if (nuevaCancion) {
+                        if (posicionActual < canciones.size()-1) {
+                            if (modoEjecucion == ModoEjecucion.REGISTRADO) {
+                                int reproduccionesMensuales = usuarioActual.getReproduccionesMensuales();
+                                if (!usuarioActual.getPremium()) {
+                                    if (reproduccionesMensuales >= configuracion.getMaxReproduccionesRegistrado()) continue;
+                                }
+                                usuarioActual.setReproduccionesMensuales(reproduccionesMensuales+1);
+                            } else if (modoEjecucion == ModoEjecucion.ANONIMO) {
+                                if (reproduccionesSesion >= configuracion.getMaxReproduccionesAnonimo()) continue;
+                                reproduccionesSesion++;
+                            }
 
-        if (modoEjecucion == ModoEjecucion.REGISTRADO) {
-            int reproduccionesMensuales = usuarioActual.getReproduccionesMensuales();
-            if (!usuarioActual.getPremium()) {
-                if (reproduccionesMensuales >= configuracion.getMaxReproduccionesRegistrado()) return;
+                            posicionActual++;
+                            cancionActual = canciones.get(posicionActual);
+
+                            cancionActual.setReproduccionesMensuales(cancionActual.getReproduccionesMensuales()+1);
+                            cancionActual.getAutor().setReproduccionesMensuales(cancionActual.getAutor().getReproduccionesMensuales()+1);
+
+                            String rutaCancion = ruta + cancionActual.getId() + ".mp3";                      
+                            player = new Player(new FileInputStream(rutaCancion));
+                            nuevaCancion = false;
+                            reproduciendo = true;
+                        }
+                    }
+                }
             }
-            usuarioActual.setReproduccionesMensuales(reproduccionesMensuales+1);
-        } else if (modoEjecucion == ModoEjecucion.ANONIMO) {
-            if (reproduccionesSesion >= configuracion.getMaxReproduccionesAnonimo()) return;
-            reproduccionesSesion++;
-        }
-
-        Cancion cancion = colaReproduccion.get(0);
-        colaReproduccion.remove(0);
-
-        String nombre = cancion.getId() + ".mp3";
-        Media media = new Media(new File(nombre).toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-
-        cancion.setReproduccionesMensuales(cancion.getReproduccionesMensuales()+1);
-        cancion.getAutor().setReproduccionesMensuales(cancion.getAutor().getReproduccionesMensuales()+1);
-
-        mediaPlayer.play();
-        mediaPlayer.setOnEndOfMedia(this);
-    }
-
-    /**
-     * Pausa la reproducción de canciones.
-     */
-    public synchronized void pause() {
-        if (sig != null) sig.pause();
-        else if (mediaPlayer != null) mediaPlayer.pause();
-    }
-
-    /**
-     * Continua la reproducción de canciones.
-     */
-    public synchronized void play() {
-        if (sig != null) sig.play();
-        else if (mediaPlayer != null) mediaPlayer.play();
-    }
-
-    /**
-     * Pone a reproducir la siguiente canción, saltando la actual.
-     */
-    public synchronized void siguiente() {
-        if (sig != null) {
-            sig.siguiente();
-        } else {
-            sig = new ModuloMP3(configuracion);
-            if (modoEjecucion == ModoEjecucion.REGISTRADO) {
-                sig.nuevaSesionRegistrado(usuarioActual);
-            } else if (modoEjecucion == ModoEjecucion.ANONIMO) {
-                sig.nuevaSesionAnonimo(reproduccionesSesion);
-            }
-
-            mediaPlayer.stop();
-            sig.anadirAColaReproduccion(colaReproduccion);
-            sig.run();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    /**
-     * Calcula la duración de un fichero de audio.
-     * @param f Archivo de audio
-     * @return Duración del fichero de audio en segundos.
-     */
-    public long obtenerDuracion(File f) {
-    	long sec;
-    	try {
-	    	AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(f);
-	        
-	        if (fileFormat instanceof TAudioFileFormat) {
-	            Map<?, ?> properties = ((TAudioFileFormat) fileFormat).properties();
-	            String key = "duration";
-	            Long microseconds = (Long) properties.get(key);
-	            long mili = (long) (microseconds / 1000);
-	            sec = (mili / 1000) % 60;
-	        } else {
-	            throw new UnsupportedAudioFileException();
-	        }
-        } catch (UnsupportedAudioFileException e) {
-        	return -1;
-        } catch (IOException e) {
-        	return -1;
-        }
-        return sec;
+    public void anadirCanciones(List<Cancion> canciones) {
+        this.canciones.addAll(canciones);
     }
-    
-    /**
-     * Valida un fichero de audio.
-     * @param f Archivo a validar
-     * @return "true" si el archivo de audio es correcto y "false" si no lo es.
-     */
-    public boolean validar(File f) {
-    	AudioFileFormat fileFormat;
-    	try {
-    		fileFormat = AudioSystem.getAudioFileFormat(f);
-    	} catch (IOException e) {
-    		return false;
-    	} catch (UnsupportedAudioFileException e) {
-    		return false;
-    	}
-        
-        if (fileFormat instanceof TAudioFileFormat) {
-            return true;
-        } else {
-            return false;
-        }
+
+    public void reproducir() {
+        if (player == null) return;
+        reproduciendo = true;
     }
-    
-    /**
-     * Termina la ejecución del reproductor.
-     */
-    public synchronized void exit() {
-        if (sig != null) sig.exit();
-        Platform.exit();
+
+    public void pausar() {
+        reproduciendo = false;
+    }
+
+    public void reiniciar() {
+        if (posicionActual < 0) return;
+        reproduciendo = false;
+        nuevaCancion = true;
+        posicionActual--;
+    }
+
+    public void avanzar() {
+        reproduciendo = false;
+        nuevaCancion = true;
+    }
+
+    public void retroceder() {
+        if (posicionActual < 1) return;
+        reproduciendo = false;
+        nuevaCancion = true;
+        posicionActual = posicionActual-2;
     }
 
     /**
@@ -207,5 +146,54 @@ public class ModuloMP3 implements Runnable {
     public void nuevaSesionRegistrado(Usuario usuarioActual) {
         modoEjecucion = ModoEjecucion.REGISTRADO;
         this.usuarioActual = usuarioActual;
+    }
+
+    /**
+     * Calcula la duración de un fichero de audio.
+     * @param fichero Archivo de audio
+     * @return Duración del fichero de audio en segundos.
+     */
+    public long obtenerDuracion(File fichero) {
+    	long sec;
+    	try {
+	    	AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(fichero);
+	        
+	        if (fileFormat instanceof TAudioFileFormat) {
+	            Map<?, ?> properties = ((TAudioFileFormat) fileFormat).properties();
+	            String key = "duration";
+	            Long microseconds = (Long) properties.get(key);
+	            long mili = (long) (microseconds / 1000);
+	            sec = (mili / 1000) % 60;
+	        } else {
+	            throw new UnsupportedAudioFileException();
+	        }
+        } catch (UnsupportedAudioFileException e) {
+        	return -1;
+        } catch (IOException e) {
+        	return -1;
+        }
+        return sec;
+    }
+    
+    /**
+     * Valida un fichero de audio.
+     * @param fichero Archivo a validar
+     * @return "true" si el archivo de audio es correcto y "false" si no lo es.
+     */
+    public boolean validar(File fichero) {
+    	AudioFileFormat fileFormat;
+    	try {
+    		fileFormat = AudioSystem.getAudioFileFormat(fichero);
+    	} catch (IOException e) {
+    		return false;
+    	} catch (UnsupportedAudioFileException e) {
+    		return false;
+    	}
+        
+        if (fileFormat instanceof TAudioFileFormat) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
