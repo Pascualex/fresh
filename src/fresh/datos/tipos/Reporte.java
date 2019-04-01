@@ -1,5 +1,7 @@
 package fresh.datos.tipos;
 
+import fresh.sistema.Sistema;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,8 @@ import java.io.Serializable;
  * infracciones de copyright por parte de otros usuarios.
  */
 public class Reporte implements Serializable {
+    private static final long serialVersionUID = Sistema.numeroVersion;
+    
     private String descripcion;
     private Usuario reportador;
     private Cancion cancionReportada;

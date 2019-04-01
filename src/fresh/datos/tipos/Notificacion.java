@@ -1,11 +1,15 @@
 package fresh.datos.tipos;
 
+import fresh.sistema.Sistema;
+
 import java.io.Serializable;
 
 /**
  * Permite trabajar con notificaciones.
  */
 public class Notificacion implements Serializable {
+    private static final long serialVersionUID = Sistema.numeroVersion;
+    
     private TipoNotificacion tipoNotificacion;
 
     /**

@@ -1,5 +1,6 @@
 package fresh.datos;
 
+import fresh.sistema.Sistema;
 import fresh.datos.tipos.*;
 import fresh.Status;
 
@@ -22,7 +23,7 @@ import java.util.List;
  * información relavante de la aplicación.</p>
  */
 public class BaseDeDatos implements Serializable {
-    static final long serialVersionUID = 0;
+    static final long serialVersionUID = Sistema.numeroVersion;
     
     private String ruta;
     private long idSiguienteCancion;

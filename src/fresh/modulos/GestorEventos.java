@@ -1,9 +1,9 @@
 package fresh.modulos;
 
+import fresh.sistema.Sistema;
 import fresh.datos.BaseDeDatos;
 import fresh.datos.tipos.*;
 import fresh.sistema.Configuracion;
-import fresh.Status;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,6 +21,8 @@ import java.util.concurrent.TimeUnit;
  * Gestiona los eventos del sistema, realizando operaciones en la base de datos.
  */
 public class GestorEventos implements Runnable, Serializable {
+    private static final long serialVersionUID = Sistema.numeroVersion;
+    
     private String ruta;
     private GregorianCalendar ultimoDiaComprobado;
     private SortedSet<ParCancionFecha> cancionesAEliminar = new TreeSet<>();

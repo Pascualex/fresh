@@ -23,6 +23,8 @@ import java.lang.Thread;
  *    necesarias para su uso.</p>
  */
 public class Sistema {
+    public static final long numeroVersion = 1;
+
     private static final String rutaBaseDeDatos = "./baseDedatos/baseDeDatos.bd";
     private static final String rutaGestorEventos = "./gestorEventos/gestorEventos";
     private static final String rutaConfiguracion = "./configuracion/configuracion.txt";
@@ -262,10 +264,16 @@ public class Sistema {
     /**
      * Elimina la canción indicada de la base de datos
      * @param cancion Canción a eliminar
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de usuario registrado.
+     * "OK" en caso contrario.
      */
-    public void eliminarCancion(Cancion cancion) {        
+    public Status eliminarCancion(Cancion cancion) {
+        if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
+
         baseDeDatos.eliminarCancion(cancion);
         usuarioActual.eliminarCancion(cancion);
+        
+        return Status.OK;
     }
 
     /**
@@ -327,10 +335,16 @@ public class Sistema {
     /**
      * Eliminar el álbum indicado de la base de datos y del usuario actual.
      * @param album Álbum a eliminar
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de usuario registrado.
+     * "OK" en caso contrario.
      */
-    public void eliminarAlbum(Album album) {
+    public Status eliminarAlbum(Album album) {
+        if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
+
         baseDeDatos.eliminarAlbum(album);
         usuarioActual.eliminarAlbum(album);
+
+        return Status.OK;
     }
 
     /**
