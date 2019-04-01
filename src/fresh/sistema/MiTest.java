@@ -16,6 +16,8 @@ public class MiTest {
 		configuracion1.setCaracteresMinimos(8);
 
         configuracion1.guardarConfiguracion();
-        System.out.println("fin");
+		
+		Configuracion configuracion2 = new Configuracion(rutaTest);
+		if (configuracion2.getNombreAdministrador().equals("Campo1")) System.out.println("Yas");
     }
 }
