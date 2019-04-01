@@ -1,9 +1,13 @@
 package fresh.datos.tipos;
 
+import fresh.sistema.Sistema;
+
 /**
  * Permite trabajar con notificaciones relacionadas con una canción.
  */
 public class NotificacionCancion extends Notificacion {
+    private static final long serialVersionUID = Sistema.numeroVersion;
+    
     private Cancion cancion;
 
     /**

@@ -1,5 +1,7 @@
 package fresh.datos.tipos;
 
+import fresh.sistema.Sistema;
+
 import java.util.List;
 import java.io.Serializable;
 
@@ -8,6 +10,8 @@ import java.io.Serializable;
  *    reproducible.</p>
  */
 public abstract class ElementoReproducible implements Serializable {
+    private static final long serialVersionUID = Sistema.numeroVersion;
+    
     private String nombre;
     private long duracion;
 

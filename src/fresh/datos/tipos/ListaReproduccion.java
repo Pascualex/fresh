@@ -1,5 +1,7 @@
 package fresh.datos.tipos;
 
+import fresh.sistema.Sistema;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -8,6 +10,8 @@ import java.util.ArrayList;
  * elemento reproducible.</p>
  */
 public class ListaReproduccion extends ElementoReproducible {
+    private static final long serialVersionUID = Sistema.numeroVersion;
+    
     private List<ElementoReproducible> elementos = new ArrayList<>();
 
     /**

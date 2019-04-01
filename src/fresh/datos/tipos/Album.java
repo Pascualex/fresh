@@ -1,5 +1,7 @@
 package fresh.datos.tipos;
 
+import fresh.sistema.Sistema;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +11,8 @@ import java.util.Collections;
  *    reproducible.</p>
  */
 public class Album extends ElementoReproducible {
+    private static final long serialVersionUID = Sistema.numeroVersion;
+    
     private List<Cancion> canciones;
     private Usuario autor;
     private int ano;

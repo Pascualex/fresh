@@ -1,5 +1,6 @@
 package fresh.datos.tipos;
 
+import fresh.sistema.Sistema;
 import fresh.Status;
 
 import java.util.Set;
@@ -14,6 +15,8 @@ import java.io.Serializable;
  * contenido y sus preferencias en el contenido de otros usuarios.
  */
 public class Usuario implements Serializable {	
+	private static final long serialVersionUID = Sistema.numeroVersion;
+	
 	private String nombre;
 	private String nombreAutor;
 	private String contrasena;
