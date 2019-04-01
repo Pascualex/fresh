@@ -4,6 +4,7 @@ import fresh.sistema.Sistema;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -101,12 +102,28 @@ public class Cancion extends ElementoReproducible {
     }
 
     /**
-     * Devuelve una lista con la canción si no está bloqueada y una lista vacía
-     * si lo está.
-     * @return Lista de canciones con la canción
+     * Devuelve una lista con la canción.
+     * @return Lista de canciones con la canción si no está bloqueada y una
+     * lista vacía si lo está.
      */
     @Override
     public List<Cancion> getCanciones() {
+        List<Cancion> canciones = new ArrayList<>();
+        if (!getBloqueado()) canciones.add(this);
+        return canciones;
+    }
+
+     /**
+     * Devuelve una lista con la canción.
+     * @param elementosExcluidos Conjunto de elementos que se deben excluir
+     * @return Lista de canciones con la canción si no está bloqueada y una
+     * lista vacía si lo está o si la canción es uno de los elementos excluidos.
+     */
+    @Override
+    public List<Cancion> getCanciones(Set<ElementoReproducible> elementosExcluidos) {
+        if (elementosExcluidos.contains(this)) return new ArrayList<>();
+        elementosExcluidos.add(this);
+
         List<Cancion> canciones = new ArrayList<>();
         if (!getBloqueado()) canciones.add(this);
         return canciones;

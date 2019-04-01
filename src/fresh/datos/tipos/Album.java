@@ -4,6 +4,7 @@ import fresh.sistema.Sistema;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.Collections;
 
 /**
@@ -73,6 +74,19 @@ public class Album extends ElementoReproducible {
      */
     @Override
     public List<Cancion> getCanciones() {
+        return Collections.unmodifiableList(canciones);
+    }
+
+    /**
+     * Devuelve una lista con todas las canciones del álbum.
+     * @param elementosExcluidos Conjunto de elementos que se deben excluir
+     * @return Lista con todas las canciones del álbum o una lista vacía si el
+     * álbum es uno de los elementos excluidos.
+     */
+    @Override
+    public List<Cancion> getCanciones(Set<ElementoReproducible> elementosExcluidos) {
+        if (elementosExcluidos.contains(this)) return new ArrayList<>();
+        elementosExcluidos.add(this);
         return Collections.unmodifiableList(canciones);
     }
 

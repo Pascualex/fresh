@@ -4,6 +4,8 @@ import fresh.sistema.Sistema;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * <p>Esta clase permite trabajar con listas de reproducción, que heredan de 
@@ -63,16 +65,31 @@ public class ListaReproduccion extends ElementoReproducible {
 
     /**
      * Devuelve una lista con todas las canciones de la lista de reproducción.
+     * Para ello llama al método principal crean un set de elementos excluidos.
      * @return Lista con todas las canciones de la lista de reproducción.
      */
     @Override
     public List<Cancion> getCanciones() {
+        return getCanciones(new HashSet<>());
+    }
+
+    /**
+     * Devuelve una lista con todas las canciones de la lista de reproducción.
+     * Propaga la lista de elementos a excluir para no repetir canciones y 
+     * evitar bucles con otras listas de reproducción.
+     * @param elementosExcluidos Conjunto de elementos que se deben excluir
+     * @return Lista con todas las canciones de la lista de reproducción.
+     */
+    @Override
+    public List<Cancion> getCanciones(Set<ElementoReproducible> elementosExcluidos) {
+        if (elementosExcluidos.contains(this)) return new ArrayList<>();
+        elementosExcluidos.add(this);
+
         List<Cancion> canciones = new ArrayList<>();
-        for (ElementoReproducible e : elementos) {
-        	canciones.add((Cancion)e);
-            //canciones.addAll(e.getCanciones());
+        for (ElementoReproducible e : elementos) {        	
+            canciones.addAll(e.getCanciones());
         }
-        return canciones;
-        
+
+        return canciones;        
     }
 }

@@ -3,6 +3,8 @@ package fresh.datos.tipos;
 import fresh.sistema.Sistema;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
 import java.io.Serializable;
 
 /**
@@ -60,4 +62,11 @@ public abstract class ElementoReproducible implements Serializable {
      * @return Lista con las canciones del elemento reproducible
      */
     public abstract List<Cancion> getCanciones();
+
+    /**
+     * Devuelve una lista con las canciones del elemento reproducible.
+     * @param elementosExcluidos Conjunto de elementos que se deben excluir
+     * @return Lista con las canciones del elemento reproducible
+     */
+    public abstract List<Cancion> getCanciones(Set<ElementoReproducible> elementosExcluidos);
 }
