@@ -182,7 +182,7 @@ public class Configuracion {
 
             String linea;
             String[] palabras;
-
+            
             linea = buffer.readLine();
             if (linea == null) throw new IOException();
             palabras = linea.split(" ");
@@ -200,12 +200,6 @@ public class Configuracion {
             palabras = linea.split(" ");
             if (!Objects.equals(palabras[0], "EDAD_MINIMA")) throw new IOException();
             edadMinima = Integer.parseInt(palabras[1]);
-
-            linea = buffer.readLine();
-            if (linea == null) throw new IOException();
-            palabras = linea.split(" ");
-            if (!Objects.equals(palabras[0], "MAX_REPRODUCCIONES_ANONIMO")) throw new IOException();
-            maxReproduccionesAnonimo = Integer.parseInt(palabras[1]);
 
             linea = buffer.readLine();
             if (linea == null) throw new IOException();
@@ -236,7 +230,7 @@ public class Configuracion {
             palabras = linea.split(" ");
             if (!Objects.equals(palabras[0], "CARACTERES_MINIMOS")) throw new IOException();
             caracteresMinimos = Integer.parseInt(palabras[1]);
-
+            
             return Status.OK;
         } catch (IOException e) {
             return Status.ERROR_CARGAR;
@@ -248,11 +242,11 @@ public class Configuracion {
     /**
      * Guarda en el fichero de configuración los nuevos parámetros.
      */
-    public void guardarConfiguracion() {
+    public void guardarConfiguracion() {        
         try (FileOutputStream stream = new FileOutputStream(ruta);
              OutputStreamWriter writer = new OutputStreamWriter(stream);
              BufferedWriter buffer = new BufferedWriter(writer);) {
-
+                 
             buffer.write("NOMBRE_ADMINISTRADOR " + nombreAdministrador + "\n");
             buffer.write("CONTRASENA_ADMINISTRADOR " + contrasenaAdministrador + "\n");
             buffer.write("EDAD_MINIMA " + edadMinima + "\n");

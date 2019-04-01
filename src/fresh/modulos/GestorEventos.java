@@ -153,17 +153,14 @@ public class GestorEventos implements Runnable, Serializable {
     }
 
     private class ParCancionFecha implements Serializable, Comparable<ParCancionFecha> {
+        private static final long serialVersionUID = Sistema.numeroVersion;
+
         Cancion cancion;
         GregorianCalendar fecha;
     
         public ParCancionFecha(Cancion cancion) {
             this.cancion = cancion;
             fecha = new GregorianCalendar();
-        }
-    
-        public ParCancionFecha(Cancion cancion, GregorianCalendar fecha) {
-            this.cancion = cancion;
-            this.fecha = fecha;
         }
     
         @Override
@@ -173,17 +170,14 @@ public class GestorEventos implements Runnable, Serializable {
     }
 
     private class ParUsuarioFecha implements Serializable, Comparable<ParUsuarioFecha> {
+    private static final long serialVersionUID = Sistema.numeroVersion;
+
         Usuario usuario;
         GregorianCalendar fecha;
     
         public ParUsuarioFecha(Usuario usuario) {
             this.usuario = usuario;
             fecha = new GregorianCalendar();
-        }
-    
-        public ParUsuarioFecha(Usuario usuario, GregorianCalendar fecha) {
-            this.usuario = usuario;
-            this.fecha = fecha;
         }
     
         @Override
