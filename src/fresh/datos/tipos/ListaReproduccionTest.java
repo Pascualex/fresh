@@ -28,9 +28,6 @@ public class ListaReproduccionTest {
 		c.setEstado(EstadoCancion.VALIDADA);
 		lr.anadirElemento(c);
 		lista.add(c);
-	
-		System.out.println("lista:"+lista);
-		System.out.println("lr:"+lr.getCanciones());
 		
 		assertEquals(lista, lr.getCanciones());
 	}
