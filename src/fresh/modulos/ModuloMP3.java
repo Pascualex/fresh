@@ -1,9 +1,12 @@
 package fresh.modulos;
 
 import fresh.sistema.Configuracion;
+
 import fresh.sistema.ModoEjecucion;
 import fresh.datos.tipos.*;
-
+import javazoom.jl.decoder.Bitstream;
+import javazoom.jl.decoder.BitstreamException;
+import javazoom.jl.decoder.Header;
 import javazoom.jl.player.Player;
 
 import java.util.List;
@@ -31,9 +34,11 @@ public class ModuloMP3 implements Runnable {
     private int posicionActual;
     private Cancion cancionActual;
     private Player player;
+    private boolean parar;
 
     /**
      * Instancia un módulo MP3 con la configuración especificada.
+     * @param ruta Ruta de los ficheros MP3
      * @param configuracion Configuración de la aplicación
      */
     public ModuloMP3(String ruta, Configuracion configuracion) {
@@ -43,14 +48,17 @@ public class ModuloMP3 implements Runnable {
         posicionActual = -1;
         reproduciendo = false;
         nuevaCancion = false;
+        parar = false;
     }
 
     @Override
     public void run() {
-        try {
-            while (true) {       
+        try {        	
+            while (!parar) {
+            	System.out.print(""); // Medida temporal para evitar "optimizaciones" de Java
                 if (reproduciendo) {
-                    if (player.play(1)) {
+                    if (!player.play(1)) {
+                    	player = null;
                         reproduciendo = false;
                         nuevaCancion = true;
                     }
@@ -86,20 +94,34 @@ public class ModuloMP3 implements Runnable {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Añade las canciones al reproductor.
+     * @param canciones Canciones a añadir al reproductor
+     */
     public void anadirCanciones(List<Cancion> canciones) {
         this.canciones.addAll(canciones);
+        nuevaCancion = true;
     }
 
+    /**
+     * Activa la reproducción de MP3.
+     */
     public void reproducir() {
-        if (player == null) return;
+    	if (player == null) return;
         reproduciendo = true;
     }
 
+    /**
+     * Pausa la reproducción de MP3.
+     */
     public void pausar() {
         reproduciendo = false;
     }
 
+    /**
+     * Reinicia la canción actual.
+     */
     public void reiniciar() {
         if (posicionActual < 0) return;
         reproduciendo = false;
@@ -107,11 +129,17 @@ public class ModuloMP3 implements Runnable {
         posicionActual--;
     }
 
+    /**
+     * Avanza a la siguiente canción.
+     */
     public void avanzar() {
         reproduciendo = false;
         nuevaCancion = true;
     }
 
+    /**
+     * Retrocede a la anterior canción.
+     */
     public void retroceder() {
         if (posicionActual < 1) return;
         reproduciendo = false;
@@ -153,26 +181,20 @@ public class ModuloMP3 implements Runnable {
      * @param fichero Archivo de audio
      * @return Duración del fichero de audio en segundos.
      */
-    public static long obtenerDuracion(File fichero) {
-    	long sec;
-    	try {
-	    	AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(fichero);
-	        
-	        if (fileFormat instanceof TAudioFileFormat) {
-	            Map<?, ?> properties = ((TAudioFileFormat) fileFormat).properties();
-	            String key = "duration";
-	            Long microseconds = (Long) properties.get(key);
-	            long mili = (long) (microseconds / 1000);
-	            sec = (mili / 1000) % 60;
-	        } else {
-	            throw new UnsupportedAudioFileException();
-	        }
-        } catch (UnsupportedAudioFileException e) {
-        	return -1;
-        } catch (IOException e) {
-        	return -1;
+    public static double obtenerDuracion(File fichero) {
+    	FileInputStream fis;
+        Bitstream bitstream;
+        Header h = null;
+        long tn = 0;
+        try {
+        	fis = new FileInputStream(fichero);
+        	bitstream = new Bitstream(fis);
+            h = bitstream.readFrame();
+            tn = fis.getChannel().size();
+        } catch (Exception e) {
+
         }
-        return sec;
+        return h.total_ms((int) tn)/1000;
     }
     
     /**
@@ -189,11 +211,18 @@ public class ModuloMP3 implements Runnable {
     	} catch (UnsupportedAudioFileException e) {
     		return false;
     	}
-        
+    	
         if (fileFormat instanceof TAudioFileFormat) {
             return true;
         } else {
             return false;
         }
+    }
+    
+    /**
+     * Finaliza la ejecución del hilo.
+     */
+    public synchronized void finalizar() {
+    	parar = true;
     }
 }

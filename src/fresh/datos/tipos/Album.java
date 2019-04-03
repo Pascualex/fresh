@@ -21,7 +21,7 @@ public class Album extends ElementoReproducible {
     /**
      * Crea un álbum dadas sus características.
      * @param nombre Nombre del álbum
-     * @param Autor Usuario autor del álbum
+     * @param autor Usuario autor del álbum
      * @param ano Año de publicación del álbum
      * @param canciones Lista de canciones que componen el álbum
      */

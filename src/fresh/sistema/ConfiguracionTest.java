@@ -4,11 +4,15 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ * Este test hace una comprobación general de la correcta persistencia de la
+ * configuración entre diferentes sesiones.
+ */
 public class ConfiguracionTest {
 	private static final String rutaTest = "./configuracionTest.txt";
 
 	@Test
-	public void testGuardarConfiguracion() {
+	public void Configuracion() {
 		Configuracion configuracion1 = new Configuracion(rutaTest);
 
 		configuracion1.setNombreAdministrador("Campo1");

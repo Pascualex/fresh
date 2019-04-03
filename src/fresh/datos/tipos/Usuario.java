@@ -224,7 +224,7 @@ public class Usuario implements Serializable {
 
 	/**
 	 * Añade un album al conjunto de álbumes del usuario
-	 * @param album Álbum a añadir
+	 * @param album Album a añadir
 	 */
 	public void anadirAlbum(Album album) {
 		albumes.add(album);
@@ -232,7 +232,7 @@ public class Usuario implements Serializable {
 
 	/**
 	 * Elimina un album del conjunto de álbumes del usuario
-	 * @param album Álbum a eliminar
+	 * @param album Album a eliminar
 	 */
 	public void eliminarAlbum(Album album) {
 		albumes.remove(album);

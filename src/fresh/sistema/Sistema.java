@@ -10,6 +10,11 @@ import es.uam.eps.padsof.telecard.OrderRejectedException;
 import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
@@ -80,7 +85,7 @@ public class Sistema {
             return Status.OK;
         }
 
-        Usuario usuario = baseDeDatos.buscarUsuario(nombre);
+        Usuario usuario = baseDeDatos.buscarUsuarioNombre(nombre);
         if (usuario == null) return Status.NOMBRE_INVALIDO;
         if (usuario.getBloqueado()) return Status.USUARIO_BLOQUEADO;
         if (!Objects.equals(contrasena, usuario.getContrasena())) return Status.CONTRASENA_INVALIDA;
@@ -249,13 +254,23 @@ public class Sistema {
         if (!ModuloMP3.validar(fichero)) return Status.MP3_INVALIDO;
 
         long id = baseDeDatos.getIdSiguienteCancion();
-        long duracion = ModuloMP3.obtenerDuracion(fichero);
+        long duracion = (long) ModuloMP3.obtenerDuracion(fichero);
         Cancion cancion = new Cancion(nombre, duracion, usuarioActual, id);
 
         Status status = baseDeDatos.anadirCancion(cancion);
         if (status == Status.OK) {
             usuarioActual.anadirCancion(cancion);
-            fichero.renameTo(new File(rutaFicherosMP3 + id + ".mp3"));
+            
+            try (InputStream input = new FileInputStream(fichero);
+            	 OutputStream output = new FileOutputStream(new File(rutaFicherosMP3 + id + ".mp3"));) {
+                byte[] buf = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = input.read(buf)) > 0) {
+                    output.write(buf, 0, bytesRead);
+                }
+            } catch (IOException e) {
+            	
+            }
         }
 
         return status;
@@ -334,7 +349,7 @@ public class Sistema {
 
     /**
      * Eliminar el álbum indicado de la base de datos y del usuario actual.
-     * @param album Álbum a eliminar
+     * @param album Album a eliminar
      * @return "OPERACION_INACCESIBLE" si la sesión no es de usuario registrado.
      * "OK" en caso contrario.
      */
@@ -428,6 +443,14 @@ public class Sistema {
         if (modoEjecucion != ModoEjecucion.REGISTRADO) return null;
         
         return usuarioActual.getNotificaciones();
+    }
+    
+    /**
+     * Devuelve la lista de las canciones pendientes de validar.
+     * @return Lista de las canciones pendientes de validar.
+     */
+    public List<Cancion> obtenerNuevasCanciones() {
+    	return baseDeDatos.obtenerNuevasCanciones();
     }
 
     /**
@@ -694,10 +717,14 @@ public class Sistema {
         return Status.OK;
     }
 
+    /**
+     * Cierra el sistema, deteniendo los hilos paralelos de ejecución.
+     */
     public void cerrarSistema() {
         baseDeDatos.guardarEnDisco();
-        gestorEventos.guardarInformacion();
-        hiloGestorEventos.stop();
-        hiloModuloMP3.stop();        
+        gestorEventos.guardarInformacion();        
+        moduloMP3.finalizar();
+        hiloGestorEventos.interrupt();
+        gestorEventos.finalizar();
     }
 }

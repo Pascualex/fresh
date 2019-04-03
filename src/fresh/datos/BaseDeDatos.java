@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,6 +52,18 @@ public class BaseDeDatos implements Serializable {
         return Status.OK;
     }
 
+    /**
+     * Busca un usuario en la base de datos.
+     * @param nombre Nombre del usuario a buscar
+     * @return Usuario con el nombre especificado.
+     */
+    public Usuario buscarUsuarioNombre(String nombre) {
+    	for (Usuario u : usuarios.values()) {
+    		if (Objects.equals(u.getNombre(), nombre)) return u;
+    	}
+        return null;
+    }
+    
     /**
      * Busca un usuario en la base de datos.
      * @param nombreAutor Nombre de autor del usuario a buscar
@@ -146,10 +159,24 @@ public class BaseDeDatos implements Serializable {
             }
         }
     }
+    
+    /**
+     * Devuelve la lista de las canciones pendientes de validar.
+     * @return Lista de las canciones pendientes de validar.
+     */
+    public List<Cancion> obtenerNuevasCanciones() {
+    	List<Cancion> nuevasCanciones = new ArrayList<>();
+    	
+    	for (Cancion c : canciones.values()) {
+    		if (c.getEstado() == EstadoCancion.PENDIENTE_VALIDACION) nuevasCanciones.add(c);
+    	}
+    	
+    	return nuevasCanciones;
+    }
 
     /**
      * Añade un álbum a la base de datos.
-     * @param album Álbum a añadir
+     * @param album Album a añadir
      * @return "ALBUM_REPETIDO" si el álbum ya estaba en la base de datos.
      * "OK" en caso contrario.
      */
@@ -178,7 +205,7 @@ public class BaseDeDatos implements Serializable {
     /**
      * Elimina un álbum de la base de datos, eliminando a su vez todas las
      * referencias que otros elementos tienen de él.
-     * @param album Álbum a eliminar
+     * @param album Album a eliminar
      */
     public void eliminarAlbum(Album album) {
         albumes.remove(album.getNombre());

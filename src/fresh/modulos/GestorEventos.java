@@ -32,12 +32,14 @@ public class GestorEventos implements Runnable, Serializable {
     private BaseDeDatos baseDeDatos;
     private Configuracion configuracion;
     static final long msDia = 86400000;
+    private boolean parar;
 
     private GestorEventos(BaseDeDatos baseDeDatos, Configuracion configuracion, String ruta) {
         this.baseDeDatos = baseDeDatos;
         this.configuracion = configuracion;
         this.ruta = ruta;
         ultimoDiaComprobado = new GregorianCalendar();
+        parar = false;
     }
 
     /**
@@ -79,11 +81,12 @@ public class GestorEventos implements Runnable, Serializable {
      */
     public void run() {
         try {
-            while (true) {
+            while (!parar) {
                 GregorianCalendar fecha_actual = new GregorianCalendar();
                 
                 if (fecha_actual.getTimeInMillis()-ultimoDiaComprobado.getTimeInMillis() < msDia) {
                     TimeUnit.SECONDS.sleep(5*60+(fecha_actual.getTimeInMillis()-msDia)/1000);
+                    if (parar) break;
                 }
                 
                 fecha_actual = new GregorianCalendar();
@@ -136,6 +139,7 @@ public class GestorEventos implements Runnable, Serializable {
      * datos y la base de datos asociada al gestor. Si no puede cargar los datos 
      * en la ruta especificada devuelve un nuevo gestor de eventos.
      * @param baseDeDatos Base de datos asociada con el gestor
+     * @param configuracion Configuración del sistema
      * @param ruta Ruta del gestor de eventos
      * @return Gestor de eventos con la información cargada.
      */
@@ -147,9 +151,9 @@ public class GestorEventos implements Runnable, Serializable {
         } catch (FileNotFoundException e) {
             return new GestorEventos(baseDeDatos, configuracion, ruta);
         } catch (IOException e) {
-            return null;
+        	return new GestorEventos(baseDeDatos, configuracion, ruta);
         } catch (ClassNotFoundException e) {
-            return null;
+        	return new GestorEventos(baseDeDatos, configuracion, ruta);
         }
     }
 
@@ -166,6 +170,13 @@ public class GestorEventos implements Runnable, Serializable {
         }
     }
 
+    /**
+     * Finaliza la ejecución del hilo.
+     */
+    public void finalizar() {
+    	parar = true;
+    }
+    
     private class ParCancionFecha implements Serializable, Comparable<ParCancionFecha> {
         private static final long serialVersionUID = Sistema.numeroVersion;
 
