@@ -58,7 +58,7 @@ public class BaseDeDatosTest {
         
         bd.anadirUsuario(u1);
         
-        l2.addAll(bd.buscarUsuarios("nombreAutor"));
+        l2.addAll(bd.buscarAutores("nombreAutor"));
 
         assertEquals(l1, l2);
     }

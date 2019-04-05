@@ -85,7 +85,7 @@ public class Sistema {
             return Status.OK;
         }
 
-        Usuario usuario = baseDeDatos.buscarUsuarioNombre(nombre);
+        Usuario usuario = baseDeDatos.buscarUsuario(nombre);
         if (usuario == null) return Status.NOMBRE_INVALIDO;
         if (usuario.getBloqueado()) return Status.USUARIO_BLOQUEADO;
         if (!Objects.equals(contrasena, usuario.getContrasena())) return Status.CONTRASENA_INVALIDA;
@@ -207,7 +207,7 @@ public class Sistema {
      * como argumento.
      */
     public List<Usuario> buscarAutores(String nombreAutor) {
-        return baseDeDatos.buscarUsuarios(nombreAutor);
+        return baseDeDatos.buscarAutores(nombreAutor);
     }
 
     /**
@@ -260,7 +260,8 @@ public class Sistema {
         Status status = baseDeDatos.anadirCancion(cancion);
         if (status == Status.OK) {
             usuarioActual.anadirCancion(cancion);
-            
+            baseDeDatos.anadirNuevaCancion(cancion);
+
             try (InputStream input = new FileInputStream(fichero);
             	 OutputStream output = new FileOutputStream(new File(rutaFicherosMP3 + id + ".mp3"));) {
                 byte[] buf = new byte[1024];
@@ -446,10 +447,10 @@ public class Sistema {
     }
     
     /**
-     * Devuelve la lista de las canciones pendientes de validar.
-     * @return Lista de las canciones pendientes de validar.
+     * Devuelve el conjunto de las canciones pendientes de validar.
+     * @return Conjunto de las canciones pendientes de validar.
      */
-    public List<Cancion> obtenerNuevasCanciones() {
+    public Set<Cancion> obtenerNuevasCanciones() {
     	return baseDeDatos.obtenerNuevasCanciones();
     }
 
@@ -468,7 +469,10 @@ public class Sistema {
         cancion.setEstado(estado);
         gestorEventos.cancelarEliminacionCancion(cancion);
         
-        if (estado == EstadoCancion.VALIDADA || estado == EstadoCancion.VALIDADA_EXPLICITA) {
+        if (estado == EstadoCancion.PENDIENTE_VALIDACION) {
+            baseDeDatos.anadirNuevaCancion(cancion);
+        } else if (estado == EstadoCancion.VALIDADA || estado == EstadoCancion.VALIDADA_EXPLICITA) {
+            baseDeDatos.eliminarNuevaCancion(cancion);
             NotificacionCancion notificacionAutor;
             if (estado == EstadoCancion.VALIDADA) {
                 notificacionAutor = new NotificacionCancion(TipoNotificacion.CANCION_VALIDADA, cancion);
@@ -482,6 +486,7 @@ public class Sistema {
                 seguidor.anadirNotificacion(notificacionSeguidor);
             }
         } else if (estado == EstadoCancion.RECHAZADA_REVISABLE) {
+            baseDeDatos.eliminarNuevaCancion(cancion);
             gestorEventos.programarEliminacionCancion(cancion);
             NotificacionCancion notificacion = new NotificacionCancion(TipoNotificacion.CANCION_RECHAZADA, cancion);
             cancion.getAutor().anadirNotificacion(notificacion);

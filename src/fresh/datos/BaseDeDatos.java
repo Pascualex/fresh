@@ -11,13 +11,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * <p>Esta clase permite trabajar con una base de datos de la mayoría de
@@ -30,9 +31,12 @@ public class BaseDeDatos implements Serializable {
     private long idSiguienteCancion;
 
     private Map<String, Usuario> usuarios = new HashMap<>();
+    private Map<String, Usuario> autores = new HashMap<>();    
     private List<Reporte> reportes = new ArrayList<>();
     private Map<String, Cancion> canciones = new HashMap<>();
     private Map<String, Album> albumes = new HashMap<>();
+
+    private Set<Cancion> nuevasCanciones = new HashSet<>();
 
     private BaseDeDatos(String ruta) {
         this.ruta = ruta;
@@ -46,9 +50,11 @@ public class BaseDeDatos implements Serializable {
      * "OK" en caso contario.
      */
     public Status anadirUsuario(Usuario usuario) {
-        if (usuarios.containsKey(usuario.getNombreAutor())) return Status.USUARIO_REPETIDO; 
+        if (usuarios.containsKey(usuario.getNombre())) return Status.USUARIO_REPETIDO;
+        if (autores.containsKey(usuario.getNombreAutor())) return Status.USUARIO_REPETIDO; 
 
-        usuarios.put(usuario.getNombreAutor(), usuario);
+        usuarios.put(usuario.getNombre(), usuario);
+        autores.put(usuario.getNombreAutor(), usuario);
         return Status.OK;
     }
 
@@ -57,34 +63,31 @@ public class BaseDeDatos implements Serializable {
      * @param nombre Nombre del usuario a buscar
      * @return Usuario con el nombre especificado.
      */
-    public Usuario buscarUsuarioNombre(String nombre) {
-    	for (Usuario u : usuarios.values()) {
-    		if (Objects.equals(u.getNombre(), nombre)) return u;
-    	}
-        return null;
+    public Usuario buscarUsuario(String nombre) {
+    	return usuarios.get(nombre);
     }
     
     /**
-     * Busca un usuario en la base de datos.
+     * Busca un autor en la base de datos.
      * @param nombreAutor Nombre de autor del usuario a buscar
      * @return Usuario con el nombre de autor especificado.
      */
-    public Usuario buscarUsuario(String nombreAutor) {
-        return usuarios.get(nombreAutor);
+    public Usuario buscarAutor(String nombreAutor) {
+        return autores.get(nombreAutor);
     }
 
     /**
-     * Busca usuarios en la base de datos dado su nombre.
+     * Busca autores en la base de datos dado su nombre.
      * @param nombreAutor Nombre a partir del que se buscará
      * @return Lista con los usuarios cuyos nombres de autor contienen el pasado
      * por argumento.
      */
-    public List<Usuario> buscarUsuarios(String nombreAutor) {
+    public List<Usuario> buscarAutores(String nombreAutor) {
         List<Usuario> lista = new ArrayList<>();
-        for (Usuario usuario : usuarios.values()) {
-            if (usuario.getBloqueado()) continue;
-            if (!usuario.getNombreAutor().contains(nombreAutor)) continue;
-            lista.add(usuario);
+        for (Usuario autor : autores.values()) {
+            if (autor.getBloqueado()) continue;
+            if (!autor.getNombreAutor().contains(nombreAutor)) continue;
+            lista.add(autor);
         }
         return lista;
     }
@@ -161,16 +164,26 @@ public class BaseDeDatos implements Serializable {
     }
     
     /**
-     * Devuelve la lista de las canciones pendientes de validar.
-     * @return Lista de las canciones pendientes de validar.
+     * Añade una canción al conjunto de nuevas canciones.
+     * @param cancion Canción a añadir al conjunto de nuevas canciones
      */
-    public List<Cancion> obtenerNuevasCanciones() {
-    	List<Cancion> nuevasCanciones = new ArrayList<>();
-    	
-    	for (Cancion c : canciones.values()) {
-    		if (c.getEstado() == EstadoCancion.PENDIENTE_VALIDACION) nuevasCanciones.add(c);
-    	}
-    	
+    public void anadirNuevaCancion(Cancion cancion) {
+        nuevasCanciones.add(cancion);
+    }
+
+    /**
+     * Elimina una canción del conjunto de nuevas canciones.
+     * @param cancion Canción a eliminar del conjunto de nuevas canciones
+     */
+    public void eliminarNuevaCancion(Cancion cancion) {
+        nuevasCanciones.remove(cancion);
+    }
+
+    /**
+     * Devuelve el conjunto de las canciones pendientes de validar.
+     * @return Conjunto de las canciones pendientes de validar.
+     */
+    public Set<Cancion> obtenerNuevasCanciones() {
     	return nuevasCanciones;
     }
 
