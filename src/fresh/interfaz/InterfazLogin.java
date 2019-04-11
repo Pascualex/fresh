@@ -3,8 +3,12 @@ package fresh.interfaz;
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-public class Interfaz extends JFrame {
+public class InterfazLogin extends JFrame {
     private static final int anchura = 1200;
     private static final int altura = 800;
 
@@ -28,10 +32,10 @@ public class Interfaz extends JFrame {
     private JCustomButton botonRegistrarseInicio;
 
     public static void main(String[] args) {
-        Interfaz interfaz = new Interfaz();
+        InterfazLogin InterfazLogin = new InterfazLogin();
     }
 
-    public Interfaz() {
+    public InterfazLogin() {
         super("Swing");
 
         // Configura la ventana principal
@@ -93,6 +97,15 @@ public class Interfaz extends JFrame {
         entradaNombreInicio.setShadowSize(5);
         entradaNombreInicio.setShadowOpacity(0.2f);
         panelInicioSesion.add(entradaNombreInicio);
+        entradaNombreInicio.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {
+                entradaNombreInicio.setText("");
+            }
+            public void focusLost(FocusEvent e) {
+                if (entradaNombreInicio.getText().isEmpty())
+                    entradaNombreInicio.setText("Usuario");
+            }      
+        });        
 
         entradaContrasenaInicio = new JCustomPasswordField(10);
         entradaContrasenaInicio.setBounds(380, 430, anchura-760, 80);
