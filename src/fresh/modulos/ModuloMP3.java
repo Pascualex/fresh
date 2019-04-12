@@ -5,12 +5,10 @@ import fresh.sistema.Configuracion;
 import fresh.sistema.ModoEjecucion;
 import fresh.datos.tipos.*;
 import javazoom.jl.decoder.Bitstream;
-import javazoom.jl.decoder.BitstreamException;
 import javazoom.jl.decoder.Header;
 import javazoom.jl.player.Player;
 
 import java.util.List;
-import java.util.Map;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
