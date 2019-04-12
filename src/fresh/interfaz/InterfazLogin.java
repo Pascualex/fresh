@@ -17,6 +17,7 @@ public class InterfazLogin extends JFrame {
     private static final Color colorPrimario = new Color(210, 220, 220);
     private static final Color colorSecundario = new Color(20, 160, 200);
     private static final Color colorTexto = new Color(40, 40, 40);
+    private static final Color colorPlaceholder = new Color(120, 120, 120);
     private static final Color colorBotonMinimizar = new Color(220, 220, 220);
     private static final Color colorBotonCerrar = new Color(220, 10, 10);
 
@@ -87,30 +88,25 @@ public class InterfazLogin extends JFrame {
         textoNombreAplicacion.setHorizontalAlignment(JLabel.CENTER);
         panelInicioSesion.add(textoNombreAplicacion);
 
-        entradaNombreInicio = new JCustomTextField("Usuario", 10);
+        entradaNombreInicio = new JCustomTextField("", 10);
+        entradaNombreInicio.setPlaceholder("Usuario");
         entradaNombreInicio.setBounds(380, 330, anchura-760, 80);
         entradaNombreInicio.setFont(new Font(fuentePredeterminada, Font.PLAIN, 25));
         entradaNombreInicio.setForeground(colorTexto);
+        entradaNombreInicio.setPlaceholderColor(colorPlaceholder);
         entradaNombreInicio.setBackground(colorPrimario);
         entradaNombreInicio.setMarginSize(25);
         entradaNombreInicio.setCornerRadius(70);
         entradaNombreInicio.setShadowSize(5);
         entradaNombreInicio.setShadowOpacity(0.2f);
         panelInicioSesion.add(entradaNombreInicio);
-        entradaNombreInicio.addFocusListener(new FocusListener() {
-            public void focusGained(FocusEvent e) {
-                entradaNombreInicio.setText("");
-            }
-            public void focusLost(FocusEvent e) {
-                if (entradaNombreInicio.getText().isEmpty())
-                    entradaNombreInicio.setText("Usuario");
-            }      
-        });        
 
         entradaContrasenaInicio = new JCustomPasswordField(10);
+        entradaContrasenaInicio.setPlaceholder("Contraseña");
         entradaContrasenaInicio.setBounds(380, 430, anchura-760, 80);
-        entradaContrasenaInicio.setFont(new Font(fuentePredeterminada, Font.PLAIN, 20));
+        entradaContrasenaInicio.setFont(new Font(fuentePredeterminada, Font.PLAIN, 25));
         entradaContrasenaInicio.setForeground(colorTexto);
+        entradaContrasenaInicio.setPlaceholderColor(colorPlaceholder);
         entradaContrasenaInicio.setBackground(colorPrimario);
         entradaContrasenaInicio.setMarginSize(25);
         entradaContrasenaInicio.setCornerRadius(70);

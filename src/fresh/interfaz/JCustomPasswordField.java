@@ -9,6 +9,8 @@ public class JCustomPasswordField extends JPasswordField {
     private int cornerRadius;    
     private int shadowSize;
     private float shadowOpacity;
+    private String placeholder;
+    private Color placeholderColor;
 
     public JCustomPasswordField(int columns) {
         super(columns);
@@ -37,6 +39,14 @@ public class JCustomPasswordField extends JPasswordField {
         setBorder(new EmptyBorder(0, marginSize, 0, marginSize));
     }
 
+    public void setPlaceholder(String placeholder) {
+        this.placeholder = placeholder;
+    }
+
+    public void setPlaceholderColor(Color placeholderColor) {
+        this.placeholderColor = placeholderColor;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g.create();
@@ -54,8 +64,17 @@ public class JCustomPasswordField extends JPasswordField {
         g2d.setColor(getBackground());
         g2d.fillRoundRect(shadowSize, shadowSize, getWidth()-2*shadowSize, getHeight()-2*shadowSize, cornerRadius-2*shadowSize, cornerRadius-2*shadowSize);
 
-        g2d.dispose();
-
         super.paintComponent(g);
+
+        if (placeholder != null && getPassword().length == 0) {
+            if (placeholderColor != null) g2d.setColor(placeholderColor);
+            else g2d.setColor(getForeground());
+            EmptyBorder border = (EmptyBorder) getBorder();
+            int xMargin = border.getBorderInsets().left;
+            int yMargin = (getHeight()-getFont().getSize())/2;
+            g2d.drawString(placeholder, xMargin, getFont().getSize()*0.9f+yMargin);
+        }
+
+        g2d.dispose();
     }
 }
