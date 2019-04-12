@@ -17,7 +17,7 @@ public class InterfazLogin extends JFrame {
     private static final Color colorPrimario = new Color(210, 220, 220);
     private static final Color colorSecundario = new Color(20, 160, 200);
     private static final Color colorTexto = new Color(40, 40, 40);
-    private static final Color colorPlaceholder = new Color(100, 100, 100);
+    private static final Color colorPlaceholder = new Color(120, 120, 120);
     private static final Color colorBotonMinimizar = new Color(220, 220, 220);
     private static final Color colorBotonCerrar = new Color(220, 10, 10);
 
@@ -102,9 +102,11 @@ public class InterfazLogin extends JFrame {
         panelInicioSesion.add(entradaNombreInicio);
 
         entradaContrasenaInicio = new JCustomPasswordField(10);
+        entradaContrasenaInicio.setPlaceholder("Contraseña");
         entradaContrasenaInicio.setBounds(380, 430, anchura-760, 80);
-        entradaContrasenaInicio.setFont(new Font(fuentePredeterminada, Font.PLAIN, 20));
+        entradaContrasenaInicio.setFont(new Font(fuentePredeterminada, Font.PLAIN, 25));
         entradaContrasenaInicio.setForeground(colorTexto);
+        entradaContrasenaInicio.setPlaceholderColor(colorPlaceholder);
         entradaContrasenaInicio.setBackground(colorPrimario);
         entradaContrasenaInicio.setMarginSize(25);
         entradaContrasenaInicio.setCornerRadius(70);
