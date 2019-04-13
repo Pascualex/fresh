@@ -1,15 +1,7 @@
 package fresh.interfaz;
 
 import javax.swing.*;
-import javax.swing.event.AncestorListener;
-import javax.swing.event.MouseInputAdapter;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseEvent;
 
 public class InterfazMenu extends JFrame {
     private static final int anchura = 1200;
@@ -96,7 +88,8 @@ public class InterfazMenu extends JFrame {
         textoNombreAplicacion.setHorizontalAlignment(JLabel.CENTER);
         panelInicio.add(textoNombreAplicacion);
 
-        entradaBusqueda = new JCustomTextField("🔍  Busca canciones...", 10);
+        entradaBusqueda = new JCustomTextField("", 10);
+        entradaBusqueda.setPlaceholder("🔍  Busca canciones...");
         entradaBusqueda.setBounds(280, 10, anchura - 760, 80);
         entradaBusqueda.setFont(new Font(fuentePredeterminada, Font.PLAIN, 25));
         entradaBusqueda.setForeground(colorTexto);
@@ -105,15 +98,6 @@ public class InterfazMenu extends JFrame {
         entradaBusqueda.setCornerRadius(40);
         entradaBusqueda.setShadowSize(5);
         entradaBusqueda.setShadowOpacity(0.2f);
-        //Hago que el texto se borre cuando se hace click sobre el texto
-        entradaBusqueda.addFocusListener(new FocusListener() {
-            public void focusGained(FocusEvent e) {
-                entradaBusqueda.setText("");
-            }
-            public void focusLost(FocusEvent e) {
-                entradaBusqueda.setText("🔍  Busca canciones...");
-            }      
-        });
         panelInicio.add(entradaBusqueda);
 
         botonReproducir = new JCustomButton("▶");

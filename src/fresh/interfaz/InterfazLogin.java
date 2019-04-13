@@ -3,38 +3,36 @@ package fresh.interfaz;
 import javax.swing.*;
 
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class InterfazLogin extends JFrame {
-    private static final int anchura = 1200;
-    private static final int altura = 800;
+    public static final int anchura = 1200;
+    public static final int altura = 800;
 
-    private static final String fuentePredeterminada = "helvetica";
+    public static final String fuentePredeterminada = "helvetica";
 
-    private static final Color colorPrimario = new Color(210, 220, 220);
-    private static final Color colorSecundario = new Color(20, 160, 200);
-    private static final Color colorTexto = new Color(40, 40, 40);
-    private static final Color colorPlaceholder = new Color(120, 120, 120);
-    private static final Color colorBotonMinimizar = new Color(220, 220, 220);
-    private static final Color colorBotonCerrar = new Color(220, 10, 10);
+    public static final Color colorPrimario = new Color(210, 220, 220);
+    public static final Color colorSecundario = new Color(20, 160, 200);
+    public static final Color colorTexto = new Color(40, 40, 40);
+    public static final Color colorPlaceholder = new Color(120, 120, 120);
+    public static final Color colorBotonMinimizar = new Color(220, 220, 220);
+    public static final Color colorBotonCerrar = new Color(220, 10, 10);
 
-    private JPanel panelInicial;
-    private JCustomButton botonMinimizarAplicacion;
-    private JCustomButton botonCerrarAplicacion;
+    public JPanel panelInicial;
+    public JCustomButton botonMinimizarAplicacion;
+    public JCustomButton botonCerrarAplicacion;
    
-    private JPanel panelInicioSesion;
-    private JLabel textoNombreAplicacion;
-    private JCustomTextField entradaNombreInicio;
-    private JCustomPasswordField entradaContrasenaInicio;
-    private JCustomButton botonIniciarSesion;
-    private JCustomButton botonRegistrarseInicio;
+    public JPanel panelInicioSesion;
+    public JLabel textoNombreAplicacion;
+    public JCustomTextField entradaNombreInicio;
+    public JCustomPasswordField entradaContrasenaInicio;
+    public JCustomButton botonIniciarSesion;
+    public JCustomButton botonRegistrarseInicio;
 
-    public static void main(String[] args) {
-        InterfazLogin InterfazLogin = new InterfazLogin();
-    }
+    public JPanel panelMensaje;
+    public JCustomButton botonOK;
+    public JLabel textoIntroduceUsuario;
+    public JLabel textoIntroduceContrasena;
+    public JLabel textoContrasenaIncorrecta;
 
     public InterfazLogin() {
         super("Swing");
@@ -139,8 +137,51 @@ public class InterfazLogin extends JFrame {
         botonRegistrarseInicio.setShadowOpacity(0.4f);
         panelInicioSesion.add(botonRegistrarseInicio);
 
-        panelInicial.add(panelInicioSesion);
+        //Configuro el panel de los mensajes
+        panelMensaje = new JPanel();
+        panelMensaje.setBounds(200, 200, anchura-400, altura-300);
+        panelMensaje.setBackground(colorPrimario);
+        panelMensaje.setLayout(null);
+        panelMensaje.setVisible(false);
 
+        botonOK = new JCustomButton("OK");
+        botonOK.setBounds(300, 300, 200, 80);
+        botonOK.setFont(new Font(fuentePredeterminada, Font.BOLD, 25));
+        botonOK.setForeground(colorTexto);
+        botonOK.setBackground(new Color(240, 240, 100));
+        botonOK.setPressedBackgound(new Color(220, 220, 95).brighter());
+        botonOK.setCornerRadius(70);
+        botonOK.setHeight(5);       
+        botonOK.setShadowSize(5);
+        botonOK.setShadowOpacity(0.4f);
+        panelMensaje.add(botonOK);
+
+        textoIntroduceUsuario = new JLabel("Introduce tu nombre de usuario");
+        textoIntroduceUsuario.setBounds(150, 150, 500, 100);
+        textoIntroduceUsuario.setFont(new Font(fuentePredeterminada, Font.BOLD, 30));
+        textoIntroduceUsuario.setForeground(colorTexto);
+        textoIntroduceUsuario.setHorizontalAlignment(JLabel.CENTER);
+        textoIntroduceUsuario.setVisible(false);
+        panelMensaje.add(textoIntroduceUsuario);
+
+        textoIntroduceContrasena = new JLabel("Introduce tu contraseña");
+        textoIntroduceContrasena.setBounds(150, 150, 500, 100);
+        textoIntroduceContrasena.setFont(new Font(fuentePredeterminada, Font.BOLD, 30));
+        textoIntroduceContrasena.setForeground(colorTexto);
+        textoIntroduceContrasena.setHorizontalAlignment(JLabel.CENTER);
+        textoIntroduceContrasena.setVisible(false);
+        panelMensaje.add(textoIntroduceContrasena);
+
+        textoContrasenaIncorrecta = new JLabel("Contraseña incorrecta");
+        textoContrasenaIncorrecta.setBounds(150, 150, 500, 100);
+        textoContrasenaIncorrecta.setFont(new Font(fuentePredeterminada, Font.BOLD, 30));
+        textoContrasenaIncorrecta.setForeground(colorTexto);
+        textoContrasenaIncorrecta.setHorizontalAlignment(JLabel.CENTER);
+        textoContrasenaIncorrecta.setVisible(false);
+        panelMensaje.add(textoContrasenaIncorrecta);
+
+        panelInicial.add(panelInicioSesion);
+        panelInicial.add(panelMensaje);
         // Añade a la ventana principal todos los paneles
         add(panelInicial);
 
@@ -148,6 +189,5 @@ public class InterfazLogin extends JFrame {
         panelInicioSesion.setVisible(true);
         panelInicial.setVisible(true);
         setVisible(true);
-        botonIniciarSesion.repaint();
     }
 }
