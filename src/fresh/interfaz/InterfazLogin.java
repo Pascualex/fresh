@@ -32,7 +32,10 @@ public class InterfazLogin extends JFrame {
     public JCustomButton botonOK;
     public JLabel textoIntroduceUsuario;
     public JLabel textoIntroduceContrasena;
+    public JLabel textoUsuarioIncorrecto;
+    public JLabel textoUsuarioBloqueado;
     public JLabel textoContrasenaIncorrecta;
+    public JLabel textoError;
 
     public InterfazLogin() {
         super("Swing");
@@ -172,13 +175,37 @@ public class InterfazLogin extends JFrame {
         textoIntroduceContrasena.setVisible(false);
         panelMensaje.add(textoIntroduceContrasena);
 
+        textoUsuarioIncorrecto = new JLabel("Nombre de usuario incorrecto");
+        textoUsuarioIncorrecto.setBounds(150, 150, 500, 100);
+        textoUsuarioIncorrecto.setFont(new Font(fuentePredeterminada, Font.BOLD, 30));
+        textoUsuarioIncorrecto.setForeground(colorTexto);
+        textoUsuarioIncorrecto.setHorizontalAlignment(JLabel.CENTER);
+        textoUsuarioIncorrecto.setVisible(false);
+        panelMensaje.add(textoUsuarioIncorrecto);
+        
+        textoUsuarioBloqueado = new JLabel("");
+        textoUsuarioBloqueado.setBounds(150, 150, 500, 100);
+        textoUsuarioBloqueado.setFont(new Font(fuentePredeterminada, Font.BOLD, 30));
+        textoUsuarioBloqueado.setForeground(colorTexto);
+        textoUsuarioBloqueado.setHorizontalAlignment(JLabel.CENTER);
+        textoUsuarioBloqueado.setVisible(false);
+        panelMensaje.add(textoUsuarioBloqueado);
+        
         textoContrasenaIncorrecta = new JLabel("Contraseña incorrecta");
         textoContrasenaIncorrecta.setBounds(150, 150, 500, 100);
         textoContrasenaIncorrecta.setFont(new Font(fuentePredeterminada, Font.BOLD, 30));
         textoContrasenaIncorrecta.setForeground(colorTexto);
         textoContrasenaIncorrecta.setHorizontalAlignment(JLabel.CENTER);
         textoContrasenaIncorrecta.setVisible(false);
-        panelMensaje.add(textoContrasenaIncorrecta);
+        panelMensaje.add(textoContrasenaIncorrecta); 
+        
+        textoError = new JLabel("Error interno en la aplicacón");
+        textoError.setBounds(150, 150, 500, 100);
+        textoError.setFont(new Font(fuentePredeterminada, Font.BOLD, 30));
+        textoError.setForeground(colorTexto);
+        textoError.setHorizontalAlignment(JLabel.CENTER);
+        textoError.setVisible(false);
+        panelMensaje.add(textoError); 
 
         panelInicial.add(panelInicioSesion);
         panelInicial.add(panelMensaje);
