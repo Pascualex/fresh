@@ -199,7 +199,7 @@ public class InterfazLogin extends JFrame {
         textoContrasenaIncorrecta.setVisible(false);
         panelMensaje.add(textoContrasenaIncorrecta); 
         
-        textoError = new JLabel("Error interno en la aplicacón");
+        textoError = new JLabel("Error interno en la aplicación");
         textoError.setBounds(150, 150, 500, 100);
         textoError.setFont(new Font(fuentePredeterminada, Font.BOLD, 30));
         textoError.setForeground(colorTexto);

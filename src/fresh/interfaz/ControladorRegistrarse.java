@@ -12,13 +12,11 @@ import fresh.sistema.Sistema;
 public class ControladorRegistrarse {
 	
 	InterfazRegistrarse interfazRegistrarse = new InterfazRegistrarse();
+	@SuppressWarnings("unused")
 	private final Sistema sistema;
 	
 	public static void main(String[] args) {
 		Sistema sistema = new Sistema();
-		Calendar c = new GregorianCalendar();
-    	c.set(1970, 1, 1);
-    	System.out.println(sistema.registrarse("usuario1", "nombre1", "123456", c));
     	ControladorRegistrarse controladorRegistrarse = new ControladorRegistrarse(sistema);
 	}
 	
@@ -45,7 +43,8 @@ public class ControladorRegistrarse {
         
             @Override
             public void mouseClicked(MouseEvent e) {
-            	interfazRegistrarse.dispose();
+				interfazRegistrarse.dispose();
+				return;
             }
         });
 		
@@ -93,13 +92,25 @@ public class ControladorRegistrarse {
         
             @Override
             public void mouseClicked(MouseEvent e) {
-            	interfazRegistrarse.textoIntroduceUsuario.setVisible(false);
-            	interfazRegistrarse.textoIntroduceContrasena.setVisible(false);
-            	interfazRegistrarse.textoUsuarioExistente.setVisible(false);
-            	interfazRegistrarse.textoContrasenaIncorrecta.setVisible(false);
-            	interfazRegistrarse.textoError.setVisible(false);
-            	interfazRegistrarse.panelMensaje.setVisible(false);
-            	interfazRegistrarse.panelRegistrarse.setVisible(true);
+            	if (interfazRegistrarse.textoRegistroCorrecto.isVisible()) {
+                	interfazRegistrarse.dispose();
+                	@SuppressWarnings("unused")
+					ControladorLogin controladorLogin = new ControladorLogin(sistema);
+					return;                	
+            	} else {
+            		interfazRegistrarse.textoIntroduceUsuario.setVisible(false);
+                	interfazRegistrarse.textoIntroduceAutor.setVisible(false);
+                	interfazRegistrarse.textoIntroduceContrasena.setVisible(false);
+                	interfazRegistrarse.textoIntroduceFecha.setVisible(false);
+                	interfazRegistrarse.textoUsuarioExistente.setVisible(false);
+                	interfazRegistrarse.textoUsuarioIncorrecto.setVisible(false);
+                	interfazRegistrarse.textoNombreUsuarioIncorrecto.setVisible(false);
+                	interfazRegistrarse.textoContrasenaIncorrecta.setVisible(false);
+                	interfazRegistrarse.textoFechaIncorrecta.setVisible(false);
+                	interfazRegistrarse.textoError.setVisible(false);
+                	interfazRegistrarse.panelMensaje.setVisible(false);
+                	interfazRegistrarse.panelRegistrarse.setVisible(true);
+            	}
             }
         });
 		
@@ -157,7 +168,7 @@ public class ControladorRegistrarse {
                 	interfazRegistrarse.panelMensaje.setVisible(true);
                 	interfazRegistrarse.panelRegistrarse.setVisible(false);
                 	interfazRegistrarse.panelMensaje.repaint();
-                }else {
+                } else {
                 	int dia = Integer.parseInt(interfazRegistrarse.entradaFechaNacimientoDia.getText());
                 	int mes = Integer.parseInt(interfazRegistrarse.entradaFechaNacimientoMes.getText());
                 	int ano = Integer.parseInt(interfazRegistrarse.entradaFechaNacimientoAno.getText());
@@ -170,9 +181,11 @@ public class ControladorRegistrarse {
         														String.valueOf(interfazRegistrarse.entradaContrasenaInicio.getPassword()), 
         																c);
                     if (status == Status.OK) {
-                    	//Pasa al menu
-                    	interfazRegistrarse.dispose();
-                    	ControladorMenu controladorMenu = new ControladorMenu(sistema);
+                    	//Pasa al login
+                    	interfazRegistrarse.textoRegistroCorrecto.setVisible(true);
+                    	interfazRegistrarse.panelMensaje.setVisible(true);
+                    	interfazRegistrarse.panelRegistrarse.setVisible(false);
+                    	interfazRegistrarse.panelMensaje.repaint();
                     } else if (status == Status.CONTRASENA_INVALIDA) {
                     	interfazRegistrarse.textoContrasenaIncorrecta.setVisible(true);
                     	interfazRegistrarse.panelMensaje.setVisible(true);

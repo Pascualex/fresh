@@ -44,6 +44,7 @@ public class InterfazRegistrarse extends JFrame{
     public JLabel textoContrasenaIncorrecta;
     public JLabel textoFechaIncorrecta;
     public JLabel textoUsuarioExistente;
+    public JLabel textoRegistroCorrecto;
     public JLabel textoError;
     
     public InterfazRegistrarse() {
@@ -280,7 +281,15 @@ public class InterfazRegistrarse extends JFrame{
         textoUsuarioExistente.setVisible(false);
         panelMensaje.add(textoUsuarioExistente);
         
-        textoError = new JLabel("Error interno en la aplicacón");
+        textoRegistroCorrecto = new JLabel("Registro correcto");
+        textoRegistroCorrecto.setBounds(150, 150, 500, 100);
+        textoRegistroCorrecto.setFont(new Font(fuentePredeterminada, Font.BOLD, 30));
+        textoRegistroCorrecto.setForeground(colorTexto);
+        textoRegistroCorrecto.setHorizontalAlignment(JLabel.CENTER);
+        textoRegistroCorrecto.setVisible(false);
+        panelMensaje.add(textoRegistroCorrecto);
+        
+        textoError = new JLabel("Error interno en la aplicación");
         textoError.setBounds(150, 150, 500, 100);
         textoError.setFont(new Font(fuentePredeterminada, Font.BOLD, 30));
         textoError.setForeground(colorTexto);
@@ -299,8 +308,4 @@ public class InterfazRegistrarse extends JFrame{
         setVisible(true);
         
     }
-    
-   /* public static void main(String[] args) {
-    	InterfazRegistrarse interfaz= new InterfazRegistrarse();
-    }*/
 }

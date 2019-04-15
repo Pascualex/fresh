@@ -11,7 +11,8 @@ import fresh.sistema.Sistema;
 
 public class ControladorLogin {
     InterfazLogin interfazLogin = new InterfazLogin();
-    private final Sistema sistema;
+    @SuppressWarnings("unused")
+	private final Sistema sistema;
 
     public static void main(String[] args) {
     	Sistema sistema = new Sistema();
@@ -44,6 +45,7 @@ public class ControladorLogin {
             @Override
             public void mouseClicked(MouseEvent e) {
                 interfazLogin.dispose();
+                return;
             }
         });
 
@@ -138,7 +140,9 @@ public class ControladorLogin {
                     if (status == Status.OK) {
                     	//Pasa al menu
                     	interfazLogin.dispose();
-                    	ControladorMenu controladorMenu = new ControladorMenu(sistema);
+                    	@SuppressWarnings("unused")
+                        ControladorMenu controladorMenu = new ControladorMenu(sistema);
+                        return;
                     } else if (status == Status.CONTRASENA_INVALIDA) {
                     	interfazLogin.textoContrasenaIncorrecta.setVisible(true);
                         interfazLogin.panelMensaje.setVisible(true);
@@ -161,6 +165,33 @@ public class ControladorLogin {
                         interfazLogin.panelMensaje.repaint();
                     }
                 }
+            }
+        });
+        
+        interfazLogin.botonRegistrarseInicio.addMouseListener(new MouseListener(){
+        
+            @Override
+            public void mouseReleased(MouseEvent e) {            
+            }
+        
+            @Override
+            public void mousePressed(MouseEvent e) {                
+            }
+        
+            @Override
+            public void mouseExited(MouseEvent e) {                
+            }
+        
+            @Override
+            public void mouseEntered(MouseEvent e) {                
+            }
+        
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	interfazLogin.dispose();
+            	@SuppressWarnings("unused")
+                ControladorRegistrarse controladorRegistrarse = new ControladorRegistrarse(sistema);            	
+                return;
             }
         });
     }
