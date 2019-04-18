@@ -4,33 +4,36 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InterfazMenu extends JFrame {
-    private static final int anchura = 1200;
-    private static final int altura = 800;
+    public static final int anchura = 1200;
+    public static final int altura = 800;
 
-    private static final String fuentePredeterminada = "helvetica";
+    public static final String fuentePredeterminada = "helvetica";
 
-    private static final Color colorPrimario = new Color(210, 220, 220);
-    private static final Color colorSecundario = new Color(20, 160, 200);
-    private static final Color colorTexto = new Color(40, 40, 40);
-    private static final Color colorBotonMinimizar = new Color(220, 220, 220);
-    private static final Color colorBotonCerrar = new Color(220, 10, 10);
+    public static final Color colorPrimario = new Color(210, 220, 220);
+    public static final Color colorSecundario = new Color(20, 160, 200);
+    public static final Color colorTexto = new Color(40, 40, 40);
+    public static final Color colorBotonMinimizar = new Color(220, 220, 220);
+    public static final Color colorBotonCerrar = new Color(220, 10, 10);
 
-    private JPanel panelInicial;
-    private JCustomButton botonMinimizarAplicacion;
-    private JCustomButton botonCerrarAplicacion;
+    public JPanel panelInicial;
+    public JCustomButton botonMinimizarAplicacion;
+    public JCustomButton botonCerrarAplicacion;
 
-    private JPanel panelInicio;
-    private JLabel textoNombreAplicacion;
-    private JCustomTextField entradaBusqueda;
-    private JCustomButton botonReproducir;
-    private JCustomButton botonAnterior;
-    private JCustomButton botonSiguiente;
-    private JCustomButton botonInicio;
-    private JCustomButton botonPlaylist;
-    private JCustomButton botonAutores;
-    private JCustomButton botonMisCanciones;
-    private JCustomButton botonConfiguracion;
-    private JCustomButton botonCerrarSesion;
+    public JCustomComboBox seleccion;
+
+    public JPanel panelInicio;
+    public JLabel textoNombreAplicacion;
+    public JCustomTextField entradaBusqueda;
+    public JCustomButton botonReproducir;
+    public JCustomButton botonParar;
+    public JCustomButton botonAnterior;
+    public JCustomButton botonSiguiente;
+    public JCustomButton botonInicio;
+    public JCustomButton botonPlaylist;
+    public JCustomButton botonAutores;
+    public JCustomButton botonMisCanciones;
+    public JCustomButton botonConfiguracion;
+    public JCustomButton botonCerrarSesion;
 
     public static void main(String[] args) {
         InterfazMenu interfaz = new InterfazMenu();
@@ -89,8 +92,8 @@ public class InterfazMenu extends JFrame {
         panelInicio.add(textoNombreAplicacion);
 
         entradaBusqueda = new JCustomTextField("", 10);
-        entradaBusqueda.setPlaceholder("🔍  Busca canciones...");
-        entradaBusqueda.setBounds(280, 10, anchura - 760, 80);
+        entradaBusqueda.setPlaceholder("🔍  Busca...");
+        entradaBusqueda.setBounds(280, 10, anchura-760, 80);
         entradaBusqueda.setFont(new Font(fuentePredeterminada, Font.PLAIN, 25));
         entradaBusqueda.setForeground(colorTexto);
         entradaBusqueda.setBackground(colorPrimario);
@@ -99,6 +102,11 @@ public class InterfazMenu extends JFrame {
         entradaBusqueda.setShadowSize(5);
         entradaBusqueda.setShadowOpacity(0.2f);
         panelInicio.add(entradaBusqueda);
+
+        String[] opciones = {"Canciones", "Álbumes", "Autores"};
+        seleccion = new JCustomComboBox(opciones);
+        seleccion.setBounds(anchura-450, 25, 100, 50);
+        panelInicial.add(seleccion);
 
         botonReproducir = new JCustomButton("▶");
         botonReproducir.setBounds(anchura/2, 700, 100, 80);
@@ -111,6 +119,19 @@ public class InterfazMenu extends JFrame {
         botonReproducir.setShadowSize(5);
         botonReproducir.setShadowOpacity(0.4f);
         panelInicio.add(botonReproducir);
+
+        botonParar = new JCustomButton("‖");
+        botonParar.setBounds(anchura/2, 700, 100, 80);
+        botonParar.setFont(new Font(fuentePredeterminada, Font.BOLD, 35));
+        botonParar.setForeground(colorTexto);
+        botonParar.setBackground(new Color(240, 240, 100));
+        botonParar.setPressedBackgound(new Color(220, 220, 95).brighter());
+        botonParar.setCornerRadius(80);
+        botonParar.setHeight(5);       
+        botonParar.setShadowSize(5);
+        botonParar.setShadowOpacity(0.4f);
+        botonParar.setVisible(false);
+        panelInicio.add(botonParar);
 
         botonAnterior = new JCustomButton("⏪");
         botonAnterior.setBounds(anchura/2-100, 700, 100, 80);

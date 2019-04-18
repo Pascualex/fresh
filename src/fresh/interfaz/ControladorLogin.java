@@ -3,8 +3,6 @@ package fresh.interfaz;
 import java.awt.Frame;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import fresh.Status;
 import fresh.sistema.Sistema;
@@ -16,9 +14,6 @@ public class ControladorLogin {
 
     public static void main(String[] args) {
     	Sistema sistema = new Sistema();
-    	Calendar c = new GregorianCalendar();
-    	c.set(1970, 1, 1);
-    	System.out.println(sistema.registrarse("usuario1", "nombre1", "123456", c));
         ControladorLogin controladorLogin = new ControladorLogin(sistema);
     }
 
@@ -45,6 +40,7 @@ public class ControladorLogin {
             @Override
             public void mouseClicked(MouseEvent e) {
                 interfazLogin.dispose();
+                sistema.cerrarSistema();
                 return;
             }
         });
@@ -192,6 +188,42 @@ public class ControladorLogin {
             	@SuppressWarnings("unused")
                 ControladorRegistrarse controladorRegistrarse = new ControladorRegistrarse(sistema);            	
                 return;
+            }
+        });
+
+        interfazLogin.botonAnonimo.addMouseListener(new MouseListener(){
+        
+            @Override
+            public void mouseReleased(MouseEvent e) {            
+            }
+        
+            @Override
+            public void mousePressed(MouseEvent e) {                
+            }
+        
+            @Override
+            public void mouseExited(MouseEvent e) {                
+            }
+        
+            @Override
+            public void mouseEntered(MouseEvent e) {                
+            }
+        
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            	interfazLogin.dispose();
+                Status status = sistema.iniciarSesionAnonimo();
+                if (status == Status.OPERACION_INACCESIBLE) {
+                    interfazLogin.textoError.setVisible(true);
+                    interfazLogin.panelMensaje.setVisible(true);
+                    interfazLogin.panelInicioSesion.setVisible(false);
+                    interfazLogin.panelMensaje.repaint();
+                }
+                else {
+                    @SuppressWarnings("unused")
+                    ControladorMenu controladorMenu = new ControladorMenu(sistema);            	
+                    return;
+                }
             }
         });
     }

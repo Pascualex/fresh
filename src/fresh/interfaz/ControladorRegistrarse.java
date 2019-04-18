@@ -44,6 +44,7 @@ public class ControladorRegistrarse {
             @Override
             public void mouseClicked(MouseEvent e) {
 				interfazRegistrarse.dispose();
+                sistema.cerrarSistema();
 				return;
             }
         });

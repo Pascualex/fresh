@@ -27,6 +27,7 @@ public class InterfazLogin extends JFrame {
     public JCustomPasswordField entradaContrasenaInicio;
     public JCustomButton botonIniciarSesion;
     public JCustomButton botonRegistrarseInicio;
+    public JCustomButton botonAnonimo;
 
     public JPanel panelMensaje;
     public JCustomButton botonOK;
@@ -72,7 +73,7 @@ public class InterfazLogin extends JFrame {
         botonCerrarAplicacion.setCornerRadius(70);
         botonCerrarAplicacion.setHeight(5);       
         botonCerrarAplicacion.setShadowSize(5);
-        botonCerrarAplicacion.setShadowOpacity(0.4f);
+        botonCerrarAplicacion.setShadowOpacity(0.4f); 
         panelInicial.add(botonCerrarAplicacion);
 
         // Crea y configura el panel de inicio de sesión
@@ -133,12 +134,24 @@ public class InterfazLogin extends JFrame {
         botonRegistrarseInicio.setFont(new Font(fuentePredeterminada, Font.BOLD, 25));
         botonRegistrarseInicio.setForeground(colorTexto);
         botonRegistrarseInicio.setBackground(new Color(240, 240, 100));
-        botonRegistrarseInicio.setPressedBackgound(new Color(220, 220, 95).brighter());
+        botonRegistrarseInicio.setPressedBackgound(new Color(240, 240, 100).brighter());
         botonRegistrarseInicio.setCornerRadius(70);
         botonRegistrarseInicio.setHeight(5);       
         botonRegistrarseInicio.setShadowSize(5);
         botonRegistrarseInicio.setShadowOpacity(0.4f);
         panelInicioSesion.add(botonRegistrarseInicio);
+
+        botonAnonimo = new JCustomButton("Entrar como anónimo");
+        botonAnonimo.setBounds(380, 640, 285, 80);
+        botonAnonimo.setFont(new Font(fuentePredeterminada, Font.BOLD, 25));
+        botonAnonimo.setForeground(colorTexto);
+        botonAnonimo.setBackground(new Color(224, 62, 98));
+        botonAnonimo.setPressedBackgound(new Color(224, 62, 98).brighter());
+        botonAnonimo.setCornerRadius(70);
+        botonAnonimo.setHeight(5);       
+        botonAnonimo.setShadowSize(5);
+        botonAnonimo.setShadowOpacity(0.4f);
+        panelInicioSesion.add(botonAnonimo);
 
         //Configuro el panel de los mensajes
         panelMensaje = new JPanel();
