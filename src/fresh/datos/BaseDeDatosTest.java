@@ -23,9 +23,9 @@ public class BaseDeDatosTest {
     
     @Test
     public void testEncontrarUsuarios1() {
-        Usuario u1 = new Usuario("nombre1", "nombreAutor1", "a", new GregorianCalendar());
-        Usuario u2 = new Usuario("nombre2", "nombreAutor2", "a", new GregorianCalendar());
-        Usuario u3 = new Usuario("nombre3", "nombreAutor3", "a", new GregorianCalendar());
+        Usuario u1 = new Usuario("nombre1", "nombreAutor1", "aaaaaaaaaa", new GregorianCalendar());
+        Usuario u2 = new Usuario("nombre2", "nombreAutor2", "aaaaaaaaaa", new GregorianCalendar());
+        Usuario u3 = new Usuario("nombre3", "nombreAutor3", "aaaaaaaaaa", new GregorianCalendar());
         
         List<Usuario> l1 = new ArrayList<>();
         List<Usuario> l2 = new ArrayList<>();
@@ -38,9 +38,9 @@ public class BaseDeDatosTest {
         bd.anadirUsuario(u2);
         bd.anadirUsuario(u3);
 
-        l2.add(bd.buscarUsuario("nombreAutor1"));
-        l2.add(bd.buscarUsuario("nombreAutor2"));
-        l2.add(bd.buscarUsuario("nombreAutor3"));
+        l2.add(bd.buscarUsuario("nombre1"));
+        l2.add(bd.buscarUsuario("nombre2"));
+        l2.add(bd.buscarUsuario("nombre3"));
 
         assertEquals(l1, l2);
     }
@@ -200,7 +200,7 @@ public class BaseDeDatosTest {
     
     @Test
     public void testCargarInformacion() {
-        Usuario u1 = new Usuario("nombre1", "nombreAutor1", "a", new GregorianCalendar());
+        Usuario u1 = new Usuario("nombre1", "nombreAutor1", "aaaaaaaaaa", new GregorianCalendar());
         
         bd.anadirUsuario(u1);
         
@@ -211,6 +211,6 @@ public class BaseDeDatosTest {
         File file = new File(ruta);
         file.delete();
 
-        assertEquals(u1.getNombre(), bd.buscarUsuario("nombreAutor1").getNombre());
+        assertEquals(u1.getNombre(), bd.buscarUsuario("nombre1").getNombre());
     }
 }
