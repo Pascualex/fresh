@@ -34,6 +34,7 @@ public class InterfazMenu extends JFrame {
     public JCustomButton botonMisCanciones;
     public JCustomButton botonConfiguracion;
     public JCustomButton botonCerrarSesion;
+    public JCustomButton botonBuscar;
 
     public static void main(String[] args) {
         InterfazMenu interfaz = new InterfazMenu();
@@ -58,7 +59,7 @@ public class InterfazMenu extends JFrame {
         panelInicial.setVisible(false);
 
         botonMinimizarAplicacion = new JCustomButton("");
-        botonMinimizarAplicacion.setBounds(anchura - 125, 10, 50, 55);
+        botonMinimizarAplicacion.setBounds(anchura-125, 10, 50, 55);
         botonMinimizarAplicacion.setBackground(colorBotonMinimizar);
         botonMinimizarAplicacion.setPressedBackgound(colorBotonMinimizar.brighter());
         botonMinimizarAplicacion.setCornerRadius(70);
@@ -68,7 +69,7 @@ public class InterfazMenu extends JFrame {
         panelInicial.add(botonMinimizarAplicacion);
 
         botonCerrarAplicacion = new JCustomButton("");
-        botonCerrarAplicacion.setBounds(anchura - 65, 10, 50, 55);
+        botonCerrarAplicacion.setBounds(anchura-65, 10, 50, 55);
         botonCerrarAplicacion.setBackground(colorBotonCerrar);
         botonCerrarAplicacion.setPressedBackgound(colorBotonCerrar.brighter());
         botonCerrarAplicacion.setCornerRadius(70);
@@ -92,8 +93,8 @@ public class InterfazMenu extends JFrame {
         panelInicio.add(textoNombreAplicacion);
 
         entradaBusqueda = new JCustomTextField("", 10);
-        entradaBusqueda.setPlaceholder("🔍  Busca...");
-        entradaBusqueda.setBounds(280, 10, anchura-760, 80);
+        entradaBusqueda.setPlaceholder("Busca...");
+        entradaBusqueda.setBounds(280, 10, anchura-800, 80);
         entradaBusqueda.setFont(new Font(fuentePredeterminada, Font.PLAIN, 25));
         entradaBusqueda.setForeground(colorTexto);
         entradaBusqueda.setBackground(colorPrimario);
@@ -105,7 +106,7 @@ public class InterfazMenu extends JFrame {
 
         String[] opciones = {"Canciones", "Álbumes", "Autores"};
         seleccion = new JCustomComboBox(opciones);
-        seleccion.setBounds(anchura-450, 25, 100, 50);
+        seleccion.setBounds(700, 25, 100, 50);
         panelInicial.add(seleccion);
 
         botonReproducir = new JCustomButton("▶");
@@ -216,6 +217,18 @@ public class InterfazMenu extends JFrame {
         botonConfiguracion.setShadowSize(5);
         botonConfiguracion.setShadowOpacity(0.4f);
         panelInicio.add(botonConfiguracion);
+
+        botonBuscar = new JCustomButton("🔎");
+        botonBuscar.setBounds(820, 10, 80, 80);
+        botonBuscar.setFont(new Font(fuentePredeterminada, Font.BOLD, 20));
+        botonBuscar.setForeground(colorTexto);
+        botonBuscar.setBackground(new Color(240, 240, 100));
+        botonBuscar.setPressedBackgound(new Color(220, 220, 95).brighter());
+        botonBuscar.setCornerRadius(40);
+        botonBuscar.setHeight(5);
+        botonBuscar.setShadowSize(5);
+        botonBuscar.setShadowOpacity(0.4f);
+        panelInicio.add(botonBuscar);
 
         botonCerrarSesion = new JCustomButton("Cerrar sesión");
         botonCerrarSesion.setBounds(20, 700, 200, 80);
