@@ -8,69 +8,11 @@ import fresh.Status;
 import fresh.sistema.Sistema;
 
 public class ControladorMenu {
-    private InterfazMenu interfazMenu;
-    @SuppressWarnings("unused")
-    private final Sistema sistema;
 
-    public static void main(String[] args) {
-        ControladorMenu c = new ControladorMenu(new Sistema());
-    }
+    public ControladorMenu(Sistema sistema, VistaVentana vistaVentana) {
+        VistaMenu vistaMenu = new VistaMenu();
 
-    public ControladorMenu(Sistema sistema) {
-        this.sistema = sistema;
-        interfazMenu = new InterfazMenu();
-        
-        interfazMenu.botonCerrarAplicacion.addMouseListener(new MouseListener(){
-        
-            @Override
-            public void mouseReleased(MouseEvent e) {            
-            }
-        
-            @Override
-            public void mousePressed(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseExited(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseEntered(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                interfazMenu.dispose();
-                sistema.cerrarSistema();
-                return;
-            }
-        });
-
-        interfazMenu.botonMinimizarAplicacion.addMouseListener(new MouseListener(){
-        
-            @Override
-            public void mouseReleased(MouseEvent e) {            
-            }
-        
-            @Override
-            public void mousePressed(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseExited(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseEntered(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                interfazMenu.setState(Frame.ICONIFIED);
-            }
-        });
-
-        interfazMenu.botonAnterior.addMouseListener(new MouseListener(){
+        vistaMenu.botonAnterior.addMouseListener(new MouseListener() {
         
             @Override
             public void mouseReleased(MouseEvent e) {            
@@ -94,7 +36,7 @@ public class ControladorMenu {
             }
         });
 
-        interfazMenu.botonReproducir.addMouseListener(new MouseListener(){
+        vistaMenu.botonReproducir.addMouseListener(new MouseListener() {
         
             @Override
             public void mouseReleased(MouseEvent e) {            
@@ -115,15 +57,15 @@ public class ControladorMenu {
             @Override
             public void mouseClicked(MouseEvent e) {
                 sistema.reanudarCancion();
-                interfazMenu.botonReproducir.setVisible(false);
-                interfazMenu.botonParar.setVisible(true);
+                vistaMenu.botonReproducir.setVisible(false);
+                vistaMenu.botonParar.setVisible(true);
             }
         });
 
-        interfazMenu.botonParar.addMouseListener(new MouseListener(){
+        vistaMenu.botonParar.addMouseListener(new MouseListener() {
         
             @Override
-            public void mouseReleased(MouseEvent e) {            
+            public void mouseReleased(MouseEvent e) {
             }
         
             @Override
@@ -141,12 +83,12 @@ public class ControladorMenu {
             @Override
             public void mouseClicked(MouseEvent e) {
                 sistema.pausarCancion();
-                interfazMenu.botonParar.setVisible(false);
-                interfazMenu.botonReproducir.setVisible(true);
+                vistaMenu.botonParar.setVisible(false);
+                vistaMenu.botonReproducir.setVisible(true);
             }
         });
 
-        interfazMenu.botonCerrarSesion.addMouseListener(new MouseListener(){
+        vistaMenu.botonCerrarSesion.addMouseListener(new MouseListener() {
         
             @Override
             public void mouseReleased(MouseEvent e) {            
@@ -168,9 +110,9 @@ public class ControladorMenu {
             public void mouseClicked(MouseEvent e) {
                 Status status = sistema.cerrarSesion();
                 if (status == Status.OK) {
-                    interfazMenu.dispose();
+                    vistaVentana.remove(vistaMenu);
                     @SuppressWarnings("unused")
-                    ControladorLogin controladorLogin = new ControladorLogin(sistema);
+                    ControladorInicio controladorInicio = new ControladorInicio(sistema, vistaVentana);
                     return;
                 }
             }
