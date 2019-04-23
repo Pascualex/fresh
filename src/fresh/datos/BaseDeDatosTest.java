@@ -4,13 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Test;
-import fresh.datos.*;
 import fresh.datos.tipos.*;
 
 

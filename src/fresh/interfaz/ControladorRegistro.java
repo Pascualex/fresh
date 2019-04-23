@@ -1,7 +1,7 @@
 package fresh.interfaz;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -12,27 +12,11 @@ public class ControladorRegistro {
 	
 	public ControladorRegistro(Sistema sistema, VistaVentana vistaVentana) {
 		VistaRegistro vistaRegistro = new VistaRegistro();
+		vistaVentana.add(vistaRegistro);
 		
-		vistaRegistro.botonOK.addMouseListener(new MouseListener(){
-	        
+		vistaRegistro.botonOK.addActionListener(new ActionListener(){
             @Override
-            public void mouseReleased(MouseEvent e) {            
-            }
-        
-            @Override
-            public void mousePressed(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseExited(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseEntered(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {       
             	if (vistaRegistro.textoRegistroCorrecto.isVisible()) {
                 	vistaVentana.remove(vistaRegistro);
                 	@SuppressWarnings("unused")
@@ -55,26 +39,9 @@ public class ControladorRegistro {
             }
         });
 		
-		vistaRegistro.botonRegistrarseInicio.addMouseListener(new MouseListener(){
-	        
+		vistaRegistro.botonRegistrarseInicio.addActionListener(new ActionListener(){
             @Override
-            public void mouseReleased(MouseEvent e) {            
-            }
-        
-            @Override
-            public void mousePressed(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseExited(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseEntered(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 if (vistaRegistro.entradaNombreInicio.getText().isEmpty()) {
                 	vistaRegistro.textoIntroduceUsuario.setVisible(true);
                 	vistaRegistro.textoIntroduceFecha.setVisible(false);
@@ -160,8 +127,8 @@ public class ControladorRegistro {
                     }
                 }
             }
-        });
+		});
 		
+		vistaVentana.repaint();
 	}
-
 }

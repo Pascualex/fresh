@@ -1,10 +1,7 @@
 package fresh.interfaz;
 
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import fresh.Status;
 import fresh.sistema.Sistema;
@@ -16,7 +13,6 @@ public class ControladorInicio {
         vistaVentana.add(vistaInicio);
 
         vistaInicio.botonOK.addActionListener(new ActionListener(){
-        
             @Override
             public void actionPerformed(ActionEvent e) {                
                 vistaInicio.textoIntroduceUsuario.setVisible(false);
@@ -30,26 +26,9 @@ public class ControladorInicio {
             }
         });
 
-        vistaInicio.botonIniciarSesion.addMouseListener(new MouseListener(){
-        
+        vistaInicio.botonIniciarSesion.addActionListener(new ActionListener(){
             @Override
-            public void mouseReleased(MouseEvent e) {            
-            }
-        
-            @Override
-            public void mousePressed(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseExited(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseEntered(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {       
                 if (vistaInicio.entradaNombreInicio.getText().isEmpty()) {
                     vistaInicio.textoIntroduceUsuario.setVisible(true);
                     vistaInicio.panelMensaje.setVisible(true);
@@ -94,26 +73,9 @@ public class ControladorInicio {
             }
         });
         
-        vistaInicio.botonRegistrarseInicio.addMouseListener(new MouseListener(){
-        
+        vistaInicio.botonRegistrarseInicio.addActionListener(new ActionListener(){
             @Override
-            public void mouseReleased(MouseEvent e) {            
-            }
-        
-            @Override
-            public void mousePressed(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseExited(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseEntered(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {       
             	vistaVentana.remove(vistaInicio);
             	@SuppressWarnings("unused")
                 ControladorRegistro controladorRegistro = new ControladorRegistro(sistema, vistaVentana);
@@ -121,26 +83,9 @@ public class ControladorInicio {
             }
         });
 
-        vistaInicio.botonAnonimo.addMouseListener(new MouseListener(){
-        
+        vistaInicio.botonAnonimo.addActionListener(new ActionListener(){
             @Override
-            public void mouseReleased(MouseEvent e) {            
-            }
-        
-            @Override
-            public void mousePressed(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseExited(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseEntered(MouseEvent e) {                
-            }
-        
-            @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {       
                 Status status = sistema.iniciarSesionAnonimo();
                 if (status == Status.OPERACION_INACCESIBLE) {
                     vistaInicio.textoError.setVisible(true);
@@ -154,5 +99,7 @@ public class ControladorInicio {
                 }
             }
         });
+        
+        vistaVentana.repaint();
     }
 }
