@@ -37,6 +37,15 @@ public class ControladorRegistro {
                 	vistaRegistro.panelRegistrarse.setVisible(true);
             	}
             }
+		});
+		
+		vistaRegistro.botonVolver.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {       
+            	vistaVentana.remove(vistaRegistro);
+				@SuppressWarnings("unused")
+				ControladorInicio controladorInicio = new ControladorInicio(sistema, vistaVentana);
+            }
         });
 		
 		vistaRegistro.botonRegistrarseInicio.addActionListener(new ActionListener(){

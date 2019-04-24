@@ -15,6 +15,7 @@ public class VistaRegistro extends JPanel {
     public JCustomTextField entradaFechaNacimientoAno;
     public JCustomPasswordField entradaContrasenaInicio;
     public JCustomButton botonRegistrarseInicio;
+    public JCustomButton botonVolver;
     
     public JPanel panelMensaje;
     public JCustomButton botonOK;
@@ -132,7 +133,7 @@ public class VistaRegistro extends JPanel {
         panelRegistrarse.add(entradaFechaNacimientoAno);
         
         botonRegistrarseInicio = new JCustomButton("Registrarse");
-        botonRegistrarseInicio.setBounds(Estilo.anchura-710, 600, 200, 80);
+        botonRegistrarseInicio.setBounds(Estilo.anchura-580, 600, 200, 80);
         botonRegistrarseInicio.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         botonRegistrarseInicio.setForeground(Estilo.colorTexto);
         botonRegistrarseInicio.setBackground(new Color(240, 240, 100));
@@ -142,6 +143,18 @@ public class VistaRegistro extends JPanel {
         botonRegistrarseInicio.setShadowSize(5);
         botonRegistrarseInicio.setShadowOpacity(0.4f);
         panelRegistrarse.add(botonRegistrarseInicio);
+
+        botonVolver = new JCustomButton("Volver ↩");
+        botonVolver.setBounds(Estilo.anchura-820, 600, 200, 80);
+        botonVolver.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+        botonVolver.setForeground(Estilo.colorTexto);
+        botonVolver.setBackground(new Color(224, 62, 98));
+        botonVolver.setPressedBackgound(new Color(224, 62, 98).brighter());
+        botonVolver.setCornerRadius(70);
+        botonVolver.setHeight(5);       
+        botonVolver.setShadowSize(5);
+        botonVolver.setShadowOpacity(0.4f);
+        panelRegistrarse.add(botonVolver);
         
         // Configura el panel de los mensajes
         panelMensaje = new JPanel();
