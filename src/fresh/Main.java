@@ -1,7 +1,7 @@
 package fresh;
 
 import fresh.sistema.Sistema;
-import fresh.interfaz.ControladorVentana;
+import fresh.interfaz.controladores.ControladorVentana;
 
 public class Main {
 
