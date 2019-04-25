@@ -1,10 +1,12 @@
-package fresh.interfaz;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+package fresh.interfaz.controladores;
 
 import fresh.Status;
 import fresh.sistema.Sistema;
+import fresh.interfaz.vistas.VistaVentana;
+import fresh.interfaz.vistas.VistaMenu;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ControladorMenu {
 

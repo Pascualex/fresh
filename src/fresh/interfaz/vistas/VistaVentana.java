@@ -1,8 +1,13 @@
-package fresh.interfaz;
+package fresh.interfaz.vistas;
+
+import fresh.interfaz.Estilo;
+import fresh.interfaz.swing.*;
 
 import javax.swing.*;
 
 public class VistaVentana extends JFrame {
+    private static final long serialVersionUID = 0;
+    
     public JPanel barraSuperior;
     public JCustomButton botonMinimizarAplicacion;
     public JCustomButton botonCerrarAplicacion;
@@ -15,13 +20,14 @@ public class VistaVentana extends JFrame {
         setResizable(false);
         setLayout(null);
         setUndecorated(true);
+        setLocationByPlatform(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Estilo.colorSecundario);
+        getContentPane().setBackground(Estilo.colorPrimario);
 
         // Crea y configura el panel de inicio
         barraSuperior = new JPanel();
         barraSuperior.setBounds(0, 0, Estilo.anchura, 75);
-        barraSuperior.setBackground(Estilo.colorSecundario);
+        barraSuperior.setOpaque(false);
         barraSuperior.setLayout(null);
         barraSuperior.setVisible(false);
         add(barraSuperior);

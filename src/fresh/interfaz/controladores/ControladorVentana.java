@@ -1,5 +1,7 @@
-package fresh.interfaz;
+package fresh.interfaz.controladores;
+
 import fresh.sistema.Sistema;
+import fresh.interfaz.vistas.VistaVentana;
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -33,7 +35,7 @@ public class ControladorVentana {
         });
 
         Point click = new Point();
-        vistaVentana.barraSuperior.addMouseListener(new MouseAdapter() {
+        vistaVentana.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 if (!e.isMetaDown()) {
                     click.x = e.getX();
@@ -41,13 +43,15 @@ public class ControladorVentana {
                 }
             }
         });
-        vistaVentana.barraSuperior.addMouseMotionListener(new MouseMotionAdapter() {
+        vistaVentana.addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
                 if (!e.isMetaDown()) {
-                    Point p = vistaVentana.getLocation();
-                    int x = p.x+e.getX()-click.x;
-                    int y = p.y+e.getY()-click.y;
-                    vistaVentana.setLocation(x, y);
+                    if (click.getY() < 30) {
+                        Point p = vistaVentana.getLocation();
+                        int x = p.x+e.getX()-click.x;
+                        int y = p.y+e.getY()-click.y;
+                        vistaVentana.setLocation(x, y);
+                    }
                 }
             }
         });

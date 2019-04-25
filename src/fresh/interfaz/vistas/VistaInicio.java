@@ -1,10 +1,16 @@
-package fresh.interfaz;
+package fresh.interfaz.vistas;
+
+import fresh.interfaz.Estilo;
+import fresh.interfaz.swing.*;
 
 import javax.swing.*;
 
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Color;
 
-public class VistaInicio extends JPanel {   
+public class VistaInicio extends JPanel {
+    private static final long serialVersionUID = 0;
+    
     public JPanel panelInicioSesion;
     public JLabel textoNombreAplicacion;
     public JCustomTextField entradaNombreInicio;
@@ -24,8 +30,8 @@ public class VistaInicio extends JPanel {
 
     public VistaInicio() {
         // Crea y configura el panel principal
-        setBounds(0, 75, Estilo.anchura, Estilo.altura-75);
-        setBackground(Estilo.colorSecundario);
+        setBounds(0, 0, Estilo.anchura, Estilo.altura);
+        setOpaque(false);
         setLayout(null);
         setVisible(false);
 
@@ -38,7 +44,7 @@ public class VistaInicio extends JPanel {
         add(panelInicioSesion);
 
         textoNombreAplicacion = new JLabel("FRESH");
-        textoNombreAplicacion.setBounds(390, 0, Estilo.anchura-780, 100);
+        textoNombreAplicacion.setBounds(390, 40, Estilo.anchura-780, 75);
         textoNombreAplicacion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 90));
         textoNombreAplicacion.setForeground(Estilo.colorTexto);
         textoNombreAplicacion.setHorizontalAlignment(JLabel.CENTER);
@@ -46,11 +52,11 @@ public class VistaInicio extends JPanel {
 
         entradaNombreInicio = new JCustomTextField("", 10);
         entradaNombreInicio.setPlaceholder("Usuario");
-        entradaNombreInicio.setBounds(380, 200, Estilo.anchura-760, 80);
+        entradaNombreInicio.setBounds(380, 220, Estilo.anchura-760, 80);
         entradaNombreInicio.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
         entradaNombreInicio.setForeground(Estilo.colorTexto);
         entradaNombreInicio.setPlaceholderColor(Estilo.colorPlaceholder);
-        entradaNombreInicio.setBackground(Estilo.colorPrimario);
+        entradaNombreInicio.setBackground(Estilo.colorTerciario);
         entradaNombreInicio.setMarginSize(25);
         entradaNombreInicio.setCornerRadius(70);
         entradaNombreInicio.setShadowSize(5);
@@ -59,11 +65,11 @@ public class VistaInicio extends JPanel {
 
         entradaContrasenaInicio = new JCustomPasswordField(10);
         entradaContrasenaInicio.setPlaceholder("Contraseña");
-        entradaContrasenaInicio.setBounds(380, 300, Estilo.anchura-760, 80);
+        entradaContrasenaInicio.setBounds(380, 320, Estilo.anchura-760, 80);
         entradaContrasenaInicio.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
         entradaContrasenaInicio.setForeground(Estilo.colorTexto);
         entradaContrasenaInicio.setPlaceholderColor(Estilo.colorPlaceholder);
-        entradaContrasenaInicio.setBackground(Estilo.colorPrimario);
+        entradaContrasenaInicio.setBackground(Estilo.colorTerciario);
         entradaContrasenaInicio.setMarginSize(25);
         entradaContrasenaInicio.setCornerRadius(70);
         entradaContrasenaInicio.setHorizontalAlignment(JLabel.LEFT);
@@ -72,7 +78,7 @@ public class VistaInicio extends JPanel {
         panelInicioSesion.add(entradaContrasenaInicio);
 
         botonIniciarSesion = new JCustomButton("Iniciar sesión");
-        botonIniciarSesion.setBounds(380, 420, 225, 80);
+        botonIniciarSesion.setBounds(380, 440, 225, 80);
         botonIniciarSesion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         botonIniciarSesion.setForeground(Estilo.colorTexto);
         botonIniciarSesion.setBackground(new Color(10, 200, 90));
@@ -84,7 +90,7 @@ public class VistaInicio extends JPanel {
         panelInicioSesion.add(botonIniciarSesion);
 
         botonRegistrarseInicio = new JCustomButton("Registrarse");
-        botonRegistrarseInicio.setBounds(Estilo.anchura-380-200, 420, 200, 80);
+        botonRegistrarseInicio.setBounds(Estilo.anchura-380-200, 440, 200, 80);
         botonRegistrarseInicio.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         botonRegistrarseInicio.setForeground(Estilo.colorTexto);
         botonRegistrarseInicio.setBackground(new Color(240, 240, 100));
@@ -96,7 +102,7 @@ public class VistaInicio extends JPanel {
         panelInicioSesion.add(botonRegistrarseInicio);
 
         botonAnonimo = new JCustomButton("Entrar como anónimo");
-        botonAnonimo.setBounds(380, 500, 285, 80);
+        botonAnonimo.setBounds(380, 530, 285, 80);
         botonAnonimo.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         botonAnonimo.setForeground(Estilo.colorTexto);
         botonAnonimo.setBackground(new Color(224, 62, 98));
@@ -110,7 +116,7 @@ public class VistaInicio extends JPanel {
         //Configuro el panel de los mensajes
         panelMensaje = new JPanel();
         panelMensaje.setBounds(200, 125, Estilo.anchura-400, Estilo.altura-250);
-        panelMensaje.setBackground(Estilo.colorPrimario);
+        panelMensaje.setBackground(Estilo.colorTerciario);
         panelMensaje.setLayout(null);
         panelMensaje.setVisible(false);
         add(panelMensaje);

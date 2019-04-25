@@ -1,23 +1,24 @@
-package fresh.interfaz;
+package fresh.interfaz.swing;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 
-public class JCustomPasswordField extends JPasswordField {
+public class JCustomTextField extends JTextField {
+    private static final long serialVersionUID = 0;
+    
     private int cornerRadius;    
     private int shadowSize;
     private float shadowOpacity;
     private String placeholder;
     private Color placeholderColor;
 
-    public JCustomPasswordField(int columns) {
-        super(columns);
+    public JCustomTextField(String text, int columns) {
+        super(text, columns);
 
         cornerRadius = 0;
         shadowSize = 0;
-        shadowOpacity = 0;
 
         setOpaque(false);
         setBorder(null);
@@ -65,8 +66,7 @@ public class JCustomPasswordField extends JPasswordField {
         g2d.fillRoundRect(shadowSize, shadowSize, getWidth()-2*shadowSize, getHeight()-2*shadowSize, cornerRadius-2*shadowSize, cornerRadius-2*shadowSize);
 
         super.paintComponent(g);
-
-        if (placeholder != null && getPassword().length == 0) {
+        if (placeholder != null && getText().length() == 0) {
             if (placeholderColor != null) g2d.setColor(placeholderColor);
             else g2d.setColor(getForeground());
             EmptyBorder border = (EmptyBorder) getBorder();
@@ -74,7 +74,5 @@ public class JCustomPasswordField extends JPasswordField {
             int yMargin = (getHeight()-getFont().getSize())/2;
             g2d.drawString(placeholder, xMargin, getFont().getSize()*0.9f+yMargin);
         }
-
-        g2d.dispose();
     }
 }

@@ -1,12 +1,14 @@
-package fresh.interfaz;
+package fresh.interfaz.controladores;
+
+import fresh.Status;
+import fresh.sistema.Sistema;
+import fresh.interfaz.vistas.VistaVentana;
+import fresh.interfaz.vistas.VistaRegistro;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
-import fresh.Status;
-import fresh.sistema.Sistema;
 
 public class ControladorRegistro {
 	

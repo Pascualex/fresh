@@ -1,4 +1,4 @@
-package fresh.interfaz;
+package fresh.interfaz.swing;
 
 import javax.swing.*;
 
@@ -7,6 +7,8 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
 public class JCustomButton extends JButton {
+    private static final long serialVersionUID = 0;
+
     private int cornerRadius;
     private Color pressedBackground;
     private int height;

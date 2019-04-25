@@ -1,4 +1,7 @@
-package fresh.interfaz;
+package fresh.interfaz.vistas;
+
+import fresh.interfaz.Estilo;
+import fresh.interfaz.swing.*;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -6,6 +9,8 @@ import java.awt.Font;
 import javax.swing.*;
 
 public class VistaRegistro extends JPanel {
+    private static final long serialVersionUID = 0;
+    
     public JPanel panelRegistrarse;
     public JLabel textoRegistrarse;
     public JCustomTextField entradaNombreInicio;
@@ -34,7 +39,7 @@ public class VistaRegistro extends JPanel {
     public VistaRegistro() {
     	// Crea y configura el panel principal
         setBounds(0, 0, Estilo.anchura, Estilo.altura);
-        setBackground(Estilo.colorSecundario);
+        setOpaque(false);
         setLayout(null);
         setVisible(false);
         
@@ -59,7 +64,7 @@ public class VistaRegistro extends JPanel {
         entradaNombreInicio.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
         entradaNombreInicio.setForeground(Estilo.colorTexto);
         entradaNombreInicio.setPlaceholderColor(Estilo.colorPlaceholder);
-        entradaNombreInicio.setBackground(Estilo.colorPrimario);
+        entradaNombreInicio.setBackground(Estilo.colorTerciario);
         entradaNombreInicio.setMarginSize(25);
         entradaNombreInicio.setCornerRadius(70);
         entradaNombreInicio.setShadowSize(5);
@@ -72,7 +77,7 @@ public class VistaRegistro extends JPanel {
         entradaNombreAutor.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
         entradaNombreAutor.setForeground(Estilo.colorTexto);
         entradaNombreAutor.setPlaceholderColor(Estilo.colorPlaceholder);
-        entradaNombreAutor.setBackground(Estilo.colorPrimario);
+        entradaNombreAutor.setBackground(Estilo.colorTerciario);
         entradaNombreAutor.setMarginSize(25);
         entradaNombreAutor.setCornerRadius(70);
         entradaNombreAutor.setShadowSize(5);
@@ -85,7 +90,7 @@ public class VistaRegistro extends JPanel {
         entradaContrasenaInicio.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
         entradaContrasenaInicio.setForeground(Estilo.colorTexto);
         entradaContrasenaInicio.setPlaceholderColor(Estilo.colorPlaceholder);
-        entradaContrasenaInicio.setBackground(Estilo.colorPrimario);
+        entradaContrasenaInicio.setBackground(Estilo.colorTerciario);
         entradaContrasenaInicio.setMarginSize(25);
         entradaContrasenaInicio.setCornerRadius(70);
         entradaContrasenaInicio.setHorizontalAlignment(JLabel.LEFT);
@@ -99,7 +104,7 @@ public class VistaRegistro extends JPanel {
         entradaFechaNacimientoDia.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
         entradaFechaNacimientoDia.setForeground(Estilo.colorTexto);
         entradaFechaNacimientoDia.setPlaceholderColor(Estilo.colorPlaceholder);
-        entradaFechaNacimientoDia.setBackground(Estilo.colorPrimario);
+        entradaFechaNacimientoDia.setBackground(Estilo.colorTerciario);
         entradaFechaNacimientoDia.setMarginSize(25);
         entradaFechaNacimientoDia.setCornerRadius(70);
         entradaFechaNacimientoDia.setShadowSize(5);
@@ -112,7 +117,7 @@ public class VistaRegistro extends JPanel {
         entradaFechaNacimientoMes.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
         entradaFechaNacimientoMes.setForeground(Estilo.colorTexto);
         entradaFechaNacimientoMes.setPlaceholderColor(Estilo.colorPlaceholder);
-        entradaFechaNacimientoMes.setBackground(Estilo.colorPrimario);
+        entradaFechaNacimientoMes.setBackground(Estilo.colorTerciario);
         entradaFechaNacimientoMes.setMarginSize(25);
         entradaFechaNacimientoMes.setCornerRadius(70);
         entradaFechaNacimientoMes.setShadowSize(5);
@@ -125,7 +130,7 @@ public class VistaRegistro extends JPanel {
         entradaFechaNacimientoAno.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
         entradaFechaNacimientoAno.setForeground(Estilo.colorTexto);
         entradaFechaNacimientoAno.setPlaceholderColor(Estilo.colorPlaceholder);
-        entradaFechaNacimientoAno.setBackground(Estilo.colorPrimario);
+        entradaFechaNacimientoAno.setBackground(Estilo.colorTerciario);
         entradaFechaNacimientoAno.setMarginSize(25);
         entradaFechaNacimientoAno.setCornerRadius(70);
         entradaFechaNacimientoAno.setShadowSize(5);
@@ -159,7 +164,7 @@ public class VistaRegistro extends JPanel {
         // Configura el panel de los mensajes
         panelMensaje = new JPanel();
         panelMensaje.setBounds(200, 200, Estilo.anchura-400, Estilo.altura-300);
-        panelMensaje.setBackground(Estilo.colorPrimario);
+        panelMensaje.setBackground(Estilo.colorTerciario);
         panelMensaje.setLayout(null);
         panelMensaje.setVisible(false);
         add(panelMensaje);
