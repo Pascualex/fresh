@@ -18,10 +18,10 @@ public class VistaMenu extends JPanel {
     public JCustomButton botonBuscar;
     
     public JPanel panelLateral;
-    public JCustomButton botonInicio;
     public JCustomButton botonPlaylist;
     public JCustomButton botonAutores;
     public JCustomButton botonMisCanciones;
+    public JCustomButton botonNotificaciones;
     public JCustomButton botonConfiguracion;
     public JCustomButton botonCerrarSesion;
 
@@ -88,20 +88,8 @@ public class VistaMenu extends JPanel {
         textoNombreAplicacion.setHorizontalAlignment(JLabel.CENTER);
         panelLateral.add(textoNombreAplicacion);
 
-        botonInicio = new JCustomButton("🔥  Inicio");
-        botonInicio.setBounds(20, 120, 220, 80);
-        botonInicio.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
-        botonInicio.setForeground(Estilo.colorTexto);
-        botonInicio.setBackground(new Color(240, 240, 100));
-        botonInicio.setPressedBackgound(new Color(220, 220, 95).brighter());
-        botonInicio.setCornerRadius(40);
-        botonInicio.setHeight(5);       
-        botonInicio.setShadowSize(5);
-        botonInicio.setShadowOpacity(0.4f);
-        panelLateral.add(botonInicio);
-
         botonPlaylist = new JCustomButton("❤  Playlists");
-        botonPlaylist.setBounds(20, 205, 220, 80);
+        botonPlaylist.setBounds(20, 120, 220, 80);
         botonPlaylist.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
         botonPlaylist.setForeground(Estilo.colorTexto);
         botonPlaylist.setBackground(new Color(240, 240, 100));
@@ -113,7 +101,7 @@ public class VistaMenu extends JPanel {
         panelLateral.add(botonPlaylist);
 
         botonAutores = new JCustomButton("Autores seguidos");
-        botonAutores.setBounds(20, 290, 220, 80);
+        botonAutores.setBounds(20, 205, 220, 80);
         botonAutores.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
         botonAutores.setForeground(Estilo.colorTexto);
         botonAutores.setBackground(new Color(240, 240, 100));
@@ -125,7 +113,7 @@ public class VistaMenu extends JPanel {
         panelLateral.add(botonAutores);
 
         botonMisCanciones = new JCustomButton("Tus canciones");
-        botonMisCanciones.setBounds(20, 375, 220, 80);
+        botonMisCanciones.setBounds(20, 290, 220, 80);
         botonMisCanciones.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
         botonMisCanciones.setForeground(Estilo.colorTexto);
         botonMisCanciones.setBackground(new Color(240, 240, 100));
@@ -135,6 +123,18 @@ public class VistaMenu extends JPanel {
         botonMisCanciones.setShadowSize(5);
         botonMisCanciones.setShadowOpacity(0.4f);
         panelLateral.add(botonMisCanciones);
+
+        botonNotificaciones = new JCustomButton("Notificaciones");
+        botonNotificaciones.setBounds(20, 375, 220, 80);
+        botonNotificaciones.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
+        botonNotificaciones.setForeground(Estilo.colorTexto);
+        botonNotificaciones.setBackground(new Color(240, 240, 100));
+        botonNotificaciones.setPressedBackgound(new Color(220, 220, 95).brighter());
+        botonNotificaciones.setCornerRadius(40);
+        botonNotificaciones.setHeight(5);       
+        botonNotificaciones.setShadowSize(5);
+        botonNotificaciones.setShadowOpacity(0.4f);
+        panelLateral.add(botonNotificaciones);
 
         botonConfiguracion = new JCustomButton("Configuración");
         botonConfiguracion.setBounds(20, 460, 220, 80);
