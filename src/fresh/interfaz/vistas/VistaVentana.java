@@ -23,6 +23,7 @@ public class VistaVentana extends JFrame {
         setLocationByPlatform(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(Estilo.colorPrimario);
+        setVisible(false);
 
         // Crea y configura el panel de inicio
         barraSuperior = new JPanel();
@@ -53,6 +54,5 @@ public class VistaVentana extends JFrame {
         barraSuperior.add(botonCerrarAplicacion);
 
         barraSuperior.setVisible(true);
-        setVisible(true);
     }
 }

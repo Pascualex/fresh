@@ -1,9 +1,13 @@
 package fresh.interfaz.swing;
 
-import javax.swing.*;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.AlphaComposite;
+import java.awt.RenderingHints;
 
 public class JCustomTextField extends JTextField {
     private static final long serialVersionUID = 0;
@@ -19,6 +23,9 @@ public class JCustomTextField extends JTextField {
 
         cornerRadius = 0;
         shadowSize = 0;
+        shadowOpacity = 0;
+        placeholder = null;
+        placeholderColor = null;
 
         setOpaque(false);
         setBorder(null);

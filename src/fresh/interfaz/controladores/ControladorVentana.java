@@ -19,6 +19,8 @@ public class ControladorVentana {
         @SuppressWarnings("unused")
         ControladorInicio controladorInicio = new ControladorInicio(sistema, vistaVentana);
 
+        vistaVentana.setVisible(true);
+
         vistaVentana.botonMinimizarAplicacion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

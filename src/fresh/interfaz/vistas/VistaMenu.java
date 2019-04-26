@@ -47,7 +47,7 @@ public class VistaMenu extends JPanel {
 
         entradaBusqueda = new JCustomTextField("", 10);
         entradaBusqueda.setPlaceholder("Busca...");
-        entradaBusqueda.setBounds(35, 30, 500, 80);
+        entradaBusqueda.setBounds(35, 30, 420, 80);
         entradaBusqueda.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
         entradaBusqueda.setForeground(Estilo.colorTexto);
         entradaBusqueda.setBackground(Estilo.colorTerciario);
@@ -59,7 +59,16 @@ public class VistaMenu extends JPanel {
 
         String[] opciones = {"Canciones", "Álbumes", "Autores"};
         seleccion = new JCustomComboBox(opciones);
-        seleccion.setBounds(550, 30, 100, 80);
+        seleccion.setBounds(470, 30, 180, 80);
+        seleccion.setMainFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
+        seleccion.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 20));
+        seleccion.setForeground(Estilo.colorTexto);
+        seleccion.setBackground(Estilo.colorTerciario);
+        seleccion.setBehindColor(Estilo.colorPrimario);
+        seleccion.setMarginSize(25);
+        seleccion.setCornerRadius(40);
+        seleccion.setShadowSize(5);
+        seleccion.setShadowOpacity(0.2f);
         panelSuperior.add(seleccion);
 
         botonBuscar = new JCustomButton("🔎");

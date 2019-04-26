@@ -22,6 +22,7 @@ public class JCustomButton extends JButton {
         pressedBackground = null;
         height = 0;
         shadowSize = 0;
+        shadowOpacity = 0;
         
         setContentAreaFilled(false);
         setFocusPainted(false);
