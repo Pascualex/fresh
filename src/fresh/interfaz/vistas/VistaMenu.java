@@ -22,8 +22,9 @@ public class VistaMenu extends JPanel {
     public JCustomButton botonAutores;
     public JCustomButton botonMisCanciones;
     public JCustomButton botonNotificaciones;
-    public JCustomButton botonConfiguracion;
     public JCustomButton botonCerrarSesion;
+
+    public JPanel panelActual;
 
     public JPanel panelInferior;
     public JCustomButton botonReproducir;
@@ -136,18 +137,6 @@ public class VistaMenu extends JPanel {
         botonNotificaciones.setShadowOpacity(0.4f);
         panelLateral.add(botonNotificaciones);
 
-        botonConfiguracion = new JCustomButton("Configuración");
-        botonConfiguracion.setBounds(20, 460, 220, 80);
-        botonConfiguracion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
-        botonConfiguracion.setForeground(Estilo.colorTexto);
-        botonConfiguracion.setBackground(new Color(240, 240, 100));
-        botonConfiguracion.setPressedBackgound(new Color(220, 220, 95).brighter());
-        botonConfiguracion.setCornerRadius(40);
-        botonConfiguracion.setHeight(5);       
-        botonConfiguracion.setShadowSize(5);
-        botonConfiguracion.setShadowOpacity(0.4f);
-        panelLateral.add(botonConfiguracion);
-
         botonCerrarSesion = new JCustomButton("Cerrar sesión");
         botonCerrarSesion.setBounds(20, 705, 220, 80);
         botonCerrarSesion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
@@ -159,6 +148,8 @@ public class VistaMenu extends JPanel {
         botonCerrarSesion.setShadowSize(5);
         botonCerrarSesion.setShadowOpacity(0.4f);
         panelLateral.add(botonCerrarSesion);
+
+        panelActual = null;
 
         // Configura el panel inferior
         panelInferior = new JPanel();        

@@ -50,6 +50,34 @@ public class ControladorMenu {
                 }
             }
         });
+
+        vistaMenu.botonPlaylist.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ControladorPlaylist controladorPlaylist = new ControladorPlaylist(sistema, vistaMenu);
+            }
+        });
+
+        vistaMenu.botonAutores.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ControladorAutores controladorAutores = new ControladorAutores(sistema, vistaMenu);
+            }
+        });
+
+        vistaMenu.botonMisCanciones.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ControladorCanciones controladorCanciones = new ControladorCanciones(sistema, vistaMenu);
+            }
+        });
+
+        vistaMenu.botonNotificaciones.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ControladorNotificaciones controladorNotificaciones = new ControladorNotificaciones(sistema, vistaMenu);
+            }
+        });
         
         vistaVentana.repaint();
     }
