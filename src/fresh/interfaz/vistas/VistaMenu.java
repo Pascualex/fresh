@@ -14,11 +14,11 @@ public class VistaMenu extends JPanel {
     public JPanel panelSuperior;
     public JLabel textoNombreAplicacion;
     public JCustomTextField entradaBusqueda;
-    public JCustomComboBox seleccion;
+    public JCustomComboBox seleccionModoBusqueda;
     public JCustomButton botonBuscar;
     
     public JPanel panelLateral;
-    public JCustomButton botonPlaylist;
+    public JCustomButton botonPlaylists;
     public JCustomButton botonAutores;
     public JCustomButton botonMisCanciones;
     public JCustomButton botonNotificaciones;
@@ -47,7 +47,7 @@ public class VistaMenu extends JPanel {
         add(panelSuperior);
 
         entradaBusqueda = new JCustomTextField("", 10);
-        entradaBusqueda.setPlaceholder("Busca...");
+        entradaBusqueda.setPlaceholder("Buscar...");
         entradaBusqueda.setBounds(35, 30, 420, 80);
         entradaBusqueda.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
         entradaBusqueda.setForeground(Estilo.colorTexto);
@@ -59,18 +59,18 @@ public class VistaMenu extends JPanel {
         panelSuperior.add(entradaBusqueda);
 
         String[] opciones = {"Canciones", "Álbumes", "Autores"};
-        seleccion = new JCustomComboBox(opciones);
-        seleccion.setBounds(470, 30, 180, 80);
-        seleccion.setMainFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
-        seleccion.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 20));
-        seleccion.setForeground(Estilo.colorTexto);
-        seleccion.setBackground(Estilo.colorTerciario);
-        seleccion.setBehindColor(Estilo.colorPrimario);
-        seleccion.setMarginSize(25);
-        seleccion.setCornerRadius(40);
-        seleccion.setShadowSize(5);
-        seleccion.setShadowOpacity(0.2f);
-        panelSuperior.add(seleccion);
+        seleccionModoBusqueda = new JCustomComboBox(opciones);
+        seleccionModoBusqueda.setBounds(470, 30, 180, 80);
+        seleccionModoBusqueda.setMainFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
+        seleccionModoBusqueda.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 20));
+        seleccionModoBusqueda.setForeground(Estilo.colorTexto);
+        seleccionModoBusqueda.setBackground(Estilo.colorTerciario);
+        seleccionModoBusqueda.setBehindColor(Estilo.colorPrimario);
+        seleccionModoBusqueda.setMarginSize(25);
+        seleccionModoBusqueda.setCornerRadius(40);
+        seleccionModoBusqueda.setShadowSize(5);
+        seleccionModoBusqueda.setShadowOpacity(0.2f);
+        panelSuperior.add(seleccionModoBusqueda);
 
         botonBuscar = new JCustomButton("🔎");
         botonBuscar.setBounds(665, 30, 80, 80);
@@ -98,17 +98,17 @@ public class VistaMenu extends JPanel {
         textoNombreAplicacion.setHorizontalAlignment(JLabel.CENTER);
         panelLateral.add(textoNombreAplicacion);
 
-        botonPlaylist = new JCustomButton("❤  Playlists");
-        botonPlaylist.setBounds(20, 120, 220, 80);
-        botonPlaylist.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
-        botonPlaylist.setForeground(Estilo.colorTexto);
-        botonPlaylist.setBackground(new Color(240, 240, 100));
-        botonPlaylist.setPressedBackgound(new Color(220, 220, 95).brighter());
-        botonPlaylist.setCornerRadius(40);
-        botonPlaylist.setHeight(5);       
-        botonPlaylist.setShadowSize(5);
-        botonPlaylist.setShadowOpacity(0.4f);
-        panelLateral.add(botonPlaylist);
+        botonPlaylists = new JCustomButton("❤  Playlists");
+        botonPlaylists.setBounds(20, 120, 220, 80);
+        botonPlaylists.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
+        botonPlaylists.setForeground(Estilo.colorTexto);
+        botonPlaylists.setBackground(new Color(240, 240, 100));
+        botonPlaylists.setPressedBackgound(new Color(220, 220, 95).brighter());
+        botonPlaylists.setCornerRadius(40);
+        botonPlaylists.setHeight(5);       
+        botonPlaylists.setShadowSize(5);
+        botonPlaylists.setShadowOpacity(0.4f);
+        panelLateral.add(botonPlaylists);
 
         botonAutores = new JCustomButton("Autores seguidos");
         botonAutores.setBounds(20, 205, 220, 80);

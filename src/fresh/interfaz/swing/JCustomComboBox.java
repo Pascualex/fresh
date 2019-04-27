@@ -1,7 +1,9 @@
 package fresh.interfaz.swing;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -27,6 +29,12 @@ public class JCustomComboBox extends JComboBox {
         shadowOpacity = 0;
         behindColor = null;
         mainFont = null;
+
+        setUI(new BasicComboBoxUI() {
+            protected JButton createArrowButton() {
+                return null;
+            }
+        });
     }
 
     public void setBehindColor(Color behindColor) {

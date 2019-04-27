@@ -3,7 +3,12 @@ package fresh.interfaz.controladores;
 import fresh.Status;
 import fresh.sistema.Sistema;
 import fresh.interfaz.vistas.VistaVentana;
+import fresh.interfaz.vistas.VistaAutores;
+import fresh.interfaz.vistas.VistaCanciones;
 import fresh.interfaz.vistas.VistaMenu;
+import fresh.interfaz.vistas.VistaNotificaciones;
+import fresh.interfaz.vistas.VistaPlaylists;
+import fresh.interfaz.vistas.VistaResultadoCanciones;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,32 +19,82 @@ public class ControladorMenu {
         VistaMenu vistaMenu = new VistaMenu();
         vistaVentana.add(vistaMenu);
 
-        vistaMenu.botonAnterior.addActionListener(new ActionListener(){
+        vistaMenu.botonBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sistema.reiniciarCancion();
+                if (vistaMenu.panelActual != null) {
+                    vistaMenu.remove(vistaMenu.panelActual);
+                }
+                
+                VistaResultadoCanciones vistaResultadoCanciones = new VistaResultadoCanciones();
+                vistaMenu.panelActual = vistaResultadoCanciones;
+                vistaMenu.add(vistaResultadoCanciones);
+
+                vistaMenu.repaint();
             }
         });
 
-        vistaMenu.botonReproducir.addActionListener(new ActionListener(){
+        vistaMenu.botonPlaylists.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sistema.reanudarCancion();
-                vistaMenu.botonReproducir.setVisible(false);
-                vistaMenu.botonParar.setVisible(true);
+                if (vistaMenu.panelActual != null) {
+                    vistaMenu.remove(vistaMenu.panelActual);
+                }
+                
+                VistaPlaylists vistaPlaylists = new VistaPlaylists();
+                vistaMenu.panelActual = vistaPlaylists;
+                vistaMenu.add(vistaPlaylists);
+
+                vistaMenu.repaint();
             }
         });
 
-        vistaMenu.botonParar.addActionListener(new ActionListener(){
+        vistaMenu.botonAutores.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                sistema.pausarCancion();
-                vistaMenu.botonParar.setVisible(false);
-                vistaMenu.botonReproducir.setVisible(true);
+                if (vistaMenu.panelActual != null) {
+                    vistaMenu.remove(vistaMenu.panelActual);
+                }
+                
+                VistaAutores vistaAutores = new VistaAutores();
+                vistaMenu.panelActual = vistaAutores;
+                vistaMenu.add(vistaAutores);
+
+                vistaMenu.repaint();
             }
         });
 
-        vistaMenu.botonCerrarSesion.addActionListener(new ActionListener(){
+        vistaMenu.botonMisCanciones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (vistaMenu.panelActual != null) {
+                    vistaMenu.remove(vistaMenu.panelActual);
+                }
+                
+                VistaCanciones vistaCanciones = new VistaCanciones();
+                vistaMenu.panelActual = vistaCanciones;
+                vistaMenu.add(vistaCanciones);
+
+                vistaMenu.repaint();
+            }
+        });
+
+        vistaMenu.botonNotificaciones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (vistaMenu.panelActual != null) {
+                    vistaMenu.remove(vistaMenu.panelActual);
+                }
+                
+                VistaNotificaciones VistaNotificaciones = new VistaNotificaciones();
+                vistaMenu.panelActual = VistaNotificaciones;
+                vistaMenu.add(VistaNotificaciones);
+
+                vistaMenu.repaint();
+            }
+        });
+
+        vistaMenu.botonCerrarSesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Status status = sistema.cerrarSesion();
@@ -51,31 +106,35 @@ public class ControladorMenu {
             }
         });
 
-        vistaMenu.botonPlaylist.addActionListener(new ActionListener(){
+        vistaMenu.botonAnterior.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ControladorPlaylist controladorPlaylist = new ControladorPlaylist(sistema, vistaMenu);
+                sistema.retrocederCancion();
             }
         });
 
-        vistaMenu.botonAutores.addActionListener(new ActionListener(){
+        vistaMenu.botonReproducir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ControladorAutores controladorAutores = new ControladorAutores(sistema, vistaMenu);
+                sistema.reanudarCancion();
+                vistaMenu.botonReproducir.setVisible(false);
+                vistaMenu.botonParar.setVisible(true);
             }
         });
 
-        vistaMenu.botonMisCanciones.addActionListener(new ActionListener(){
+        vistaMenu.botonParar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ControladorCanciones controladorCanciones = new ControladorCanciones(sistema, vistaMenu);
+                sistema.pausarCancion();
+                vistaMenu.botonParar.setVisible(false);
+                vistaMenu.botonReproducir.setVisible(true);
             }
         });
 
-        vistaMenu.botonNotificaciones.addActionListener(new ActionListener(){
+        vistaMenu.botonSiguiente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ControladorNotificaciones controladorNotificaciones = new ControladorNotificaciones(sistema, vistaMenu);
+                sistema.avanzarCancion();
             }
         });
         
