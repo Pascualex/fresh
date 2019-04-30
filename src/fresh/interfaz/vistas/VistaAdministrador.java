@@ -8,22 +8,21 @@ import javax.swing.*;
 import java.awt.Font;
 import java.awt.Color;
 
-public class VistaAnonimo extends JPanel{
-	private static final long serialVersionUID = 0;
+public class VistaAdministrador extends JPanel {
 	
-	public JPanel panelSuperior;
+	private static final long serialVersionUID = 0;
+
+    public JPanel panelSuperior;
     public JLabel textoNombreAplicacion;
     public JCustomTextField entradaBusqueda;
     public JCustomComboBox seleccionModoBusqueda;
     public JCustomButton botonBuscar;
     
     public JPanel panelLateral;
-    public JCustomButton botonPlaylists;
-    public JCustomButton botonAutores;
-    public JCustomButton botonMisCanciones;
-    public JCustomButton botonNotificaciones;
-	public JCustomButton botonRegistrarse;
-	public JCustomButton botonCerrarSesion;
+    public JCustomButton botonReportes;
+    public JCustomButton botonNuevasCanciones;
+    public JCustomButton botonConfiguracion;
+    public JCustomButton botonCerrarSesion;
 
     public JPanel panelActual;
 
@@ -33,8 +32,9 @@ public class VistaAnonimo extends JPanel{
     public JCustomButton botonAnterior;
     public JCustomButton botonSiguiente;
     
-    public VistaAnonimo() {
-        // Crea y configura el panel principal
+    public VistaAdministrador() {
+    	
+    	// Crea y configura el panel principal
         setBounds(0, 0, Estilo.anchura, Estilo.altura);
         setOpaque(false);
         setLayout(null);
@@ -46,7 +46,7 @@ public class VistaAnonimo extends JPanel{
         panelSuperior.setOpaque(false);
         panelSuperior.setLayout(null);
         add(panelSuperior);
-        
+
         entradaBusqueda = new JCustomTextField("", 10);
         entradaBusqueda.setPlaceholder("Buscar...");
         entradaBusqueda.setBounds(35, 30, 420, 80);
@@ -58,7 +58,7 @@ public class VistaAnonimo extends JPanel{
         entradaBusqueda.setShadowSize(5);
         entradaBusqueda.setShadowOpacity(0.2f);
         panelSuperior.add(entradaBusqueda);
-        
+
         String[] opciones = {"Canciones", "Álbumes", "Autores"};
         seleccionModoBusqueda = new JCustomComboBox(opciones);
         seleccionModoBusqueda.setBounds(470, 30, 180, 80);
@@ -72,7 +72,7 @@ public class VistaAnonimo extends JPanel{
         seleccionModoBusqueda.setShadowSize(5);
         seleccionModoBusqueda.setShadowOpacity(0.2f);
         panelSuperior.add(seleccionModoBusqueda);
-        
+
         botonBuscar = new JCustomButton("🔎");
         botonBuscar.setBounds(665, 30, 80, 80);
         botonBuscar.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
@@ -84,7 +84,7 @@ public class VistaAnonimo extends JPanel{
         botonBuscar.setShadowSize(5);
         botonBuscar.setShadowOpacity(0.4f);
         panelSuperior.add(botonBuscar);
-        
+
         // Configura el panel lateral
         panelLateral = new JPanel();        
         panelLateral.setBounds(0, 0, 260, Estilo.altura);        
@@ -98,19 +98,43 @@ public class VistaAnonimo extends JPanel{
         textoNombreAplicacion.setForeground(Estilo.colorTexto);
         textoNombreAplicacion.setHorizontalAlignment(JLabel.CENTER);
         panelLateral.add(textoNombreAplicacion);
-        
-        botonRegistrarse = new JCustomButton("Registrate");
-        botonRegistrarse.setBounds(20, 120, 220, 80);
-        botonRegistrarse.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
-        botonRegistrarse.setForeground(Estilo.colorTexto);
-        botonRegistrarse.setBackground(new Color(245, 100, 100));
-        botonRegistrarse.setPressedBackgound(new Color(220, 50, 50).brighter());
-        botonRegistrarse.setCornerRadius(40);
-        botonRegistrarse.setHeight(5);       
-        botonRegistrarse.setShadowSize(5);
-        botonRegistrarse.setShadowOpacity(0.4f);
-        panelLateral.add(botonRegistrarse);
-        
+
+        botonReportes = new JCustomButton("Reportes");
+        botonReportes.setBounds(20, 120, 220, 80);
+        botonReportes.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
+        botonReportes.setForeground(Estilo.colorTexto);
+        botonReportes.setBackground(new Color(240, 240, 100));
+        botonReportes.setPressedBackgound(new Color(220, 220, 95).brighter());
+        botonReportes.setCornerRadius(40);
+        botonReportes.setHeight(5);       
+        botonReportes.setShadowSize(5);
+        botonReportes.setShadowOpacity(0.4f);
+        panelLateral.add(botonReportes);
+
+        botonNuevasCanciones = new JCustomButton("Nuevas canciones");
+        botonNuevasCanciones.setBounds(20, 205, 220, 80);
+        botonNuevasCanciones.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
+        botonNuevasCanciones.setForeground(Estilo.colorTexto);
+        botonNuevasCanciones.setBackground(new Color(240, 240, 100));
+        botonNuevasCanciones.setPressedBackgound(new Color(220, 220, 95).brighter());
+        botonNuevasCanciones.setCornerRadius(40);
+        botonNuevasCanciones.setHeight(5);       
+        botonNuevasCanciones.setShadowSize(5);
+        botonNuevasCanciones.setShadowOpacity(0.4f);
+        panelLateral.add(botonNuevasCanciones);
+
+        botonConfiguracion = new JCustomButton("Configuracion");
+        botonConfiguracion.setBounds(20, 290, 220, 80);
+        botonConfiguracion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
+        botonConfiguracion.setForeground(Estilo.colorTexto);
+        botonConfiguracion.setBackground(new Color(240, 240, 100));
+        botonConfiguracion.setPressedBackgound(new Color(220, 220, 95).brighter());
+        botonConfiguracion.setCornerRadius(40);
+        botonConfiguracion.setHeight(5);       
+        botonConfiguracion.setShadowSize(5);
+        botonConfiguracion.setShadowOpacity(0.4f);
+        panelLateral.add(botonConfiguracion);
+
         botonCerrarSesion = new JCustomButton("Cerrar sesión");
         botonCerrarSesion.setBounds(20, 705, 220, 80);
         botonCerrarSesion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
@@ -124,7 +148,7 @@ public class VistaAnonimo extends JPanel{
         panelLateral.add(botonCerrarSesion);
 
         panelActual = null;
-        
+
         // Configura el panel inferior
         panelInferior = new JPanel();        
         panelInferior.setBounds(260, 680, Estilo.anchura-260, Estilo.altura-680);      
@@ -183,7 +207,5 @@ public class VistaAnonimo extends JPanel{
         
         // Revela la ventana de la aplicación 
         setVisible(true);
-        
     }
-
 }

@@ -50,6 +50,11 @@ public class ControladorInicio {
                     	@SuppressWarnings("unused")
                         ControladorMenu controladorMenu = new ControladorMenu(sistema, vistaVentana);
                         return;
+                    } else if (status == Status.INICIO_ADMINISTRADOR) {
+                    	vistaVentana.remove(vistaInicio);
+                    	@SuppressWarnings("unused")
+                        ControladorAdministrador controladorAdministrador = new ControladorAdministrador(sistema, vistaVentana);
+                        return;
                     } else if (status == Status.CONTRASENA_INVALIDA) {
                     	vistaInicio.textoContrasenaIncorrecta.setVisible(true);
                         vistaInicio.panelMensaje.setVisible(true);

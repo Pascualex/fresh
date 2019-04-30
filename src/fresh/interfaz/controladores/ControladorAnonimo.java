@@ -41,6 +41,18 @@ public class ControladorAnonimo {
             }
         });
         
+        vistaAnonimo.botonCerrarSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Status status = sistema.cerrarSesion();
+                if (status == Status.OK) {
+                    vistaVentana.remove(vistaAnonimo);
+                    @SuppressWarnings("unused")
+                    ControladorInicio controladorInicio = new ControladorInicio(sistema, vistaVentana);
+                }
+            }
+        });
+        
         vistaAnonimo.botonAnterior.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
