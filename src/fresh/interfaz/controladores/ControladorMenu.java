@@ -22,13 +22,27 @@ public class ControladorMenu {
         vistaMenu.botonBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String entrada = vistaMenu.entradaBusqueda.getText();
+                if (entrada.length() == 0) return;
+
                 if (vistaMenu.panelActual != null) {
                     vistaMenu.remove(vistaMenu.panelActual);
                 }
+
+                if (vistaMenu.seleccionModoBusqueda.getSelectedIndex() == 0) {
+                    //Canciones
+                    VistaResultadoCanciones vistaResultadoCanciones = new VistaResultadoCanciones();
+                    vistaMenu.panelActual = vistaResultadoCanciones;
+                    vistaMenu.add(vistaResultadoCanciones);
+
+                    ControladorResultadoCanciones controladorResultadoCanciones = new ControladorResultadoCanciones(sistema, vistaResultadoCanciones, entrada);
                 
-                VistaResultadoCanciones vistaResultadoCanciones = new VistaResultadoCanciones();
-                vistaMenu.panelActual = vistaResultadoCanciones;
-                vistaMenu.add(vistaResultadoCanciones);
+                    vistaResultadoCanciones.setVisible(true);
+                } else if (vistaMenu.seleccionModoBusqueda.getSelectedIndex() == 1) {
+                    //Álbumes
+                } else {
+                    //Autores
+                }
 
                 vistaMenu.repaint();
             }
@@ -45,11 +59,13 @@ public class ControladorMenu {
                 vistaMenu.panelActual = vistaPlaylists;
                 vistaMenu.add(vistaPlaylists);
 
+                vistaPlaylists.setVisible(true);
+
                 vistaMenu.repaint();
             }
         });
 
-        vistaMenu.botonAutores.addActionListener(new ActionListener(){
+        vistaMenu.botonAutores.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (vistaMenu.panelActual != null) {

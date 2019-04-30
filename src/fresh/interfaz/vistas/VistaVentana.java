@@ -30,10 +30,9 @@ public class VistaVentana extends JFrame {
         barraSuperior.setBounds(0, 0, Estilo.anchura, 75);
         barraSuperior.setOpaque(false);
         barraSuperior.setLayout(null);
-        barraSuperior.setVisible(false);
         add(barraSuperior);
 
-        botonMinimizarAplicacion = new JCustomButton("⎯");
+        botonMinimizarAplicacion = new JCustomButton("-");
         botonMinimizarAplicacion.setBounds(Estilo.anchura-125, 10, 50, 55);
         botonMinimizarAplicacion.setBackground(Estilo.colorBotonMinimizar);
         botonMinimizarAplicacion.setPressedBackgound(Estilo.colorBotonMinimizar.brighter());
@@ -52,7 +51,5 @@ public class VistaVentana extends JFrame {
         botonCerrarAplicacion.setShadowSize(5);
         botonCerrarAplicacion.setShadowOpacity(0.4f); 
         barraSuperior.add(botonCerrarAplicacion);
-
-        barraSuperior.setVisible(true);
     }
 }

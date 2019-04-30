@@ -52,6 +52,7 @@ public class VistaMenu extends JPanel {
         entradaBusqueda.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
         entradaBusqueda.setForeground(Estilo.colorTexto);
         entradaBusqueda.setBackground(Estilo.colorTerciario);
+        entradaBusqueda.setPlaceholderColor(Estilo.colorPlaceholder);
         entradaBusqueda.setMarginSize(25);
         entradaBusqueda.setCornerRadius(40);
         entradaBusqueda.setShadowSize(5);
