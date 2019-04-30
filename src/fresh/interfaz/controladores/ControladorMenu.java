@@ -101,6 +101,8 @@ public class ControladorMenu {
                 @SuppressWarnings("unused")
                 ControladorCanciones controladorCanciones = new ControladorCanciones(sistema, vistaCanciones);
 
+                vistaCanciones.setVisible(true);
+
                 vistaMenu.repaint();
             }
         });

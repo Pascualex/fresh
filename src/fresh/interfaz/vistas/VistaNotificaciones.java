@@ -1,7 +1,6 @@
 package fresh.interfaz.vistas;
 
 import javax.swing.JPanel;
-import java.awt.Color;
 import fresh.interfaz.*;
 
 public class VistaNotificaciones extends JPanel {

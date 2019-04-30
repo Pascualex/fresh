@@ -1,6 +1,9 @@
 package fresh.interfaz.vistas;
 
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -13,7 +16,8 @@ public class VistaCanciones extends JPanel {
 
     public JCustomScrollPane scrollFrame;
     public JPanel scrollPanel;
-    
+    public JFileChooser chooser;
+
     public JCustomButton botonSubirCancion;
 
     public VistaCanciones() {
@@ -23,7 +27,7 @@ public class VistaCanciones extends JPanel {
         setVisible(false);
 
         botonSubirCancion = new JCustomButton("Subir canción");
-        botonSubirCancion.setBounds(20, 0, 160, 60);
+        botonSubirCancion.setBounds(40, 0, 160, 60);
         botonSubirCancion.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 20));
         botonSubirCancion.setForeground(Estilo.colorTexto);
         botonSubirCancion.setBackground(new Color(10, 200, 90));
@@ -39,6 +43,9 @@ public class VistaCanciones extends JPanel {
         scrollPanel.setBackground(Estilo.colorPrimario);
         scrollPanel.setLayout(null);
         scrollPanel.setAutoscrolls(true);
+        
+        chooser = new JFileChooser();
+        chooser.setFileFilter(new FileNameExtensionFilter("mp3"));
         
         scrollFrame = new JCustomScrollPane(scrollPanel);
         scrollFrame.setBounds(0, 100, Estilo.anchura-260, 440);

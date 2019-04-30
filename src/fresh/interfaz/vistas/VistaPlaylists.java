@@ -4,7 +4,6 @@ import fresh.interfaz.Estilo;
 import fresh.interfaz.swing.*;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 
 import java.awt.Color;
 import java.awt.Dimension;

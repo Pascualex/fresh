@@ -12,7 +12,7 @@ import java.awt.AlphaComposite;
 import java.awt.RenderingHints;
 import java.awt.Font;
 
-public class JCustomComboBox extends JComboBox {
+public class JCustomComboBox extends JComboBox<Object> {
     private static final long serialVersionUID = 0;
 
     private Color behindColor;
