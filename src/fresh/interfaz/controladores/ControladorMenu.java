@@ -35,6 +35,7 @@ public class ControladorMenu {
                     vistaMenu.panelActual = vistaResultadoCanciones;
                     vistaMenu.add(vistaResultadoCanciones);
 
+                    @SuppressWarnings("unused")
                     ControladorResultadoCanciones controladorResultadoCanciones = new ControladorResultadoCanciones(sistema, vistaResultadoCanciones, entrada);
                 
                     vistaResultadoCanciones.setVisible(true);
@@ -59,6 +60,9 @@ public class ControladorMenu {
                 vistaMenu.panelActual = vistaPlaylists;
                 vistaMenu.add(vistaPlaylists);
 
+                @SuppressWarnings("unused")
+                ControladorPlaylists controladorPlaylists = new ControladorPlaylists(sistema, vistaPlaylists);
+
                 vistaPlaylists.setVisible(true);
 
                 vistaMenu.repaint();
@@ -76,6 +80,9 @@ public class ControladorMenu {
                 vistaMenu.panelActual = vistaAutores;
                 vistaMenu.add(vistaAutores);
 
+                @SuppressWarnings("unused")
+                ControladorAutores controladorAutores = new ControladorAutores(sistema, vistaAutores);
+
                 vistaMenu.repaint();
             }
         });
@@ -91,6 +98,9 @@ public class ControladorMenu {
                 vistaMenu.panelActual = vistaCanciones;
                 vistaMenu.add(vistaCanciones);
 
+                @SuppressWarnings("unused")
+                ControladorCanciones controladorCanciones = new ControladorCanciones(sistema, vistaCanciones);
+
                 vistaMenu.repaint();
             }
         });
@@ -105,6 +115,9 @@ public class ControladorMenu {
                 VistaNotificaciones VistaNotificaciones = new VistaNotificaciones();
                 vistaMenu.panelActual = VistaNotificaciones;
                 vistaMenu.add(VistaNotificaciones);
+                
+                @SuppressWarnings("unused")
+                ControladorNotificaciones controladorNotificaciones = new ControladorNotificaciones(sistema, VistaNotificaciones);
 
                 vistaMenu.repaint();
             }

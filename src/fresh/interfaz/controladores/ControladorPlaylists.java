@@ -5,7 +5,7 @@ import fresh.interfaz.vistas.VistaPlaylists;
 
 public class ControladorPlaylists {
 
-    public ControladorPlaylists(Sistema sistema, VistaPlaylists vistaMenu) {
+    public ControladorPlaylists(Sistema sistema, VistaPlaylists vistaPlaylists) {
 
     }
 }
