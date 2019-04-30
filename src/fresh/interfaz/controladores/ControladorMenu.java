@@ -141,6 +141,8 @@ public class ControladorMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sistema.retrocederCancion();
+                vistaMenu.botonReproducir.setVisible(false);
+                vistaMenu.botonParar.setVisible(true);
             }
         });
 
@@ -166,6 +168,8 @@ public class ControladorMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sistema.avanzarCancion();
+                vistaMenu.botonReproducir.setVisible(false);
+                vistaMenu.botonParar.setVisible(true);
             }
         });
         

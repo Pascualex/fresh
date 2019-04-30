@@ -57,7 +57,7 @@ public class ControladorCanciones {
             JCustomButton botonReproducir;
             botonReproducir = new JCustomButton("▶");
             botonReproducir.setBounds(50, 100*i, 75, 75);
-            botonReproducir.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 35));
+            botonReproducir.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
             botonReproducir.setForeground(Estilo.colorTexto);
             botonReproducir.setBackground(new Color(240, 240, 100));
             botonReproducir.setPressedBackgound(new Color(220, 220, 95).brighter());
