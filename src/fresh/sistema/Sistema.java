@@ -724,6 +724,14 @@ public class Sistema {
     }
 
     /**
+     * Devuelve el usuario actual
+     * @return Usuario actualmente loggeado en la aplicación
+     */
+    public Usuario getUsuarioActual() {
+        return usuarioActual;
+    }
+
+    /**
      * Cierra el sistema, deteniendo los hilos paralelos de ejecución.
      */
     public void cerrarSistema() {
