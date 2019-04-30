@@ -72,6 +72,7 @@ public class Sistema {
      * "CONTRASENA_INVALIDA" si se encuentra una coincidencia en el nombre, pero
      * la contraseña es incorrecta.
      * "USUARIO_BLOQUEADO" si es un usuario registrado y está bloqueado.
+     * "INICIO_ADMINISTRADOR" si los credenciales son los del administrador.
      * "OK" si no se da ninguna de las anteriores.
      */
     public Status iniciarSesion(String nombre, String contrasena) {
@@ -82,7 +83,7 @@ public class Sistema {
 
             modoEjecucion = ModoEjecucion.ADMINISTRADOR;
 
-            return Status.OK;
+            return Status.INICIO_ADMINISTRADOR;
         }
 
         Usuario usuario = baseDeDatos.buscarUsuario(nombre);

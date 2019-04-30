@@ -117,5 +117,10 @@ public enum Status {
      * Indica que la función ejecutada no es accesible desde el modo de
      * ejecución actual del sistema.
      */
-    OPERACION_INACCESIBLE
+    OPERACION_INACCESIBLE,
+
+    /**
+     * Indica que se ha iniciado sesión como administrador.
+     */
+    INICIO_ADMINISTRADOR
 }
