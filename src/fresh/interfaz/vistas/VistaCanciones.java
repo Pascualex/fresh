@@ -45,7 +45,7 @@ public class VistaCanciones extends JPanel {
         scrollPanel.setAutoscrolls(true);
         
         chooser = new JFileChooser();
-        chooser.setFileFilter(new FileNameExtensionFilter("mp3"));
+        chooser.setFileFilter(new FileNameExtensionFilter("Archivo MP3", "mp3"));
         
         scrollFrame = new JCustomScrollPane(scrollPanel);
         scrollFrame.setBounds(0, 100, Estilo.anchura-260, 440);
