@@ -10,10 +10,13 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import fresh.datos.tipos.Cancion;
+import fresh.datos.tipos.ListaReproduccion;
 import fresh.interfaz.Estilo;
 import fresh.interfaz.swing.*;
+import fresh.interfaz.vistas.VistaAnadirALista;
 import fresh.interfaz.vistas.VistaResultadoCanciones;
 
 public class ControladorResultadoCanciones {
@@ -42,7 +45,7 @@ public class ControladorResultadoCanciones {
             vistaResultadoCanciones.scrollPanel.add(textoNombreAutor);
 
             JLabel textoDuracion;
-            textoDuracion = new JLabel(String.valueOf(c.getDuracion()));
+            textoDuracion = new JLabel(String.valueOf(c.getDuracion()/60) + ":" + String.valueOf(c.getDuracion()%60));
             textoDuracion.setBounds(600, 100*i+25, 100, 40);
             textoDuracion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoDuracion.setForeground(Estilo.colorTexto);
@@ -84,7 +87,43 @@ public class ControladorResultadoCanciones {
             botonAnadirPlaylist.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("anadir");
+                    VistaAnadirALista vistaAnadirALista = new VistaAnadirALista();
+                    int i = 0;
+
+                    for (ListaReproduccion l : sistema.getUsuarioActual().getListasReproducion()) {
+                        JLabel nombrePlaylist;
+                        nombrePlaylist = new JLabel(l.getNombre());
+                        nombrePlaylist.setBounds(600, 100*i+25, 100, 40);
+                        nombrePlaylist.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+                        nombrePlaylist.setForeground(Estilo.colorTexto);
+                        nombrePlaylist.setHorizontalAlignment(JLabel.CENTER);
+                        vistaAnadirALista.scrollPanel.add(nombrePlaylist);
+
+                        JCustomButton botonAnadir;
+                        botonAnadir = new JCustomButton("+");
+                        botonAnadir.setBounds(25, 100*i, 75, 75);
+                        botonAnadir.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+                        botonAnadir.setForeground(Estilo.colorTexto);
+                        botonAnadir.setBackground(new Color(240, 240, 100));
+                        botonAnadir.setPressedBackgound(new Color(220, 220, 95).brighter());
+                        botonAnadir.setCornerRadius(80);
+                        botonAnadir.setHeight(5);       
+                        botonAnadir.setShadowSize(5);
+                        botonAnadir.setShadowOpacity(0.4f);
+
+                        botonAnadir.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                sistema.anadirAListaReproduccion(l, c);
+                            }
+                        });
+                        vistaAnadirALista.scrollPanel.add(botonAnadir);
+                        i++;
+                    }
+
+                    vistaResultadoCanciones.setVisible(false);
+                    vistaAnadirALista.setVisible(true);
+                    vistaAnadirALista.repaint();
                 }
             });
             vistaResultadoCanciones.scrollPanel.add(botonAnadirPlaylist);
