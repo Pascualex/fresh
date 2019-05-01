@@ -89,6 +89,7 @@ public class ControladorResultadoCanciones {
                 public void actionPerformed(ActionEvent e) {
                     VistaAnadirALista vistaAnadirALista = new VistaAnadirALista();
                     int i = 0;
+                    vistaResultadoCanciones.add(vistaAnadirALista);
 
                     for (ListaReproduccion l : sistema.getUsuarioActual().getListasReproducion()) {
                         JLabel nombrePlaylist;
@@ -115,13 +116,16 @@ public class ControladorResultadoCanciones {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 sistema.anadirAListaReproduccion(l, c);
+                                vistaResultadoCanciones.remove(vistaAnadirALista);
+                                vistaResultadoCanciones.scrollFrame.setVisible(false);
+                                vistaResultadoCanciones.repaint();
                             }
                         });
                         vistaAnadirALista.scrollPanel.add(botonAnadir);
                         i++;
                     }
 
-                    vistaResultadoCanciones.setVisible(false);
+                    vistaResultadoCanciones.scrollFrame.setVisible(false);
                     vistaAnadirALista.setVisible(true);
                     vistaAnadirALista.repaint();
                 }
