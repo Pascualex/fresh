@@ -51,7 +51,7 @@ public class ControladorResultadoCanciones {
 
             JCustomButton botonReproducir;
             botonReproducir = new JCustomButton("▶");
-            botonReproducir.setBounds(50, 100*i, 75, 75);
+            botonReproducir.setBounds(25, 100*i, 75, 75);
             botonReproducir.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
             botonReproducir.setForeground(Estilo.colorTexto);
             botonReproducir.setBackground(new Color(240, 240, 100));
@@ -60,6 +60,7 @@ public class ControladorResultadoCanciones {
             botonReproducir.setHeight(5);       
             botonReproducir.setShadowSize(5);
             botonReproducir.setShadowOpacity(0.4f);
+
             botonReproducir.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -67,6 +68,27 @@ public class ControladorResultadoCanciones {
                 }
             });
             vistaResultadoCanciones.scrollPanel.add(botonReproducir);
+
+            JCustomButton botonAnadirPlaylist;
+            botonAnadirPlaylist = new JCustomButton("+");
+            botonAnadirPlaylist.setBounds(100, 100*i, 75, 75);
+            botonAnadirPlaylist.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            botonAnadirPlaylist.setForeground(Estilo.colorTexto);
+            botonAnadirPlaylist.setBackground(new Color(10, 200, 90));
+            botonAnadirPlaylist.setPressedBackgound(new Color(10, 200, 90).brighter());
+            botonAnadirPlaylist.setCornerRadius(80);
+            botonAnadirPlaylist.setHeight(5);       
+            botonAnadirPlaylist.setShadowSize(5);
+            botonAnadirPlaylist.setShadowOpacity(0.4f);
+
+            botonAnadirPlaylist.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("anadir");
+                }
+            });
+            vistaResultadoCanciones.scrollPanel.add(botonAnadirPlaylist);
+
             i++;
         }
     }
