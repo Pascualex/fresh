@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import fresh.datos.tipos.Cancion;
 import fresh.datos.tipos.ListaReproduccion;

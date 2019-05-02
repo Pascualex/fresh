@@ -1,7 +1,7 @@
 package fresh.modulos;
 
+import fresh.Status;
 import fresh.sistema.Configuracion;
-
 import fresh.sistema.ModoEjecucion;
 import fresh.datos.tipos.*;
 import javazoom.jl.decoder.Bitstream;
@@ -29,7 +29,7 @@ public class ModuloMP3 implements Runnable {
     private List<Cancion> canciones;
     private boolean reproduciendo;
     private boolean nuevaCancion;
-    private int posicionActual;
+    private Integer posicionActual;
     private Cancion cancionActual;
     private Player player;
     private boolean parar;
@@ -43,7 +43,7 @@ public class ModuloMP3 implements Runnable {
         this.ruta = ruta;
         this.configuracion = configuracion;
         canciones = new ArrayList<>();
-        posicionActual = -1;
+        posicionActual = 0;
         reproduciendo = false;
         nuevaCancion = false;
         parar = false;
@@ -56,35 +56,39 @@ public class ModuloMP3 implements Runnable {
             	System.out.print(""); // Medida temporal para evitar "optimizaciones" de Java
                 if (reproduciendo) {
                     if (!player.play(1)) {
-                    	player = null;
                         reproduciendo = false;
+                        
+                        synchronized (posicionActual) {
+                            posicionActual++;
+                        }
+
                         nuevaCancion = true;
                     }
-                } else {
-                    if (nuevaCancion) {
-                        if (posicionActual < canciones.size()-1) {
-                            if (modoEjecucion == ModoEjecucion.REGISTRADO) {
-                                int reproduccionesMensuales = usuarioActual.getReproduccionesMensuales();
-                                if (!usuarioActual.getPremium()) {
-                                    if (reproduccionesMensuales >= configuracion.getMaxReproduccionesRegistrado()) continue;
-                                }
-                                usuarioActual.setReproduccionesMensuales(reproduccionesMensuales+1);
-                            } else if (modoEjecucion == ModoEjecucion.ANONIMO) {
-                                if (reproduccionesSesion >= configuracion.getMaxReproduccionesAnonimo()) continue;
-                                reproduccionesSesion++;
+                } else {                    
+                    if (nuevaCancion && posicionActual < canciones.size()) {
+                        System.out.println("Que si coño????");
+                        if (modoEjecucion == ModoEjecucion.REGISTRADO) {
+                            int reproduccionesMensuales = usuarioActual.getReproduccionesMensuales();
+                            if (!usuarioActual.getPremium()) {
+                                /* DESACTIVADO PARA LAS PRUEBAS // if (reproduccionesMensuales >= configuracion.getMaxReproduccionesRegistrado()) continue;*/
                             }
-
-                            posicionActual++;
-                            cancionActual = canciones.get(posicionActual);
-
-                            cancionActual.setReproduccionesMensuales(cancionActual.getReproduccionesMensuales()+1);
-                            cancionActual.getAutor().setReproduccionesMensuales(cancionActual.getAutor().getReproduccionesMensuales()+1);
-
-                            String rutaCancion = ruta + cancionActual.getId() + ".mp3";                      
-                            player = new Player(new FileInputStream(rutaCancion));
-                            nuevaCancion = false;
-                            reproduciendo = true;
+                            usuarioActual.setReproduccionesMensuales(reproduccionesMensuales+1);
+                        } else if (modoEjecucion == ModoEjecucion.ANONIMO) {
+                            if (reproduccionesSesion >= configuracion.getMaxReproduccionesAnonimo()) continue;
+                            reproduccionesSesion++;
                         }
+                        
+                        cancionActual = canciones.get(posicionActual);
+
+                        cancionActual.setReproduccionesMensuales(cancionActual.getReproduccionesMensuales()+1);
+                        cancionActual.getAutor().setReproduccionesMensuales(cancionActual.getAutor().getReproduccionesMensuales()+1);
+
+                        String rutaCancion = ruta + cancionActual.getId() + ".mp3";
+                        player = new Player(new FileInputStream(rutaCancion));
+                        nuevaCancion = false;
+                        System.out.println("Que si coño");
+                        System.out.println(nuevaCancion + " (" + posicionActual + "/" + canciones.size() + ")");
+                        reproduciendo = true;
                     }
                 }
             }
@@ -98,16 +102,25 @@ public class ModuloMP3 implements Runnable {
      * @param canciones Canciones a añadir al reproductor
      */
     public void anadirCanciones(List<Cancion> canciones) {
+        synchronized (posicionActual) {        
+            posicionActual = this.canciones.size();
+        }
+
         this.canciones.addAll(canciones);
+        reproduciendo = false;
         nuevaCancion = true;
     }
 
     /**
      * Activa la reproducción de MP3.
+     * @return "NO_PUEDE_REPRODUCIR" si no hay nada que reproducir.
+     * "OK" en caso contrario.
      */
-    public void reproducir() {
-    	if (player == null) return;
+    public Status reproducir() {
+        if (posicionActual == canciones.size()) return Status.NO_PUEDE_REPRODUCIR;
+        
         reproduciendo = true;
+        return Status.OK;
     }
 
     /**
@@ -121,28 +134,38 @@ public class ModuloMP3 implements Runnable {
      * Reinicia la canción actual.
      */
     public void reiniciar() {
-        if (posicionActual < 0) return;
+        if (posicionActual == canciones.size()) return;
+
         reproduciendo = false;
         nuevaCancion = true;
-        posicionActual--;
     }
 
     /**
      * Avanza a la siguiente canción.
      */
     public void avanzar() {
+        if (posicionActual >= canciones.size()-1) return;
+
         reproduciendo = false;
         nuevaCancion = true;
+
+        synchronized (posicionActual) {        
+            posicionActual++;
+        }
     }
 
     /**
      * Retrocede a la anterior canción.
      */
     public void retroceder() {
-        if (posicionActual < 1) return;
+        if (posicionActual <= 0) return;
+
         reproduciendo = false;
         nuevaCancion = true;
-        posicionActual = posicionActual-2;
+
+        synchronized (posicionActual) {        
+            posicionActual--;
+        }
     }
 
     /**

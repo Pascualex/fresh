@@ -163,14 +163,15 @@ public class Sistema {
      */
     public void reproducir(ElementoReproducible elemento) {
         moduloMP3.anadirCanciones(elemento.getCanciones());
-        moduloMP3.reproducir();
     }
 
     /**
      * Reanuda la reproducción de canciones.
+     * @return "NO_PUEDE_REPRODUCIR" si no hay nada que reproducir.
+     * "OK" en caso contrario.
      */
-    public void reanudarCancion() {
-        moduloMP3.reproducir();
+    public Status reanudarCancion() {
+        return moduloMP3.reproducir();
     }
 
     /**

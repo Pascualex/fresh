@@ -10,6 +10,11 @@ public enum Status {
      * Indica que no se ha producido ningún error.
      */
     OK,
+
+    /**
+     * Indica que se ha iniciado sesión como administrador.
+     */
+    INICIO_ADMINISTRADOR,
        
     /**
      * Indica que el nombre de usuario no tiene los caracteres mínimos.
@@ -77,6 +82,11 @@ public enum Status {
      * Indica que la descripción del reporte no tiene los caracteres mínimos.
      */
     DESCRIPCION_INVALIDA,
+
+    /**
+     * Indica que el módulo MP3 no tiene nada que reproducir.
+     */
+    NO_PUEDE_REPRODUCIR,
     
     /**
      * Indica que la canción no es reportable.
@@ -117,10 +127,5 @@ public enum Status {
      * Indica que la función ejecutada no es accesible desde el modo de
      * ejecución actual del sistema.
      */
-    OPERACION_INACCESIBLE,
-
-    /**
-     * Indica que se ha iniciado sesión como administrador.
-     */
-    INICIO_ADMINISTRADOR
+    OPERACION_INACCESIBLE
 }

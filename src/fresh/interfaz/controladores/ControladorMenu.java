@@ -99,7 +99,7 @@ public class ControladorMenu {
                 vistaMenu.add(vistaCanciones);
 
                 @SuppressWarnings("unused")
-                ControladorCanciones controladorCanciones = new ControladorCanciones(sistema, vistaCanciones);
+                ControladorCanciones controladorCanciones = new ControladorCanciones(sistema, vistaCanciones, vistaMenu);
 
                 vistaCanciones.setVisible(true);
 
@@ -149,7 +149,7 @@ public class ControladorMenu {
         vistaMenu.botonReproducir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sistema.reanudarCancion();
+                if (sistema.reanudarCancion() != Status.OK) return;
                 vistaMenu.botonReproducir.setVisible(false);
                 vistaMenu.botonParar.setVisible(true);
             }

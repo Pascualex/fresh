@@ -1,6 +1,12 @@
 package fresh.interfaz.controladores;
 
+import fresh.Status;
 import fresh.sistema.Sistema;
+import fresh.datos.tipos.Cancion;
+import fresh.interfaz.Estilo;
+import fresh.interfaz.swing.JCustomButton;
+import fresh.interfaz.vistas.VistaCanciones;
+import fresh.interfaz.vistas.VistaMenu;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,16 +17,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 
-import fresh.Status;
-import fresh.datos.tipos.Cancion;
-import fresh.datos.tipos.EstadoCancion;
-import fresh.interfaz.Estilo;
-import fresh.interfaz.swing.JCustomButton;
-import fresh.interfaz.vistas.VistaCanciones;
-
 public class ControladorCanciones {
 
-    public ControladorCanciones(Sistema sistema, VistaCanciones vistaCanciones) {
+    public ControladorCanciones(Sistema sistema, VistaCanciones vistaCanciones, VistaMenu vistaMenu) {
         vistaCanciones.botonSubirCancion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -64,14 +63,18 @@ public class ControladorCanciones {
             botonReproducir.setCornerRadius(80);
             botonReproducir.setHeight(5);       
             botonReproducir.setShadowSize(5);
-            botonReproducir.setShadowOpacity(0.4f);
+            botonReproducir.setShadowOpacity(0.4f);            
+            vistaCanciones.scrollPanel.add(botonReproducir);
+
             botonReproducir.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    vistaMenu.botonReproducir.setVisible(false);
+                    vistaMenu.botonParar.setVisible(true);
                     sistema.reproducir(c);
                 }
             });
-            vistaCanciones.scrollPanel.add(botonReproducir);
+
             i++;
         }
     }
