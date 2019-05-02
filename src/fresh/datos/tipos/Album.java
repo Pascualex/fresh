@@ -57,14 +57,17 @@ public class Album extends ElementoReproducible {
     /** 
      * Devuelve el estado de bloqueo del álbum. Basado en el estado de bloqueo
      * de las canciones que lo componen.
-     * @return "true" si alguna de sus canciones está bloqueada. "false" en caso
-     * contrario.
+     * @return "true" si alguna de sus canciones está bloqueada o is está vacío.
+     * "false" en caso contrario.
      */
     @Override
     public boolean getBloqueado() {
+        if (canciones.size() == 0) return true;
+
         for (Cancion cancion : canciones) {
             if (cancion.getBloqueado()) return true;
         }
+
         return false;
     }
 

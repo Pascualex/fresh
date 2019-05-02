@@ -12,10 +12,13 @@ import java.awt.Font;
 public class VistaPlaylists extends JPanel {
     private static final long serialVersionUID = 0;
 
-    public JCustomScrollPane scrollFrame;
-    public JPanel scrollPanel;
     public JCustomTextField entradaNombrePlaylist;
     public JCustomButton botonCrearPlaylist;
+
+    public JCustomPanel separador;
+
+    public JCustomScrollPane scrollFrame;
+    public JPanel scrollPanel;
 
     public VistaPlaylists() {
         setBounds(260, 140, Estilo.anchura-260, 540);
@@ -46,16 +49,27 @@ public class VistaPlaylists extends JPanel {
         botonCrearPlaylist.setHeight(5);       
         botonCrearPlaylist.setShadowSize(5);
         botonCrearPlaylist.setShadowOpacity(0.4f);
-        add(botonCrearPlaylist);
+        add(botonCrearPlaylist);        
+
+        separador = new JCustomPanel();
+        separador.setBounds(20, 97, Estilo.anchura-260-92, 3);
+        separador.setBackground(Estilo.colorPrimario.darker());
+        separador.setCornerRadius(5);
+        add(separador);
 
         scrollPanel = new JPanel();
-        scrollPanel.setPreferredSize(new Dimension(0, 2000));
+        scrollPanel.setPreferredSize(new Dimension(0, 0));
         scrollPanel.setBackground(Estilo.colorPrimario);
         scrollPanel.setLayout(null);
-        scrollPanel.setAutoscrolls(true);
         
         scrollFrame = new JCustomScrollPane(scrollPanel);
-        scrollFrame.setBounds(0, 100, Estilo.anchura-260, 440);
+        scrollFrame.setBounds(0, 100, Estilo.anchura-270, 440);
+        scrollFrame.setThumbColor(Estilo.colorSecundario.brighter());
+        scrollFrame.setTrackColor(Estilo.colorPrimario.darker());
+        scrollFrame.setBehindColor(Estilo.colorPrimario);
+        scrollFrame.setHeight(10); 
+        scrollFrame.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollFrame.getVerticalScrollBar().setUnitIncrement(16);
         add(scrollFrame);
     }    
 }

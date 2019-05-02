@@ -99,7 +99,7 @@ public class VistaMenu extends JPanel {
         textoNombreAplicacion.setHorizontalAlignment(JLabel.CENTER);
         panelLateral.add(textoNombreAplicacion);
 
-        botonPlaylists = new JCustomButton("❤  Playlists");
+        botonPlaylists = new JCustomButton("Playlists");
         botonPlaylists.setBounds(20, 120, 220, 80);
         botonPlaylists.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
         botonPlaylists.setForeground(Estilo.colorTexto);
@@ -163,7 +163,7 @@ public class VistaMenu extends JPanel {
 
         // Configura el panel inferior
         panelInferior = new JPanel();        
-        panelInferior.setBounds(260, 680, Estilo.anchura-260, Estilo.altura-680);      
+        panelInferior.setBounds(260, 680, Estilo.anchura-260, Estilo.altura-680);
         panelInferior.setBackground(Estilo.colorPrimario.darker());
         panelInferior.setLayout(null);
         add(panelInferior);

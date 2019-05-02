@@ -17,8 +17,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
 
 /**
  * <p>Esta clase permite trabajar con una base de datos de la mayoría de
@@ -36,7 +34,7 @@ public class BaseDeDatos implements Serializable {
     private Map<String, Cancion> canciones = new HashMap<>();
     private Map<String, Album> albumes = new HashMap<>();
 
-    private Set<Cancion> nuevasCanciones = new HashSet<>();
+    private List<Cancion> nuevasCanciones = new ArrayList<>();
 
     private BaseDeDatos(String ruta) {
         this.ruta = ruta;
@@ -180,10 +178,10 @@ public class BaseDeDatos implements Serializable {
     }
 
     /**
-     * Devuelve el conjunto de las canciones pendientes de validar.
-     * @return Conjunto de las canciones pendientes de validar.
+     * Devuelve la lista de las canciones pendientes de validar.
+     * @return Lista de las canciones pendientes de validar.
      */
-    public Set<Cancion> obtenerNuevasCanciones() {
+    public List<Cancion> obtenerNuevasCanciones() {
     	return nuevasCanciones;
     }
 

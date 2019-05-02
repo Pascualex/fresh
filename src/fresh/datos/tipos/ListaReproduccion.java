@@ -51,14 +51,17 @@ public class ListaReproduccion extends ElementoReproducible {
     /** 
      * Devuelve el estado de bloqueo de la lista de reproducción. Basado en el 
      * estado de bloqueo de los elementos que la componen.
-     * @return "true" si alguno de sus elementos reproducibles está bloqueado. 
-     * "false" en caso contrario.
+     * @return "true" si alguno de sus elementos reproducibles está bloqueado o
+     * si está vacía. "false" en caso contrario.
      */
     @Override
     public boolean getBloqueado() {
+        if (elementos.size() == 0) return true;
+
         for (ElementoReproducible elemento : elementos) {            
             if (elemento.getBloqueado()) return true;
         }
+
         return false;
     }
 
@@ -90,5 +93,19 @@ public class ListaReproduccion extends ElementoReproducible {
         }
 
         return canciones;        
+    }
+
+    /**
+     * Indica si el objeto pasado equivale a esta lista de reproducción.
+     * @param obj Objecto a comparar con la lista de reproducción
+     * @return "true" si tienen el mismo nombre. "false" en caso contrario.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ListaReproduccion)) return false;
+
+        ListaReproduccion listaReproduccion = (ListaReproduccion) obj;
+
+        return listaReproduccion.getNombre().equals(getNombre());
     }
 }

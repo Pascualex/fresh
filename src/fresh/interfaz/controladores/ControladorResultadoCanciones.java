@@ -27,33 +27,33 @@ public class ControladorResultadoCanciones {
 
         int i = 0;
         for (Cancion c : canciones) {
+            JLabel textoDuracion;
+            textoDuracion = new JLabel(String.valueOf(c.getDuracion()/60) + ":" + String.format("%02d", c.getDuracion()%60));
+            textoDuracion.setBounds(200, 15+100*i+20, 80, 40);
+            textoDuracion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            textoDuracion.setForeground(Estilo.colorTexto);
+            textoDuracion.setHorizontalAlignment(JLabel.RIGHT);
+            vistaResultadoCanciones.scrollPanel.add(textoDuracion);
+
             JLabel textoNombreCancion;
             textoNombreCancion = new JLabel(c.getNombre());
-            textoNombreCancion.setBounds(200, 100*i+25, 200, 40);
+            textoNombreCancion.setBounds(310, 15+100*i, 490, 40);
             textoNombreCancion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoNombreCancion.setForeground(Estilo.colorTexto);
-            textoNombreCancion.setHorizontalAlignment(JLabel.CENTER);
+            textoNombreCancion.setHorizontalAlignment(JLabel.LEFT);
             vistaResultadoCanciones.scrollPanel.add(textoNombreCancion);
 
             JLabel textoNombreAutor;
             textoNombreAutor = new JLabel(c.getAutor().getNombre());
-            textoNombreAutor.setBounds(400, 100*i+25, 200, 40);
-            textoNombreAutor.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            textoNombreAutor.setBounds(310, 15+100*i+35, 490, 40);
+            textoNombreAutor.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
             textoNombreAutor.setForeground(Estilo.colorTexto);
-            textoNombreAutor.setHorizontalAlignment(JLabel.CENTER);
+            textoNombreAutor.setHorizontalAlignment(JLabel.LEFT);
             vistaResultadoCanciones.scrollPanel.add(textoNombreAutor);
-
-            JLabel textoDuracion;
-            textoDuracion = new JLabel(String.valueOf(c.getDuracion()/60) + ":" + String.valueOf(c.getDuracion()%60));
-            textoDuracion.setBounds(600, 100*i+25, 100, 40);
-            textoDuracion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
-            textoDuracion.setForeground(Estilo.colorTexto);
-            textoDuracion.setHorizontalAlignment(JLabel.CENTER);
-            vistaResultadoCanciones.scrollPanel.add(textoDuracion);
 
             JCustomButton botonReproducir;
             botonReproducir = new JCustomButton("▶");
-            botonReproducir.setBounds(25, 100*i, 75, 75);
+            botonReproducir.setBounds(25, 15+100*i, 75, 75);
             botonReproducir.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
             botonReproducir.setForeground(Estilo.colorTexto);
             botonReproducir.setBackground(new Color(240, 240, 100));
@@ -73,7 +73,7 @@ public class ControladorResultadoCanciones {
 
             JCustomButton botonAnadirPlaylist;
             botonAnadirPlaylist = new JCustomButton("+");
-            botonAnadirPlaylist.setBounds(100, 100*i, 75, 75);
+            botonAnadirPlaylist.setBounds(110, 15+100*i, 75, 75);
             botonAnadirPlaylist.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             botonAnadirPlaylist.setForeground(Estilo.colorTexto);
             botonAnadirPlaylist.setBackground(new Color(10, 200, 90));

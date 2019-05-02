@@ -61,7 +61,7 @@ public class ControladorMenu {
                 vistaMenu.add(vistaPlaylists);
 
                 @SuppressWarnings("unused")
-                ControladorPlaylists controladorPlaylists = new ControladorPlaylists(sistema, vistaPlaylists);
+                ControladorPlaylists controladorPlaylists = new ControladorPlaylists(sistema, vistaPlaylists, vistaMenu);
 
                 vistaPlaylists.setVisible(true);
 

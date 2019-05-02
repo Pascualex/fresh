@@ -3,7 +3,6 @@ package fresh.sistema;
 import fresh.Status;
 import fresh.datos.tipos.*;
 
-import java.util.Set;
 import java.util.List;
 import java.io.File;
 import java.util.GregorianCalendar;
@@ -60,7 +59,7 @@ public class SimulacionEjecucion {
         }
         
         System.out.println("Obtiene la lista de canciones pendientes de validar.");
-        Set<Cancion> nuevasCanciones = sistema.obtenerNuevasCanciones();
+        List<Cancion> nuevasCanciones = sistema.obtenerNuevasCanciones();
         if (nuevasCanciones.size() == 0) {
             System.out.println("Error");
             sistema.cerrarSistema();

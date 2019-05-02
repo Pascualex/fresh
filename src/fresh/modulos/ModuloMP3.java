@@ -9,9 +9,9 @@ import javazoom.jl.decoder.Header;
 import javazoom.jl.player.Player;
 
 import java.util.List;
+import java.util.LinkedList;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
 import java.io.IOException;
 
 import javax.sound.sampled.AudioFileFormat;
@@ -42,7 +42,7 @@ public class ModuloMP3 implements Runnable {
     public ModuloMP3(String ruta, Configuracion configuracion) {
         this.ruta = ruta;
         this.configuracion = configuracion;
-        canciones = new ArrayList<>();
+        canciones = new LinkedList<>();
         posicionActual = 0;
         reproduciendo = false;
         nuevaCancion = false;
@@ -66,7 +66,6 @@ public class ModuloMP3 implements Runnable {
                     }
                 } else {                    
                     if (nuevaCancion && posicionActual < canciones.size()) {
-                        System.out.println("Que si coño????");
                         if (modoEjecucion == ModoEjecucion.REGISTRADO) {
                             int reproduccionesMensuales = usuarioActual.getReproduccionesMensuales();
                             if (!usuarioActual.getPremium()) {
@@ -86,8 +85,6 @@ public class ModuloMP3 implements Runnable {
                         String rutaCancion = ruta + cancionActual.getId() + ".mp3";
                         player = new Player(new FileInputStream(rutaCancion));
                         nuevaCancion = false;
-                        System.out.println("Que si coño");
-                        System.out.println(nuevaCancion + " (" + posicionActual + "/" + canciones.size() + ")");
                         reproduciendo = true;
                     }
                 }
@@ -202,7 +199,7 @@ public class ModuloMP3 implements Runnable {
      * @param fichero Archivo de audio
      * @return Duración del fichero de audio en segundos.
      */
-    public static double obtenerDuracion(File fichero) {
+    public static long obtenerDuracion(File fichero) {
     	FileInputStream fis;
         Bitstream bitstream;
         Header h = null;
@@ -215,7 +212,7 @@ public class ModuloMP3 implements Runnable {
         } catch (Exception e) {
 
         }
-        return h.total_ms((int) tn)/1000;
+        return (long) h.total_ms((int) tn)/1000;
     }
     
     /**
@@ -239,11 +236,22 @@ public class ModuloMP3 implements Runnable {
             return false;
         }
     }
+
+    /**
+     * Devuelve al módulo MP3 a su estado inicial
+     */
+    public void clear() {
+        reproduciendo = false;
+        posicionActual = 0;
+        nuevaCancion = false;
+        
+        canciones.clear();
+    }
     
     /**
      * Finaliza la ejecución del hilo.
      */
-    public synchronized void finalizar() {
+    public void finalizar() {
     	parar = true;
     }
 }

@@ -3,8 +3,8 @@ package fresh.datos.tipos;
 import fresh.sistema.Sistema;
 import fresh.Status;
 
-import java.util.Set;
-import java.util.HashSet;
+import java.util.List;
+import java.util.LinkedList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -26,11 +26,11 @@ public class Usuario implements Serializable {
 	private boolean bloqueado;
 	private int reproduccionesMensuales;
 	
-	private Set<Notificacion> notificaciones = new HashSet<>();
-	private Set<ListaReproduccion> listasReproduccion = new HashSet<>();
-	private Set<Cancion> canciones = new HashSet<>();
-	private Set<Album> albumes = new HashSet<>();
-	private Set<Usuario> seguidores = new HashSet<>();
+	private List<Notificacion> notificaciones = new LinkedList<>();
+	private List<ListaReproduccion> listasReproduccion = new LinkedList<>();
+	private List<Cancion> canciones = new LinkedList<>();
+	private List<Album> albumes = new LinkedList<>();
+	private List<Usuario> seguidores = new LinkedList<>();
 
 	/**
 	 * Instancia un usuario dadas sus características.
@@ -141,8 +141,8 @@ public class Usuario implements Serializable {
 	 * Devuelve la lista de notificaciones del usuario.
 	 * @return Lista de notificaciones del usuario.
 	 */
-	public Set<Notificacion> getNotificaciones(){
-		return Collections.unmodifiableSet(notificaciones);
+	public List<Notificacion> getNotificaciones(){
+		return Collections.unmodifiableList(notificaciones);
 	}
 
 	/**
@@ -162,15 +162,15 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * Devuelve un conjunto con las listas de reproduccion del usuario.
-	 * @return Conjunto con las listas de reproduccion del usuario.
+	 * Devuelve la lista de listas de reproduccion del usuario.
+	 * @return Lista de listas de reproduccion del usuario.
 	 */
-	public Set<ListaReproduccion> getListasReproducion() {
-		return Collections.unmodifiableSet(listasReproduccion);
+	public List<ListaReproduccion> getListasReproducion() {
+		return Collections.unmodifiableList(listasReproduccion);
 	}
 
 	/**
-	 * Añade una lista de reproduccion al conjunto de listas del usuario.
+	 * Añade una lista de reproduccion a la lista de listas del usuario.
 	 * @param listaReproduccion Lista de reproducción a añadir
 	 * @return "LISTA_REPRODUCCION_REPETIDA" si la lista ya está presente.
 	 * "OK" en caso contario.
@@ -183,7 +183,7 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * Elimina una lista de reproducción del conjunto de listas del usuario.
+	 * Elimina una lista de reproducción de la lista de listas del usuario.
 	 * @param listaReproduccion Lista de reproducción a eliminar
 	 */
 	public void eliminarListaReproduccion(ListaReproduccion listaReproduccion) {
@@ -191,15 +191,15 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * Devuelve el conjunto de canciones del usuario
-	 * @return Conjunto de canciones del usuario
+	 * Devuelve la lista de canciones del usuario
+	 * @return Lista de canciones del usuario
 	 */
-	public Set<Cancion> getCanciones(){
-		return Collections.unmodifiableSet(canciones);
+	public List<Cancion> getCanciones(){
+		return Collections.unmodifiableList(canciones);
 	}
 
 	/**
-	 * Añade una cancion al conjunto de canciones del usuario
+	 * Añade una cancion a la lista de canciones del usuario
 	 * @param cancion Canción a añadir
 	 */
 	public void anadirCancion(Cancion cancion) {
@@ -207,7 +207,7 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * Elimina una cancion del conjunto de canciones del usuario
+	 * Elimina una cancion de la lista de canciones del usuario
 	 * @param cancion Canción a eliminar
 	 */
 	public void eliminarCancion(Cancion cancion) {
@@ -215,15 +215,15 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * Devuelve el conjunto de álbumes del usuario
-	 * @return Conjunto de álbumes del usuario
+	 * Devuelve la lista de álbumes del usuario
+	 * @return Lista de álbumes del usuario
 	 */
-    public Set<Album> getAlbumes(){
-    	return Collections.unmodifiableSet(albumes);
+    public List<Album> getAlbumes(){
+    	return Collections.unmodifiableList(albumes);
 	}
 
 	/**
-	 * Añade un album al conjunto de álbumes del usuario
+	 * Añade un album a la lista de álbumes del usuario
 	 * @param album Album a añadir
 	 */
 	public void anadirAlbum(Album album) {
@@ -242,8 +242,8 @@ public class Usuario implements Serializable {
 	 * Devuelve el conjunto de seguidores del usuario
 	 * @return Conjunto de seguidores del usuario
 	 */
-	public Set<Usuario> getSeguidores() {
-		return Collections.unmodifiableSet(seguidores);
+	public List<Usuario> getSeguidores() {
+		return Collections.unmodifiableList(seguidores);
 	}
 
 	/**

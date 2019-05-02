@@ -19,7 +19,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 import java.util.List;
-import java.util.Set;
 import java.lang.Thread;
 
 /**
@@ -152,6 +151,7 @@ public class Sistema {
     public Status cerrarSesion() {
         if (modoEjecucion == ModoEjecucion.DESCONECTADO) return Status.OPERACION_INACCESIBLE;
 
+        moduloMP3.clear();
         modoEjecucion = ModoEjecucion.DESCONECTADO;
 
         return Status.OK;
@@ -256,7 +256,7 @@ public class Sistema {
         if (!ModuloMP3.validar(fichero)) return Status.MP3_INVALIDO;
 
         long id = baseDeDatos.getIdSiguienteCancion();
-        long duracion = (long) ModuloMP3.obtenerDuracion(fichero);
+        long duracion = ModuloMP3.obtenerDuracion(fichero);
         Cancion cancion = new Cancion(nombre, duracion, usuarioActual, id);
 
         Status status = baseDeDatos.anadirCancion(cancion);
@@ -369,7 +369,7 @@ public class Sistema {
      * Devuelve las listas de reproducción del usuario actual.
      * @return Listas de reproducción del usuario actual.
      */
-    public Set<ListaReproduccion> obtenerListasReproduccion() {
+    public List<ListaReproduccion> obtenerListasReproduccion() {
         return usuarioActual.getListasReproducion();
     }
 
@@ -438,21 +438,24 @@ public class Sistema {
     }
 
     /**
-     * Devuelve el set de notificaciones del usuario actual.
-     * @return El set de notifcaciones del usuario actual si la sesión es de 
+     * Devuelve la lista de notificaciones del usuario actual.
+     * @return La lista de notifcaciones del usuario actual si la sesión es de 
      * usuario registrado y "null" en caso contrario.
      */
-    public Set<Notificacion> obtenerNotificaciones() {
+    public List<Notificacion> obtenerNotificaciones() {
         if (modoEjecucion != ModoEjecucion.REGISTRADO) return null;
         
         return usuarioActual.getNotificaciones();
     }
     
     /**
-     * Devuelve el conjunto de las canciones pendientes de validar.
-     * @return Conjunto de las canciones pendientes de validar.
+     * Devuelve la lista de las canciones pendientes de validar.
+     * @return La lista de las canciones pendientes de validar si la sesión es 
+     * de administrador y "null" en caso contrario.
      */
-    public Set<Cancion> obtenerNuevasCanciones() {
+    public List<Cancion> obtenerNuevasCanciones() {
+        if (modoEjecucion != ModoEjecucion.ADMINISTRADOR) return null;
+
     	return baseDeDatos.obtenerNuevasCanciones();
     }
 
