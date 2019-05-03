@@ -104,14 +104,13 @@ public class ControladorResultadoCanciones {
     }
 
     private void cargarPlaylists(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, VistaAnadirALista vistaAnadirALista, Cancion c) { 
-        List<ListaReproduccion> listasReproduccion = sistema.getUsuarioActual().getListasReproducion();
-        
-        vistaAnadirALista.scrollPanel.setPreferredSize(new Dimension(0, 15+listasReproduccion.size()*100));
+        int numPlaylists = sistema.getUsuarioActual().getListasReproducion().size();        
+        vistaAnadirALista.scrollPanel.setPreferredSize(new Dimension(0, 15+numPlaylists*100));
         vistaAnadirALista.scrollFrame.revalidate();
         vistaAnadirALista.scrollFrame.repaint();
 
         int i = 0;
-        for (ListaReproduccion l : listasReproduccion) {
+        for (ListaReproduccion l : sistema.getUsuarioActual().getListasReproducion()) {
             JLabel nombrePlaylist;
             nombrePlaylist = new JLabel(l.getNombre());
             nombrePlaylist.setBounds(125, 15+100*i+20, 675, 40);

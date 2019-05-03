@@ -44,7 +44,7 @@ public class VistaCanciones extends JPanel {
         add(entradaNombreCancion);
 
         botonSubirCancion = new JCustomButton("Subir canción");
-        botonSubirCancion.setBounds(444, 0, 160, 60);
+        botonSubirCancion.setBounds(445, 0, 160, 60);
         botonSubirCancion.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 20));
         botonSubirCancion.setForeground(Estilo.colorTexto);
         botonSubirCancion.setBackground(new Color(10, 200, 90));
@@ -54,6 +54,9 @@ public class VistaCanciones extends JPanel {
         botonSubirCancion.setShadowSize(5);
         botonSubirCancion.setShadowOpacity(0.4f);
         add(botonSubirCancion);
+        
+        selectorArchivo = new JFileChooser();
+        selectorArchivo.setFileFilter(new FileNameExtensionFilter("Archivo MP3", "mp3"));
 
         separador = new JCustomPanel();
         separador.setBounds(20, 97, Estilo.anchura-260-92, 3);
@@ -65,10 +68,7 @@ public class VistaCanciones extends JPanel {
         scrollPanel.setPreferredSize(new Dimension(0, 0));
         scrollPanel.setBackground(Estilo.colorPrimario);
         scrollPanel.setLayout(null);
-        
-        selectorArchivo = new JFileChooser();
-        selectorArchivo.setFileFilter(new FileNameExtensionFilter("Archivo MP3", "mp3"));
-        
+
         scrollFrame = new JCustomScrollPane(scrollPanel);
         scrollFrame.setBounds(0, 100, Estilo.anchura-270, 440);
         scrollFrame.setThumbColor(Estilo.colorSecundario.brighter());

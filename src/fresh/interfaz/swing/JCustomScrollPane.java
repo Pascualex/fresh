@@ -83,7 +83,7 @@ public class JCustomScrollPane extends JScrollPane {
 
             if (trackColor != null) {
                 g2d.setColor(trackColor);
-                g2d.fillRoundRect(r.x, r.y, r.width, r.height, 20, 20);
+                g2d.fillRoundRect(r.x, r.y, r.width, r.height-10, 20, 20);
             }
         }
 
@@ -94,7 +94,7 @@ public class JCustomScrollPane extends JScrollPane {
 
             if (thumbColor != null) {
                 g2d.setColor(thumbColor);
-                g2d.fillRoundRect(r.x, r.y, r.width, r.height, 20, 20);
+                g2d.fillRoundRect(r.x, r.y, r.width, r.height-10, 20, 20);
             }
         }
 

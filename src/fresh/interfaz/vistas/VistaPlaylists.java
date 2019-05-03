@@ -40,7 +40,7 @@ public class VistaPlaylists extends JPanel {
         add(entradaNombrePlaylist);
 
         botonCrearPlaylist = new JCustomButton("Crear playlist");
-        botonCrearPlaylist.setBounds(444, 0, 160, 60);
+        botonCrearPlaylist.setBounds(445, 0, 160, 60);
         botonCrearPlaylist.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 20));
         botonCrearPlaylist.setForeground(Estilo.colorTexto);
         botonCrearPlaylist.setBackground(new Color(10, 200, 90));
