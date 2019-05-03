@@ -23,7 +23,13 @@ public class ControladorResultadoCanciones {
     public ControladorResultadoCanciones(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, String entrada) {
         List<Cancion> canciones = sistema.buscarCanciones(entrada);
 
-        vistaResultadoCanciones.scrollPanel.setPreferredSize(new Dimension(0, canciones.size()*100));
+        cargarCanciones(sistema, vistaResultadoCanciones, canciones);
+    }
+
+    private void cargarCanciones(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, List<Cancion> canciones) {
+        vistaResultadoCanciones.scrollPanel.setPreferredSize(new Dimension(0, 15+canciones.size()*100));
+        vistaResultadoCanciones.scrollFrame.revalidate();
+        vistaResultadoCanciones.scrollFrame.repaint();
 
         int i = 0;
         for (Cancion c : canciones) {
@@ -87,51 +93,60 @@ public class ControladorResultadoCanciones {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     VistaAnadirALista vistaAnadirALista = new VistaAnadirALista();
-                    int i = 0;
                     vistaResultadoCanciones.add(vistaAnadirALista);
-
-                    for (ListaReproduccion l : sistema.getUsuarioActual().getListasReproducion()) {
-                        JLabel nombrePlaylist;
-                        nombrePlaylist = new JLabel(l.getNombre());
-                        nombrePlaylist.setBounds(600, 100*i+25, 100, 40);
-                        nombrePlaylist.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
-                        nombrePlaylist.setForeground(Estilo.colorTexto);
-                        nombrePlaylist.setHorizontalAlignment(JLabel.CENTER);
-                        vistaAnadirALista.scrollPanel.add(nombrePlaylist);
-
-                        JCustomButton botonAnadir;
-                        botonAnadir = new JCustomButton("+");
-                        botonAnadir.setBounds(25, 100*i, 75, 75);
-                        botonAnadir.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
-                        botonAnadir.setForeground(Estilo.colorTexto);
-                        botonAnadir.setBackground(new Color(240, 240, 100));
-                        botonAnadir.setPressedBackgound(new Color(220, 220, 95).brighter());
-                        botonAnadir.setCornerRadius(80);
-                        botonAnadir.setHeight(5);       
-                        botonAnadir.setShadowSize(5);
-                        botonAnadir.setShadowOpacity(0.4f);
-
-                        botonAnadir.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                sistema.anadirAListaReproduccion(l, c);
-                                vistaResultadoCanciones.remove(vistaAnadirALista);
-                                vistaResultadoCanciones.scrollFrame.setVisible(false);
-                                vistaResultadoCanciones.repaint();
-                            }
-                        });
-                        vistaAnadirALista.scrollPanel.add(botonAnadir);
-                        i++;
-                    }
-
-                    vistaResultadoCanciones.scrollFrame.setVisible(false);
-                    vistaAnadirALista.setVisible(true);
-                    vistaAnadirALista.repaint();
+                    cargarPlaylists(sistema, vistaResultadoCanciones, vistaAnadirALista, c);
                 }
             });
             vistaResultadoCanciones.scrollPanel.add(botonAnadirPlaylist);
 
             i++;
         }
+    }
+
+    private void cargarPlaylists(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, VistaAnadirALista vistaAnadirALista, Cancion c) { 
+        List<ListaReproduccion> listasReproduccion = sistema.getUsuarioActual().getListasReproducion();
+        
+        vistaAnadirALista.scrollPanel.setPreferredSize(new Dimension(0, 15+listasReproduccion.size()*100));
+        vistaAnadirALista.scrollFrame.revalidate();
+        vistaAnadirALista.scrollFrame.repaint();
+
+        int i = 0;
+        for (ListaReproduccion l : listasReproduccion) {
+            JLabel nombrePlaylist;
+            nombrePlaylist = new JLabel(l.getNombre());
+            nombrePlaylist.setBounds(125, 15+100*i+20, 675, 40);
+            nombrePlaylist.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            nombrePlaylist.setForeground(Estilo.colorTexto);
+            nombrePlaylist.setHorizontalAlignment(JLabel.LEFT);
+            vistaAnadirALista.scrollPanel.add(nombrePlaylist);
+
+            JCustomButton botonAnadir;
+            botonAnadir = new JCustomButton("+");
+            botonAnadir.setBounds(25, 15+100*i, 75, 75);
+            botonAnadir.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            botonAnadir.setForeground(Estilo.colorTexto);
+            botonAnadir.setBackground(new Color(240, 240, 100));
+            botonAnadir.setPressedBackgound(new Color(220, 220, 95).brighter());
+            botonAnadir.setCornerRadius(80);
+            botonAnadir.setHeight(5);       
+            botonAnadir.setShadowSize(5);
+            botonAnadir.setShadowOpacity(0.4f);
+
+            botonAnadir.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    sistema.anadirAListaReproduccion(l, c);
+                    vistaResultadoCanciones.remove(vistaAnadirALista);
+                    vistaResultadoCanciones.scrollFrame.setVisible(false);
+                    vistaResultadoCanciones.repaint();
+                }
+            });
+            vistaAnadirALista.scrollPanel.add(botonAnadir);
+            i++;
+        }
+
+        vistaResultadoCanciones.scrollFrame.setVisible(false);
+        vistaAnadirALista.setVisible(true);
+        vistaAnadirALista.repaint();
     }
 }

@@ -15,7 +15,7 @@ public class VistaAnadirALista extends JPanel {
     public JPanel scrollPanel;
 
     public VistaAnadirALista() {
-        setBounds(260, 140, Estilo.anchura-260, 540);
+        setBounds(0, 0, Estilo.anchura-260, 540);
         setOpaque(false);
         setLayout(null);
         setVisible(false);
@@ -26,11 +26,10 @@ public class VistaAnadirALista extends JPanel {
         scrollPanel.setLayout(null);
         
         scrollFrame = new JCustomScrollPane(scrollPanel);
-        scrollFrame.setBounds(0, 100, Estilo.anchura-270, 440);
+        scrollFrame.setBounds(0, 3, Estilo.anchura-260, 537);
         scrollFrame.setThumbColor(Estilo.colorSecundario.brighter());
         scrollFrame.setTrackColor(Estilo.colorPrimario.darker());
         scrollFrame.setBehindColor(Estilo.colorPrimario);
-        scrollFrame.setHeight(10); 
         scrollFrame.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollFrame.getVerticalScrollBar().setUnitIncrement(16);
         add(scrollFrame);

@@ -37,22 +37,16 @@ public class JCustomScrollPane extends JScrollPane {
     public void setBehindColor(Color behindColor) {
         customScrollBarUI.setBehindColor(behindColor);
     }
-    
-    public void setHeight(int height) {
-        customScrollBarUI.setHeight(height);
-    }
 
     private static class CustomScrollBarUI extends BasicScrollBarUI {
         private Color thumbColor;
         private Color trackColor;
         private Color behindColor;
-        private int height;
 
         public CustomScrollBarUI() {
             thumbColor = null;
             trackColor = null;
             behindColor = null;
-            height = 0;
         }
         
         public void setThumbColor(Color thumbColor) {
@@ -65,10 +59,6 @@ public class JCustomScrollPane extends JScrollPane {
 
         public void setBehindColor(Color behindColor) {
             this.behindColor = behindColor;
-        }
-
-        public void setHeight(int height) {
-            this.height = height;
         }
 
         @Override
@@ -92,13 +82,8 @@ public class JCustomScrollPane extends JScrollPane {
             }
 
             if (trackColor != null) {
-                if (height > 0) {
-                    g2d.setColor(trackColor.darker());
-                    g2d.fillRoundRect(r.x, r.y, r.width, r.height-height, 20, 20);
-                }
-
                 g2d.setColor(trackColor);
-                g2d.fillRoundRect(r.x, r.y+height, r.width, r.height-2*height, 20, 20);
+                g2d.fillRoundRect(r.x, r.y, r.width, r.height, 20, 20);
             }
         }
 
@@ -108,17 +93,8 @@ public class JCustomScrollPane extends JScrollPane {
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             if (thumbColor != null) {
-                if (height > 0) {
-                    int offset = height-((getTrackBounds().y+getTrackBounds().height)-(getThumbBounds().y+getThumbBounds().height));
-
-                    if (offset < 0) offset = 0;
-
-                    g2d.setColor(thumbColor.darker());
-                    g2d.fillRoundRect(r.x, r.y, r.width, r.height-offset, 20, 20);
-                }
-
                 g2d.setColor(thumbColor);
-                g2d.fillRoundRect(r.x, r.y, r.width, r.height-height, 20, 20);
+                g2d.fillRoundRect(r.x, r.y, r.width, r.height, 20, 20);
             }
         }
 

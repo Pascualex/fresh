@@ -37,7 +37,6 @@ public class VistaResultadoCanciones extends JPanel {
         scrollFrame.setThumbColor(Estilo.colorSecundario.brighter());
         scrollFrame.setTrackColor(Estilo.colorPrimario.darker());
         scrollFrame.setBehindColor(Estilo.colorPrimario);
-        scrollFrame.setHeight(10); 
         scrollFrame.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollFrame.getVerticalScrollBar().setUnitIncrement(16);
         add(scrollFrame);

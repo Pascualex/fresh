@@ -62,7 +62,7 @@ public class ControladorCanciones {
             vistaCanciones.scrollPanel.add(textoNombreCancion);
 
             JLabel textoEstadoCancion;
-            textoEstadoCancion = new JLabel(c.getAutor().getNombre());
+            textoEstadoCancion = new JLabel(c.getEstado().aTexto());
             textoEstadoCancion.setBounds(225, 15+100*i+35, 575, 40);
             textoEstadoCancion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
             textoEstadoCancion.setForeground(Estilo.colorTexto);
