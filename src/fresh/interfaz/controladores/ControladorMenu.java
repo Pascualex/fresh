@@ -3,6 +3,7 @@ package fresh.interfaz.controladores;
 import fresh.Status;
 import fresh.sistema.Sistema;
 import fresh.interfaz.vistas.VistaVentana;
+import fresh.interfaz.vistas.VistaAlbumes;
 import fresh.interfaz.vistas.VistaAutores;
 import fresh.interfaz.vistas.VistaCanciones;
 import fresh.interfaz.vistas.VistaMenu;
@@ -102,6 +103,26 @@ public class ControladorMenu {
                 ControladorCanciones controladorCanciones = new ControladorCanciones(sistema, vistaCanciones, vistaMenu);
 
                 vistaCanciones.setVisible(true);
+
+                vistaMenu.repaint();
+            }
+        });
+
+        vistaMenu.botonMisAlbumes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (vistaMenu.panelActual != null) {
+                    vistaMenu.remove(vistaMenu.panelActual);
+                }
+                
+                VistaAlbumes vistaAlbumes = new VistaAlbumes();
+                vistaMenu.panelActual = vistaAlbumes;
+                vistaMenu.add(vistaAlbumes);
+
+                @SuppressWarnings("unused")
+                ControladorAlbumes controladorAlbumes = new ControladorAlbumes(sistema, vistaAlbumes, vistaMenu);
+
+                vistaAlbumes.setVisible(true);
 
                 vistaMenu.repaint();
             }

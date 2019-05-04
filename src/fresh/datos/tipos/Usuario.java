@@ -15,7 +15,7 @@ import java.io.Serializable;
  * contenido y sus preferencias en el contenido de otros usuarios.
  */
 public class Usuario implements Serializable {	
-	private static final long serialVersionUID = Sistema.numeroVersion;
+	private static final long serialVersionUID = 2;
 	
 	private String nombre;
 	private String nombreAutor;

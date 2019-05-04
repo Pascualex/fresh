@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - MainValidarTodo",
+            "request": "launch",
+            "mainClass": "fresh.MainValidarTodo",
+            "projectName": "Fresh"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Main",
+            "request": "launch",
+            "mainClass": "fresh.Main",
+            "projectName": "Fresh"
+        }
+    ]
+}
