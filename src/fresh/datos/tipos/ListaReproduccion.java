@@ -48,6 +48,23 @@ public class ListaReproduccion extends ElementoReproducible {
         elementos.remove(elemento);
     }
 
+    /**
+     * Indica si el elemento pasado como argumento es esta lista o es contenido
+     * de manera directa por esta.
+     * @param elemento Elemento reproducible a comprobar
+     * @return "true" si el elemento es esta lista o es contenido de manera
+     * directa por esta. "false" en caso contrario.
+     */
+    public boolean contieneElemento(ElementoReproducible elemento) {
+        if (elemento.equals(this)) return true;
+
+        for (ElementoReproducible e : elementos) {
+            if (e.equals(elemento)) return true;
+        }
+
+        return false;
+    }
+
     /** 
      * Devuelve el estado de bloqueo de la lista de reproducción. Basado en el 
      * estado de bloqueo de los elementos que la componen.

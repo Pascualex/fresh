@@ -2,14 +2,7 @@ package fresh.interfaz.controladores;
 
 import fresh.Status;
 import fresh.sistema.Sistema;
-import fresh.interfaz.vistas.VistaVentana;
-import fresh.interfaz.vistas.VistaAlbumes;
-import fresh.interfaz.vistas.VistaAutores;
-import fresh.interfaz.vistas.VistaCanciones;
-import fresh.interfaz.vistas.VistaMenu;
-import fresh.interfaz.vistas.VistaNotificaciones;
-import fresh.interfaz.vistas.VistaPlaylists;
-import fresh.interfaz.vistas.VistaResultadoCanciones;
+import fresh.interfaz.vistas.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +13,18 @@ public class ControladorMenu {
         VistaMenu vistaMenu = new VistaMenu();
         vistaVentana.add(vistaMenu);
 
+        vistaMenu.seleccionModoBusqueda.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (vistaMenu.panelActual != null) {
+                    vistaMenu.remove(vistaMenu.panelActual);
+                    vistaMenu.panelActual = null;
+
+                    vistaMenu.repaint();
+                }
+            }
+        });
+
         vistaMenu.botonBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -28,11 +33,12 @@ public class ControladorMenu {
 
                 if (vistaMenu.panelActual != null) {
                     vistaMenu.remove(vistaMenu.panelActual);
+                    vistaMenu.panelActual = null;
                 }
 
                 if (vistaMenu.seleccionModoBusqueda.getSelectedIndex() == 0) {
                     //Canciones
-                    VistaResultadoCanciones vistaResultadoCanciones = new VistaResultadoCanciones();
+                    VistaResultadoCanciones vistaResultadoCanciones = new VistaResultadoCanciones(entrada);
                     vistaMenu.panelActual = vistaResultadoCanciones;
                     vistaMenu.add(vistaResultadoCanciones);
 
@@ -42,6 +48,14 @@ public class ControladorMenu {
                     vistaResultadoCanciones.setVisible(true);
                 } else if (vistaMenu.seleccionModoBusqueda.getSelectedIndex() == 1) {
                     //Álbumes
+                    VistaResultadoAlbumes vistaResultadoAlbumes = new VistaResultadoAlbumes(entrada);
+                    vistaMenu.panelActual = vistaResultadoAlbumes;
+                    vistaMenu.add(vistaResultadoAlbumes);
+
+                    @SuppressWarnings("unused")
+                    ControladorResultadoAlbumes controladorResultadoAlbumes = new ControladorResultadoAlbumes(sistema, vistaResultadoAlbumes, entrada);
+                
+                    vistaResultadoAlbumes.setVisible(true);
                 } else {
                     //Autores
                 }
@@ -54,7 +68,8 @@ public class ControladorMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (vistaMenu.panelActual != null) {
-                    vistaMenu.remove(vistaMenu.panelActual);
+                    vistaMenu.remove(vistaMenu.panelActual);                    
+                    vistaMenu.panelActual = null;
                 }
                 
                 VistaPlaylists vistaPlaylists = new VistaPlaylists();
@@ -75,6 +90,7 @@ public class ControladorMenu {
             public void actionPerformed(ActionEvent e) {
                 if (vistaMenu.panelActual != null) {
                     vistaMenu.remove(vistaMenu.panelActual);
+                    vistaMenu.panelActual = null;
                 }
                 
                 VistaAutores vistaAutores = new VistaAutores();
@@ -93,6 +109,7 @@ public class ControladorMenu {
             public void actionPerformed(ActionEvent e) {
                 if (vistaMenu.panelActual != null) {
                     vistaMenu.remove(vistaMenu.panelActual);
+                    vistaMenu.panelActual = null;
                 }
                 
                 VistaCanciones vistaCanciones = new VistaCanciones();
@@ -113,6 +130,7 @@ public class ControladorMenu {
             public void actionPerformed(ActionEvent e) {
                 if (vistaMenu.panelActual != null) {
                     vistaMenu.remove(vistaMenu.panelActual);
+                    vistaMenu.panelActual = null;
                 }
                 
                 VistaAlbumes vistaAlbumes = new VistaAlbumes();
@@ -133,6 +151,7 @@ public class ControladorMenu {
             public void actionPerformed(ActionEvent e) {
                 if (vistaMenu.panelActual != null) {
                     vistaMenu.remove(vistaMenu.panelActual);
+                    vistaMenu.panelActual = null;
                 }
                 
                 VistaNotificaciones VistaNotificaciones = new VistaNotificaciones();

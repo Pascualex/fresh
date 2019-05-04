@@ -59,7 +59,7 @@ public class VistaCanciones extends JPanel {
         selectorArchivo.setFileFilter(new FileNameExtensionFilter("Archivo MP3", "mp3"));
 
         separador = new JCustomPanel();
-        separador.setBounds(20, 97, Estilo.anchura-260-92, 3);
+        separador.setBounds(20, 77, Estilo.anchura-260-92, 3);
         separador.setBackground(Estilo.colorPrimario.darker());
         separador.setCornerRadius(5);
         add(separador);
@@ -70,7 +70,7 @@ public class VistaCanciones extends JPanel {
         scrollPanel.setLayout(null);
 
         scrollFrame = new JCustomScrollPane(scrollPanel);
-        scrollFrame.setBounds(0, 100, Estilo.anchura-270, 440);
+        scrollFrame.setBounds(0, 80, Estilo.anchura-270, 460);
         scrollFrame.setThumbColor(Estilo.colorSecundario.brighter());
         scrollFrame.setTrackColor(Estilo.colorPrimario.darker());
         scrollFrame.setBehindColor(Estilo.colorPrimario);

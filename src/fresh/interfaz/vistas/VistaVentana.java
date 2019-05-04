@@ -21,6 +21,7 @@ public class VistaVentana extends JFrame {
         setLayout(null);
         setUndecorated(true);
         setLocationByPlatform(true);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(Estilo.colorPrimario);
         setVisible(false);

@@ -2,9 +2,7 @@ package fresh.interfaz.controladores;
 
 import fresh.Status;
 import fresh.sistema.Sistema;
-import fresh.interfaz.vistas.VistaVentana;
-import fresh.interfaz.vistas.VistaAdministrador;
-import fresh.interfaz.vistas.VistaResultadoCanciones;
+import fresh.interfaz.vistas.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,13 +16,37 @@ public class ControladorAdministrador {
         vistaAdministrador.botonBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String entrada = vistaAdministrador.entradaBusqueda.getText();
+                if (entrada.length() == 0) return;
+
                 if (vistaAdministrador.panelActual != null) {
-                	vistaAdministrador.remove(vistaAdministrador.panelActual);
+                    vistaAdministrador.remove(vistaAdministrador.panelActual);
+                    vistaAdministrador.panelActual = null;
                 }
+
+                if (vistaAdministrador.seleccionModoBusqueda.getSelectedIndex() == 0) {
+                    //Canciones
+                    VistaResultadoCanciones vistaResultadoCanciones = new VistaResultadoCanciones(entrada);
+                    vistaAdministrador.panelActual = vistaResultadoCanciones;
+                    vistaAdministrador.add(vistaResultadoCanciones);
+
+                    @SuppressWarnings("unused")
+                    ControladorResultadoCanciones controladorResultadoCanciones = new ControladorResultadoCanciones(sistema, vistaResultadoCanciones, entrada);
                 
-                VistaResultadoCanciones vistaResultadoCanciones = new VistaResultadoCanciones();
-                vistaAdministrador.panelActual = vistaResultadoCanciones;
-                vistaAdministrador.add(vistaResultadoCanciones);
+                    vistaResultadoCanciones.setVisible(true);
+                } else if (vistaAdministrador.seleccionModoBusqueda.getSelectedIndex() == 1) {
+                    //Álbumes
+                    VistaResultadoAlbumes vistaResultadoAlbumes = new VistaResultadoAlbumes(entrada);
+                    vistaAdministrador.panelActual = vistaResultadoAlbumes;
+                    vistaAdministrador.add(vistaResultadoAlbumes);
+
+                    @SuppressWarnings("unused")
+                    ControladorResultadoAlbumes controladorResultadoAlbumes = new ControladorResultadoAlbumes(sistema, vistaResultadoAlbumes, entrada);
+                
+                    vistaResultadoAlbumes.setVisible(true);
+                } else {
+                    //Autores
+                }
 
                 vistaAdministrador.repaint();
             }

@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Font;
 
-public class VistaResultadoCanciones extends JPanel {
+public class VistaResultadoAlbumes extends JPanel {
     private static final long serialVersionUID = 0;
 
     public JCustomPanel separador;
@@ -18,11 +18,11 @@ public class VistaResultadoCanciones extends JPanel {
     public JCustomScrollPane scrollFrame;
     public JPanel scrollPanel;
 
-    public VistaResultadoCanciones(String entrada) {
+    public VistaResultadoAlbumes(String entrada) {
         setBounds(260, 140, Estilo.anchura-260, 540);
         setOpaque(false);
         setLayout(null);
-        setVisible(false);
+        setVisible(false);        
 
         separador = new JCustomPanel();
         separador.setBounds(20, 0, Estilo.anchura-260-92, 3);
@@ -30,7 +30,7 @@ public class VistaResultadoCanciones extends JPanel {
         separador.setCornerRadius(5);
         add(separador);
         
-        textoSinResultados = new JLabel("Sin canciones para \"" + entrada + "\"");
+        textoSinResultados = new JLabel("Sin albumes para \"" + entrada + "\"");
         textoSinResultados.setBounds(35, 10, 765, 40);
         textoSinResultados.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         textoSinResultados.setForeground(Estilo.colorTexto);

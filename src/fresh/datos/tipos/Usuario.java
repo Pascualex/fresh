@@ -1,6 +1,5 @@
 package fresh.datos.tipos;
 
-import fresh.sistema.Sistema;
 import fresh.Status;
 
 import java.util.List;

@@ -45,25 +45,22 @@ public class ControladorCanciones {
 
         int i = 0;
         for (Cancion c : sistema.getUsuarioActual().getCanciones()) {
-            JLabel textoDuracion;
-            textoDuracion = new JLabel(String.valueOf(c.getDuracion()/60) + ":" + String.format("%02d", c.getDuracion()%60));
-            textoDuracion.setBounds(115, 15+100*i+20, 80, 40);
+            JLabel textoDuracion = new JLabel(String.valueOf(c.getDuracion()/60) + ":" + String.format("%02d", c.getDuracion()%60));
+            textoDuracion.setBounds(100, 15+100*i+20, 80, 40);
             textoDuracion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoDuracion.setForeground(Estilo.colorTexto);
             textoDuracion.setHorizontalAlignment(JLabel.RIGHT);
             vistaCanciones.scrollPanel.add(textoDuracion);
 
-            JLabel textoNombreCancion;
-            textoNombreCancion = new JLabel(c.getNombre());
-            textoNombreCancion.setBounds(225, 15+100*i, 575, 40);
+            JLabel textoNombreCancion = new JLabel(c.getNombre());
+            textoNombreCancion.setBounds(210, 15+100*i, 590, 40);
             textoNombreCancion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoNombreCancion.setForeground(Estilo.colorTexto);
             textoNombreCancion.setHorizontalAlignment(JLabel.LEFT);
             vistaCanciones.scrollPanel.add(textoNombreCancion);
 
-            JLabel textoEstadoCancion;
-            textoEstadoCancion = new JLabel(c.getEstado().aTexto());
-            textoEstadoCancion.setBounds(225, 15+100*i+35, 575, 40);
+            JLabel textoEstadoCancion = new JLabel(c.getEstado().aTexto());
+            textoEstadoCancion.setBounds(210, 15+100*i+35, 590, 40);
             textoEstadoCancion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
             textoEstadoCancion.setForeground(Estilo.colorTexto);
             textoEstadoCancion.setHorizontalAlignment(JLabel.LEFT);
@@ -74,8 +71,7 @@ public class ControladorCanciones {
                 continue;
             }
 
-            JCustomButton botonReproducir;
-            botonReproducir = new JCustomButton("▶");
+            JCustomButton botonReproducir = new JCustomButton("▶");
             botonReproducir.setBounds(25, 15+100*i, 75, 75);
             botonReproducir.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
             botonReproducir.setForeground(Estilo.colorTexto);
