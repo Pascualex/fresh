@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.Font;
 import java.awt.Color;
 
-public class VistaAdministrador extends JPanel {
+public class VistaMenuAdministrador extends JPanel {
 	
 	private static final long serialVersionUID = 0;
 
@@ -32,7 +32,7 @@ public class VistaAdministrador extends JPanel {
     public JCustomButton botonAnterior;
     public JCustomButton botonSiguiente;
     
-    public VistaAdministrador() {
+    public VistaMenuAdministrador() {
     	
     	// Crea y configura el panel principal
         setBounds(0, 0, Estilo.anchura, Estilo.altura);

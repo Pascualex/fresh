@@ -234,7 +234,9 @@ public class Sistema {
      * argumento.
      */
     public List<Cancion> buscarCanciones(String nombre) {
-        return baseDeDatos.buscarCanciones(nombre, usuarioActual.getPremium() && usuarioActual.puedeContenidoExplicito());
+        if (modoEjecucion == ModoEjecucion.ADMINISTRADOR) return baseDeDatos.buscarCanciones(nombre, true);
+        else if (modoEjecucion == ModoEjecucion.ANONIMO) return baseDeDatos.buscarCanciones(nombre, false);
+        else return baseDeDatos.buscarCanciones(nombre, usuarioActual.getPremium() && usuarioActual.puedeContenidoExplicito());
     }
 
     /**

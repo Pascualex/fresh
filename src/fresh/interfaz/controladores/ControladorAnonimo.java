@@ -30,7 +30,7 @@ public class ControladorAnonimo {
                     vistaAnonimo.add(vistaResultadoCanciones);
 
                     @SuppressWarnings("unused")
-                    ControladorResultadoCanciones controladorResultadoCanciones = new ControladorResultadoCanciones(sistema, vistaResultadoCanciones, entrada);
+                    ControladorResultadoCancionesNoPlaylist controladorResultadoCancionesNoPlaylist = new ControladorResultadoCancionesNoPlaylist(sistema, vistaResultadoCanciones, entrada);
                 
                     vistaResultadoCanciones.setVisible(true);
                 } else if (vistaAnonimo.seleccionModoBusqueda.getSelectedIndex() == 1) {
