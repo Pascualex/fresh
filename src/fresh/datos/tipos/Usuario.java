@@ -3,6 +3,7 @@ package fresh.datos.tipos;
 import fresh.Status;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.LinkedList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -149,6 +150,7 @@ public class Usuario implements Serializable {
 	 * @param notificacion Notificación a añadir a la lista
 	 */
 	public void anadirNotificacion(Notificacion notificacion) {
+		if (notificaciones.contains(notificacion)) return;
 		notificaciones.add(notificacion);
 	}
 	
@@ -176,7 +178,6 @@ public class Usuario implements Serializable {
 	 */
 	public Status anadirListaReproduccion(ListaReproduccion listaReproduccion) {
 		if (listasReproduccion.contains(listaReproduccion)) return Status.LISTA_REPRODUCCION_REPETIDA;
-
 		listasReproduccion.add(listaReproduccion);
 		return Status.OK;
 	}
@@ -202,6 +203,7 @@ public class Usuario implements Serializable {
 	 * @param cancion Canción a añadir
 	 */
 	public void anadirCancion(Cancion cancion) {
+		if (canciones.contains(cancion)) return;
 		canciones.add(cancion);
 	}
 
@@ -226,6 +228,7 @@ public class Usuario implements Serializable {
 	 * @param album Album a añadir
 	 */
 	public void anadirAlbum(Album album) {
+		if (albumes.contains(album)) return;
 		albumes.add(album);
 	}
 
@@ -249,16 +252,34 @@ public class Usuario implements Serializable {
 	 * Añade a un seguidor al conjunto de seguidores del usuario
 	 * @param usuario Seguidor a añadir
 	 */
-	public void anadirSeguidor(Usuario usuario) {
-		seguidores.add(usuario);
+	public void anadirSeguidor(Usuario seguidor) {
+		if (seguidores.contains(seguidor)) return;
+		seguidores.add(seguidor);
 	}
 
 	/**
 	 * Elimina a un seguidor del conjunto de seguidores del usuario
 	 * @param usuario Seguidor a eliminar
 	 */
-	public void eliminarSeguidor(Usuario usuario) {
-		seguidores.remove(usuario);
+	public void eliminarSeguidor(Usuario seguidor) {
+		seguidores.remove(seguidor);
+	}
+
+	/**
+	 * Indica si el usuario pasado como argumento es este usuario o sigue a 
+	 * este usuario.
+	 * @param seguidor Usuario a comprobar
+	 * @return "true" si el usuario pasasdo como argumento es este usuario o
+	 * sigue a este usuario. "false" en caso contrario
+	 */
+	public boolean contieneSeguidor(Usuario seguidor) {
+		if (seguidor.equals(this)) return true;
+
+		for (Usuario s : seguidores) {
+			if (s.equals(seguidor)) return true;
+		}
+
+		return false;
 	}
 
     /**
@@ -273,5 +294,20 @@ public class Usuario implements Serializable {
     	if (fechaNacimiento.after(fechaNacimientoMinima)) return false;
     	
     	return true;
-	}	
+	}
+
+    /**
+     * Compara el objeto pasado como argumento con la instancia del usuario.
+     * @param object Objeto a comparar con la instancia del usuario
+     * @return "true" si el objeto pasado como argumento es una instancia de la
+     * clase Usuario y su nombre es el mismo que el de esta instancia.
+     * "false" en caso contrario.
+     */
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Usuario)) return false;
+
+        Usuario usuario = (Usuario) object;
+        return Objects.equals(usuario.getNombre(), getNombre());
+    }
 }

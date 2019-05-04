@@ -1,6 +1,12 @@
 package fresh.interfaz.controladores;
 
 import fresh.sistema.Sistema;
+import fresh.datos.tipos.Album;
+import fresh.datos.tipos.ListaReproduccion;
+import fresh.interfaz.Estilo;
+import fresh.interfaz.swing.*;
+import fresh.interfaz.vistas.VistaAnadirALista;
+import fresh.interfaz.vistas.VistaResultadoAlbumes;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,13 +16,6 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JLabel;
-
-import fresh.datos.tipos.Album;
-import fresh.datos.tipos.ListaReproduccion;
-import fresh.interfaz.Estilo;
-import fresh.interfaz.swing.*;
-import fresh.interfaz.vistas.VistaAnadirALista;
-import fresh.interfaz.vistas.VistaResultadoAlbumes;
 
 public class ControladorResultadoAlbumes {
 

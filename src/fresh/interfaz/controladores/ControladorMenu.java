@@ -58,6 +58,14 @@ public class ControladorMenu {
                     vistaResultadoAlbumes.setVisible(true);
                 } else {
                     //Autores
+                    VistaResultadoAutores vistaResultadoAutores = new VistaResultadoAutores(entrada);
+                    vistaMenu.panelActual = vistaResultadoAutores;
+                    vistaMenu.add(vistaResultadoAutores);
+
+                    @SuppressWarnings("unused")
+                    ControladorResultadoAutores controladorResultadoAutores = new ControladorResultadoAutores(sistema, vistaResultadoAutores, entrada);
+                
+                    vistaResultadoAutores.setVisible(true);
                 }
 
                 vistaMenu.repaint();

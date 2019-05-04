@@ -1,6 +1,12 @@
 package fresh.interfaz.controladores;
 
 import fresh.sistema.Sistema;
+import fresh.datos.tipos.Cancion;
+import fresh.datos.tipos.ListaReproduccion;
+import fresh.interfaz.Estilo;
+import fresh.interfaz.swing.*;
+import fresh.interfaz.vistas.VistaAnadirALista;
+import fresh.interfaz.vistas.VistaResultadoCanciones;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,13 +16,6 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JLabel;
-
-import fresh.datos.tipos.Cancion;
-import fresh.datos.tipos.ListaReproduccion;
-import fresh.interfaz.Estilo;
-import fresh.interfaz.swing.*;
-import fresh.interfaz.vistas.VistaAnadirALista;
-import fresh.interfaz.vistas.VistaResultadoCanciones;
 
 public class ControladorResultadoCanciones {
 
@@ -46,14 +45,14 @@ public class ControladorResultadoCanciones {
             vistaResultadoCanciones.scrollPanel.add(textoDuracion);
 
             JLabel textoNombreCancion = new JLabel(c.getNombre());
-            textoNombreCancion.setBounds(295, 15+100*i, 505, 40);
+            textoNombreCancion.setBounds(295, 15+100*i, 485, 40);
             textoNombreCancion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoNombreCancion.setForeground(Estilo.colorTexto);
             textoNombreCancion.setHorizontalAlignment(JLabel.LEFT);
             vistaResultadoCanciones.scrollPanel.add(textoNombreCancion);
 
             JLabel textoNombreAutor = new JLabel(c.getAutor().getNombre());
-            textoNombreAutor.setBounds(295, 15+100*i+35, 505, 40);
+            textoNombreAutor.setBounds(295, 15+100*i+35, 485, 40);
             textoNombreAutor.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
             textoNombreAutor.setForeground(Estilo.colorTexto);
             textoNombreAutor.setHorizontalAlignment(JLabel.LEFT);
@@ -82,6 +81,18 @@ public class ControladorResultadoCanciones {
             botonAnadirPlaylist.setShadowSize(5);
             botonAnadirPlaylist.setShadowOpacity(0.4f);
             vistaResultadoCanciones.scrollPanel.add(botonAnadirPlaylist);
+
+            JCustomButton botonReportar = new JCustomButton("R");
+            botonReportar.setBounds(790, 15+100*i, 75, 75);
+            botonReportar.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            botonReportar.setForeground(Estilo.colorTexto);
+            botonReportar.setBackground(new Color(245, 100, 100));
+            botonReportar.setPressedBackgound(new Color(220, 50, 50).brighter());
+            botonReportar.setCornerRadius(80);
+            botonReportar.setHeight(5);       
+            botonReportar.setShadowSize(5);
+            botonReportar.setShadowOpacity(0.4f);
+            vistaResultadoCanciones.scrollPanel.add(botonReportar);
 
             botonReproducir.addActionListener(new ActionListener() {
                 @Override

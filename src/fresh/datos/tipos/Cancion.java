@@ -133,7 +133,7 @@ public class Cancion extends ElementoReproducible {
      * Compara el objeto pasado como argumento con la instancia de la canción.
      * @param object Objeto a comparar con la instancia de la canción
      * @return "true" si el objeto pasado como argumento es una instancia de la
-     * clase Cancion y su nombre es la mismo que el de esta instancia.
+     * clase Cancion y su nombre es el mismo que el de esta instancia.
      * "false" en caso contrario.
      */
     @Override

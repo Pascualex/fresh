@@ -1,6 +1,10 @@
 package fresh.interfaz.controladores;
 
 import fresh.sistema.Sistema;
+import fresh.datos.tipos.Cancion;
+import fresh.interfaz.Estilo;
+import fresh.interfaz.swing.*;
+import fresh.interfaz.vistas.VistaResultadoCanciones;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,11 +14,6 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JLabel;
-
-import fresh.datos.tipos.Cancion;
-import fresh.interfaz.Estilo;
-import fresh.interfaz.swing.*;
-import fresh.interfaz.vistas.VistaResultadoCanciones;
 
 public class ControladorResultadoCancionesNoPlaylist {
 
