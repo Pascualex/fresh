@@ -106,8 +106,10 @@ public class ControladorMenu {
                 vistaMenu.add(vistaAutores);
 
                 @SuppressWarnings("unused")
-                ControladorAutores controladorAutores = new ControladorAutores(sistema, vistaAutores);
+                ControladorAutores controladorAutores = new ControladorAutores(sistema, vistaAutores, vistaMenu);
 
+                vistaAutores.setVisible(true);
+                
                 vistaMenu.repaint();
             }
         });

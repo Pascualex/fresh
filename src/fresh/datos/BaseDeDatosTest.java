@@ -10,8 +10,6 @@ import java.util.List;
 import org.junit.Test;
 import fresh.datos.tipos.*;
 
-
-
 public class BaseDeDatosTest {
 	final String ruta = "Prueba";
 	

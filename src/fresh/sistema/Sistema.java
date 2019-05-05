@@ -206,23 +206,43 @@ public class Sistema {
      * Busca autores en el sistema dado un nombre.
      * @param nombreAutor Nombre a partir del que se buscará
      * @return Lista con los usuarios cuyos nombres de autor contienen el pasado
-     * como argumento.
+     * como argumento, excluyendo al usuario actual.
      */
     public List<Usuario> buscarAutores(String nombreAutor) {
-        return baseDeDatos.buscarAutores(nombreAutor);
+        List<Usuario> autores = baseDeDatos.buscarAutores(nombreAutor);
+        autores.remove(usuarioActual);
+        return autores;
     }
 
     /**
      * Añade al usuario actual a la lista de seguidores del autor pasado por
      * argumento.
-     * @param autor Autor que debe seguir el usuario a actual.
+     * @param autor Autor que debe seguir el usuario a actual
      * @return "OPERACION_INACCESIBLE" si la sesión no es de usuario registrado.
      * "OK" en caso contrario.
      */
     public Status seguirAutor(Usuario autor) {
         if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
 
+        
+        usuarioActual.anadirAutorSeguido(autor);
         autor.anadirSeguidor(usuarioActual);
+
+        return Status.OK;
+    }
+
+    /**
+     * Elimina al usuario actual de la lista de seguidores del autor pasado por
+     * argumento.
+     * @param autor Autor que no debe seguir el usuario a actual
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de usuario registrado.
+     * "OK" en caso contrario.
+     */
+    public Status noSeguirAutor(Usuario autor) {
+        if (modoEjecucion != ModoEjecucion.REGISTRADO) return Status.OPERACION_INACCESIBLE;
+
+        usuarioActual.eliminarAutorSeguido(autor);
+        autor.eliminarSeguidor(usuarioActual);
 
         return Status.OK;
     }

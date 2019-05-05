@@ -15,7 +15,7 @@ import java.io.Serializable;
  * contenido y sus preferencias en el contenido de otros usuarios.
  */
 public class Usuario implements Serializable {	
-	private static final long serialVersionUID = 2;
+	private static final long serialVersionUID = 0;
 	
 	private String nombre;
 	private String nombreAutor;
@@ -31,6 +31,7 @@ public class Usuario implements Serializable {
 	private List<Cancion> canciones = new LinkedList<>();
 	private List<Album> albumes = new LinkedList<>();
 	private List<Usuario> seguidores = new LinkedList<>();
+	private List<Usuario> autoresSeguidos = new LinkedList<>();
 
 	/**
 	 * Instancia un usuario dadas sus características.
@@ -191,15 +192,15 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * Devuelve la lista de canciones del usuario
-	 * @return Lista de canciones del usuario
+	 * Devuelve la lista de canciones del usuario.
+	 * @return Lista de canciones del usuario.
 	 */
 	public List<Cancion> getCanciones(){
 		return Collections.unmodifiableList(canciones);
 	}
 
 	/**
-	 * Añade una cancion a la lista de canciones del usuario
+	 * Añade una cancion a la lista de canciones del usuario.
 	 * @param cancion Canción a añadir
 	 */
 	public void anadirCancion(Cancion cancion) {
@@ -208,7 +209,7 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * Elimina una cancion de la lista de canciones del usuario
+	 * Elimina una cancion de la lista de canciones del usuario.
 	 * @param cancion Canción a eliminar
 	 */
 	public void eliminarCancion(Cancion cancion) {
@@ -216,15 +217,15 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * Devuelve la lista de álbumes del usuario
-	 * @return Lista de álbumes del usuario
+	 * Devuelve la lista de álbumes del usuario.
+	 * @return Lista de álbumes del usuario.
 	 */
     public List<Album> getAlbumes(){
     	return Collections.unmodifiableList(albumes);
 	}
 
 	/**
-	 * Añade un album a la lista de álbumes del usuario
+	 * Añade un album a la lista de álbumes del usuario.
 	 * @param album Album a añadir
 	 */
 	public void anadirAlbum(Album album) {
@@ -233,7 +234,7 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * Elimina un album del conjunto de álbumes del usuario
+	 * Elimina un album del conjunto de álbumes del usuario.
 	 * @param album Album a eliminar
 	 */
 	public void eliminarAlbum(Album album) {
@@ -241,16 +242,16 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * Devuelve el conjunto de seguidores del usuario
-	 * @return Conjunto de seguidores del usuario
+	 * Devuelve el conjunto de seguidores del usuario.
+	 * @return Conjunto de seguidores del usuario.
 	 */
 	public List<Usuario> getSeguidores() {
 		return Collections.unmodifiableList(seguidores);
 	}
 
 	/**
-	 * Añade a un seguidor al conjunto de seguidores del usuario
-	 * @param usuario Seguidor a añadir
+	 * Añade a un seguidor al conjunto de seguidores del usuario.
+	 * @param seguidor Seguidor a añadir
 	 */
 	public void anadirSeguidor(Usuario seguidor) {
 		if (seguidores.contains(seguidor)) return;
@@ -258,28 +259,36 @@ public class Usuario implements Serializable {
 	}
 
 	/**
-	 * Elimina a un seguidor del conjunto de seguidores del usuario
-	 * @param usuario Seguidor a eliminar
+	 * Elimina a un seguidor del conjunto de seguidores del usuario.
+	 * @param seguidor Seguidor a eliminar
 	 */
 	public void eliminarSeguidor(Usuario seguidor) {
 		seguidores.remove(seguidor);
 	}
 
 	/**
-	 * Indica si el usuario pasado como argumento es este usuario o sigue a 
-	 * este usuario.
-	 * @param seguidor Usuario a comprobar
-	 * @return "true" si el usuario pasasdo como argumento es este usuario o
-	 * sigue a este usuario. "false" en caso contrario
+	 * Devuelve el conjunto de autores seguidos por el usuario.
+	 * @return Conjunto de autores seguidos por el usuario.
 	 */
-	public boolean contieneSeguidor(Usuario seguidor) {
-		if (seguidor.equals(this)) return true;
+	public List<Usuario> getAutoresSeguidos() {
+		return Collections.unmodifiableList(autoresSeguidos);
+	}
 
-		for (Usuario s : seguidores) {
-			if (s.equals(seguidor)) return true;
-		}
+	/**
+	 * Añade a un autor al conjunto de autores seguidos por el usuario.
+	 * @param autor Autor a añadir
+	 */
+	public void anadirAutorSeguido(Usuario autor) {
+		if (autoresSeguidos.contains(autor)) return;
+		autoresSeguidos.add(autor);
+	}
 
-		return false;
+	/**
+	 * Elimina a un autor del conjunto de autores seguidos por el usuario.
+	 * @param autor Autor a eliminar
+	 */
+	public void eliminarAutorSeguido(Usuario autor) {
+		autoresSeguidos.remove(autor);
 	}
 
     /**

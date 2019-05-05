@@ -36,19 +36,14 @@ public class ControladorResultadoAutores {
         int i = 0;
         for (Usuario a : autores) {
             JLabel textoNombre = new JLabel(a.getNombreAutor());
-            textoNombre.setBounds(115, 15+100*i+20, 685, 40);
+            textoNombre.setBounds(240, 15+100*i+20, 560, 40);
             textoNombre.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoNombre.setForeground(Estilo.colorTexto);
             textoNombre.setHorizontalAlignment(JLabel.LEFT);
-            vistaResultadoAutores.scrollPanel.add(textoNombre);   
-            
-            if (a.contieneSeguidor(sistema.getUsuarioActual())) {
-                i++;
-                continue;
-            }
+            vistaResultadoAutores.scrollPanel.add(textoNombre);             
 
-            JCustomButton botonSeguir = new JCustomButton("S");
-            botonSeguir.setBounds(25, 15+100*i, 75, 75);
+            JCustomButton botonSeguir = new JCustomButton("Seguir");
+            botonSeguir.setBounds(25, 15+100*i, 200, 75);
             botonSeguir.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
             botonSeguir.setForeground(Estilo.colorTexto);
             botonSeguir.setBackground(new Color(240, 240, 100));
@@ -59,11 +54,39 @@ public class ControladorResultadoAutores {
             botonSeguir.setShadowOpacity(0.4f);
             vistaResultadoAutores.scrollPanel.add(botonSeguir);
 
+            JCustomButton botonNoSeguir = new JCustomButton("No seguir");
+            botonNoSeguir.setBounds(25, 15+100*i, 200, 75);
+            botonNoSeguir.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
+            botonNoSeguir.setForeground(Estilo.colorTexto);
+            botonNoSeguir.setBackground(new Color(245, 100, 100));
+            botonNoSeguir.setPressedBackgound(new Color(220, 50, 50).brighter());
+            botonNoSeguir.setCornerRadius(80);
+            botonNoSeguir.setHeight(5);       
+            botonNoSeguir.setShadowSize(5);
+            botonNoSeguir.setShadowOpacity(0.4f);
+            vistaResultadoAutores.scrollPanel.add(botonNoSeguir);
+
+            if (!sistema.getUsuarioActual().getAutoresSeguidos().contains(a)) {
+                botonNoSeguir.setVisible(false);
+            } else {
+                botonSeguir.setVisible(false);
+            }
+
             botonSeguir.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     sistema.seguirAutor(a);
                     botonSeguir.setVisible(false);
+                    botonNoSeguir.setVisible(true);
+                }
+            });
+
+            botonNoSeguir.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    sistema.noSeguirAutor(a);
+                    botonNoSeguir.setVisible(false);
+                    botonSeguir.setVisible(true);
                 }
             });
 
