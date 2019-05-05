@@ -11,15 +11,16 @@ import java.util.List;
 
 import javax.swing.JLabel;
 
+import fresh.datos.tipos.EstadoCancion;
 import fresh.datos.tipos.Reporte;
 import fresh.interfaz.Estilo;
 import fresh.interfaz.swing.*;
+import fresh.interfaz.vistas.VistaMenuAdministrador;
 import fresh.interfaz.vistas.VistaReportes;
 
 public class ControladorReportes {
-    private static final int charsPerLine = 50;
 
-    public ControladorReportes(Sistema sistema, VistaReportes vistaReportes) {
+    public ControladorReportes(Sistema sistema, VistaReportes vistaReportes, VistaMenuAdministrador vistaMenuAdministrador) {
         List<Reporte> reportes = sistema.obtenerReportes();
         
         if (reportes.size() == 0) {
@@ -27,25 +28,24 @@ public class ControladorReportes {
             vistaReportes.textoSinResultados.setVisible(true);
         }
 
-        cargarReportes(sistema, vistaReportes, reportes);
+        cargarReportes(sistema, vistaReportes, vistaMenuAdministrador, reportes);
     }
 
-    private void cargarReportes(Sistema sistema, VistaReportes vistaReportes, List<Reporte> reportes) {
-        vistaReportes.scrollPanel.setPreferredSize(new Dimension(0, 15+reportes.size()*100));
+    private void cargarReportes(Sistema sistema, VistaReportes vistaReportes, VistaMenuAdministrador vistaMenuAdministrador, List<Reporte> reportes) {
         vistaReportes.scrollFrame.revalidate();
         vistaReportes.scrollFrame.repaint();
 
         int i = 0;
         for (Reporte r : reportes) {
-            JLabel textoCancionReportada = new JLabel("Cancion reportada: " + r.getCancionReportada().getNombre() + " de " + r.getCancionReportada().getAutor());
-            textoCancionReportada.setBounds(295, 35+i, 80, 40);
+            JLabel textoCancionReportada = new JLabel("Cancion reportada: " + r.getCancionReportada().getNombre() + " de " + r.getCancionReportada().getAutor().getNombre());
+            textoCancionReportada.setBounds(250, 35+i, 500, 40);
             textoCancionReportada.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoCancionReportada.setForeground(Estilo.colorTexto);
             textoCancionReportada.setHorizontalAlignment(JLabel.RIGHT);
             vistaReportes.scrollPanel.add(textoCancionReportada);
 
-            JLabel textoDescripcion = new JLabel(r.getDescripcion());
-            textoDescripcion.setBounds(25, 135+i, 505, 100*(1+r.getDescripcion().length()/charsPerLine));
+            JLabel textoDescripcion = new JLabel("\"" + r.getDescripcion() + "\"");
+            textoDescripcion.setBounds(35, 80+i, Estilo.anchura-360, 100);
             textoDescripcion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoDescripcion.setForeground(Estilo.colorTexto);
             textoDescripcion.setHorizontalAlignment(JLabel.LEFT);
@@ -90,7 +90,9 @@ public class ControladorReportes {
             botonReproducir.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    r.getCancionReportada().setEstado(EstadoCancion.VALIDADA);
                     sistema.reproducir(r.getCancionReportada());
+                    r.getCancionReportada().setEstado(EstadoCancion.BLOQUEADA_TEMPORAL);
                 }
             });
 
@@ -98,6 +100,22 @@ public class ControladorReportes {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     sistema.aceptarReporte(r);
+
+                    if (vistaMenuAdministrador.panelActual != null) {
+                        vistaMenuAdministrador.remove(vistaMenuAdministrador.panelActual);                    
+                        vistaMenuAdministrador.panelActual = null;
+                    }
+                    
+                    VistaReportes vistaReportes = new VistaReportes();
+                    vistaMenuAdministrador.panelActual = vistaReportes;
+                    vistaMenuAdministrador.add(vistaReportes);
+    
+                    @SuppressWarnings("unused")
+                    ControladorReportes controladorReportes = new ControladorReportes(sistema, vistaReportes, vistaMenuAdministrador);
+    
+                    vistaReportes.setVisible(true);
+    
+                    vistaMenuAdministrador.repaint();
                 }
             });
 
@@ -105,10 +123,28 @@ public class ControladorReportes {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     sistema.rechazarReporte(r);
+
+                    if (vistaMenuAdministrador.panelActual != null) {
+                        vistaMenuAdministrador.remove(vistaMenuAdministrador.panelActual);                    
+                        vistaMenuAdministrador.panelActual = null;
+                    }
+                    
+                    VistaReportes vistaReportes = new VistaReportes();
+                    vistaMenuAdministrador.panelActual = vistaReportes;
+                    vistaMenuAdministrador.add(vistaReportes);
+    
+                    @SuppressWarnings("unused")
+                    ControladorReportes controladorReportes = new ControladorReportes(sistema, vistaReportes, vistaMenuAdministrador);
+    
+                    vistaReportes.setVisible(true);
+    
+                    vistaMenuAdministrador.repaint();
                 }
             });
 
-            i += 100 + r.getDescripcion().length()/charsPerLine;
+            i += 175;
         }
+
+        vistaReportes.scrollPanel.setPreferredSize(new Dimension(0, 15+i));
     }
 }

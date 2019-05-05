@@ -66,7 +66,7 @@ public class ControladorMenuAdministrador {
                 vistaMenuAdministrador.add(vistaReportes);
 
                 @SuppressWarnings("unused")
-                ControladorReportes controladorReportes = new ControladorReportes(sistema, vistaReportes);
+                ControladorReportes controladorReportes = new ControladorReportes(sistema, vistaReportes, vistaMenuAdministrador);
 
                 vistaReportes.setVisible(true);
 

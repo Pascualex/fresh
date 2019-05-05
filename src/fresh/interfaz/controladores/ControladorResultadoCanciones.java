@@ -6,6 +6,7 @@ import fresh.datos.tipos.ListaReproduccion;
 import fresh.interfaz.Estilo;
 import fresh.interfaz.swing.*;
 import fresh.interfaz.vistas.VistaAnadirALista;
+import fresh.interfaz.vistas.VistaReportar;
 import fresh.interfaz.vistas.VistaResultadoCanciones;
 
 import java.awt.Color;
@@ -110,6 +111,15 @@ public class ControladorResultadoCanciones {
                 }
             });
 
+            botonReportar.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    VistaReportar vistaReportar = new VistaReportar();
+                    vistaResultadoCanciones.add(vistaReportar);
+                    cargarReporte(sistema, vistaResultadoCanciones, vistaReportar, c);
+                }
+            });
+
             i++;
         }
     }
@@ -178,5 +188,29 @@ public class ControladorResultadoCanciones {
 
         vistaAnadirALista.scrollFrame.revalidate();
         vistaAnadirALista.repaint();
+    }
+
+    private void cargarReporte(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, VistaReportar vistaReportar, Cancion c) {        
+
+        vistaReportar.textoReportar.setText("Reportando " + c.getNombre() + " de " + c.getAutor().getNombre());
+
+        vistaReportar.botonReportar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sistema.reportar(vistaReportar.entradaDescripcion.getText(), c);
+                vistaResultadoCanciones.remove(vistaReportar);
+                    
+                vistaResultadoCanciones.separador.setVisible(true);
+                vistaResultadoCanciones.scrollFrame.setVisible(true);
+
+                vistaResultadoCanciones.repaint();
+            }
+        });
+
+        vistaResultadoCanciones.separador.setVisible(false);
+        vistaResultadoCanciones.scrollFrame.setVisible(false);
+        vistaReportar.setVisible(true);
+
+        vistaReportar.repaint();
     }
 }

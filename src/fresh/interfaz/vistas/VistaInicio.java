@@ -157,7 +157,7 @@ public class VistaInicio extends JPanel {
         textoUsuarioIncorrecto.setVisible(false);
         panelMensaje.add(textoUsuarioIncorrecto);
         
-        textoUsuarioBloqueado = new JLabel("");
+        textoUsuarioBloqueado = new JLabel("Usuario bloqueado");
         textoUsuarioBloqueado.setBounds(150, 150, 500, 100);
         textoUsuarioBloqueado.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 30));
         textoUsuarioBloqueado.setForeground(Estilo.colorTexto);

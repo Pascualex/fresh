@@ -576,6 +576,7 @@ public class Sistema {
 
         NotificacionCancion notificacion = new NotificacionCancion(TipoNotificacion.REPORTE_ACEPTADO, reporte.getCancionReportada());
         reporte.getReportador().anadirNotificacion(notificacion);
+        baseDeDatos.eliminarReporte(reporte);
 
         return Status.OK;
     }
@@ -599,6 +600,7 @@ public class Sistema {
 
         reporte.getReportador().setBloqueado(true);
         gestorEventos.programarDesbloqueoUsuario(reporte.getReportador());
+        baseDeDatos.eliminarReporte(reporte);
 
         return Status.OK;
     }
