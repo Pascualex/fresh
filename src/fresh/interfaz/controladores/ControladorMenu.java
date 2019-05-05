@@ -2,17 +2,41 @@ package fresh.interfaz.controladores;
 
 import fresh.Status;
 import fresh.sistema.Sistema;
+import fresh.interfaz.Estilo;
 import fresh.interfaz.vistas.*;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JLabel;
 
 public class ControladorMenu {
 
     public ControladorMenu(Sistema sistema, VistaVentana vistaVentana) {
         VistaMenu vistaMenu = new VistaMenu();
         vistaVentana.add(vistaMenu);
-
+        
+        JLabel textoAutor = new JLabel(sistema.getUsuarioActual().getNombre());
+        textoAutor.setBounds(20, 550, 220, 80);
+        textoAutor.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 17));
+        textoAutor.setForeground(Estilo.colorTexto);
+        textoAutor.setHorizontalAlignment(JLabel.CENTER);
+        vistaMenu.panelLateral.add(textoAutor);
+        
+        boolean usuarioPremium = sistema.getUsuarioActual().getPremium();
+        
+        if (usuarioPremium) {
+        	System.out.println("es premium");
+        	vistaMenu.textoRegistradoUsuario.setVisible(false);
+        	vistaMenu.textoPremiumUsuario.setVisible(true);
+        	vistaMenu.botonPagarPremium.setVisible(false);
+        }else {
+        	vistaMenu.textoRegistradoUsuario.setVisible(true);
+        	vistaMenu.textoPremiumUsuario.setVisible(false);
+        	vistaMenu.botonPagarPremium.setVisible(true);
+        }
+        
         vistaMenu.seleccionModoBusqueda.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -172,6 +196,27 @@ public class ControladorMenu {
                 ControladorNotificaciones controladorNotificaciones = new ControladorNotificaciones(sistema, VistaNotificaciones);
 
                 vistaMenu.repaint();
+            }
+        });
+
+        vistaMenu.botonPagarPremium.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	if (vistaMenu.panelActual != null) {
+                    vistaMenu.remove(vistaMenu.panelActual);
+                    vistaMenu.panelActual = null;
+                }
+            	
+            	 VistaPagarPremium vistaPagarPremium = new VistaPagarPremium();
+                 vistaMenu.panelActual = vistaPagarPremium;
+                 vistaMenu.add(vistaPagarPremium);
+                 
+                 @SuppressWarnings("unused")
+                 ControladorPagarPremium controladorPagarPremium = new ControladorPagarPremium(sistema, vistaMenu, vistaPagarPremium);
+
+                 vistaPagarPremium.setVisible(true);
+                 vistaMenu.repaint();
+
             }
         });
 

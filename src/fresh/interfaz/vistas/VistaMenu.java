@@ -23,7 +23,11 @@ public class VistaMenu extends JPanel {
     public JCustomButton botonMisCanciones;
     public JCustomButton botonMisAlbumes;
     public JCustomButton botonNotificaciones;
+    public JCustomButton botonPagarPremium;
     public JCustomButton botonCerrarSesion;
+    public JLabel textoNombreUsuario;
+    public JLabel textoPremiumUsuario;
+    public JLabel textoRegistradoUsuario;
 
     public JPanel panelActual;
 
@@ -159,6 +163,42 @@ public class VistaMenu extends JPanel {
         botonNotificaciones.setShadowSize(5);
         botonNotificaciones.setShadowOpacity(0.4f);
         panelLateral.add(botonNotificaciones);
+        
+        textoNombreUsuario = new JLabel("Nombre de usuario: ");
+        textoNombreUsuario.setBounds(20, 520, 220, 80);
+        textoNombreUsuario.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 17));
+        textoNombreUsuario.setForeground(Estilo.colorTexto);
+        textoNombreUsuario.setHorizontalAlignment(JLabel.CENTER);
+        panelLateral.add(textoNombreUsuario);
+        
+        textoPremiumUsuario = new JLabel("Usuario premium");
+        textoPremiumUsuario.setBounds(20, 570, 220, 80);
+        textoPremiumUsuario.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 17));
+        textoPremiumUsuario.setForeground(Estilo.colorTexto);
+        textoPremiumUsuario.setHorizontalAlignment(JLabel.CENTER);
+        textoPremiumUsuario.setVisible(false);
+        panelLateral.add(textoPremiumUsuario);
+        
+        textoRegistradoUsuario = new JLabel("Usuario registrado");
+        textoRegistradoUsuario.setBounds(20, 570, 220, 80);
+        textoRegistradoUsuario.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 17));
+        textoRegistradoUsuario.setForeground(Estilo.colorTexto);
+        textoRegistradoUsuario.setHorizontalAlignment(JLabel.CENTER);
+        textoRegistradoUsuario.setVisible(false);
+        panelLateral.add(textoRegistradoUsuario);
+        
+        botonPagarPremium = new JCustomButton("Hazte Premium");
+        botonPagarPremium.setBounds(20, 620, 220, 80);
+        botonPagarPremium.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
+        botonPagarPremium.setForeground(Estilo.colorTexto);
+        botonPagarPremium.setBackground(new Color(245, 100, 100));
+        botonPagarPremium.setPressedBackgound(new Color(220, 50, 50).brighter());
+        botonPagarPremium.setCornerRadius(40);
+        botonPagarPremium.setHeight(5);       
+        botonPagarPremium.setShadowSize(5);
+        botonPagarPremium.setShadowOpacity(0.4f);
+        botonPagarPremium.setVisible(false);
+        panelLateral.add(botonPagarPremium);
 
         botonCerrarSesion = new JCustomButton("Cerrar sesión");
         botonCerrarSesion.setBounds(20, 705, 220, 80);
