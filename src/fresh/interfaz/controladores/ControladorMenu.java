@@ -195,6 +195,8 @@ public class ControladorMenu {
                 @SuppressWarnings("unused")
                 ControladorNotificaciones controladorNotificaciones = new ControladorNotificaciones(sistema, VistaNotificaciones);
 
+                VistaNotificaciones.setVisible(true);
+
                 vistaMenu.repaint();
             }
         });

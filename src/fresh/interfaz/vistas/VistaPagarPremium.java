@@ -85,7 +85,7 @@ public class VistaPagarPremium extends JPanel{
         
         // Configura el panel de los mensajes
         panelMensaje = new JPanel();
-        panelMensaje.setBounds(100, 100, Estilo.anchura-400, Estilo.altura-300);
+        panelMensaje.setBounds(50, 15, Estilo.anchura-400, Estilo.altura-300);
         panelMensaje.setBackground(Estilo.colorTerciario);
         panelMensaje.setLayout(null);
         panelMensaje.setVisible(false);
