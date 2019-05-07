@@ -27,7 +27,6 @@ public class ControladorMenu {
         boolean usuarioPremium = sistema.getUsuarioActual().getPremium();
         
         if (usuarioPremium) {
-        	System.out.println("es premium");
         	vistaMenu.textoRegistradoUsuario.setVisible(false);
         	vistaMenu.textoPremiumUsuario.setVisible(true);
         	vistaMenu.botonPagarPremium.setVisible(false);
@@ -214,7 +213,7 @@ public class ControladorMenu {
                  vistaMenu.add(vistaPagarPremium);
                  
                  @SuppressWarnings("unused")
-                 ControladorPagarPremium controladorPagarPremium = new ControladorPagarPremium(sistema, vistaMenu, vistaPagarPremium);
+                 ControladorPagarPremium controladorPagarPremium = new ControladorPagarPremium(sistema, vistaVentana, vistaMenu, vistaPagarPremium);
 
                  vistaPagarPremium.setVisible(true);
                  vistaMenu.repaint();

@@ -2,6 +2,7 @@ package fresh.interfaz.controladores;
 
 import fresh.sistema.Sistema;
 import fresh.datos.tipos.Cancion;
+import fresh.datos.tipos.EstadoCancion;
 import fresh.interfaz.Estilo;
 import fresh.interfaz.swing.JCustomButton;
 import fresh.interfaz.vistas.VistaCanciones;
@@ -66,7 +67,34 @@ public class ControladorCanciones {
             textoEstadoCancion.setHorizontalAlignment(JLabel.LEFT);
             vistaCanciones.scrollPanel.add(textoEstadoCancion);
 
-            if (c.getBloqueado()) {
+            if (c.getBloqueado() && c.getEstado() != EstadoCancion.RECHAZADA_REVISABLE) {
+                i++;
+                continue;
+            }
+
+            if (c.getEstado() == EstadoCancion.RECHAZADA_REVISABLE) {
+                JCustomButton botonResubir = new JCustomButton("R");
+                botonResubir.setBounds(25, 15+100*i, 75, 75);
+                botonResubir.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
+                botonResubir.setForeground(Estilo.colorTexto);
+                botonResubir.setBackground(new Color(10, 200, 90));
+                botonResubir.setPressedBackgound(new Color(10, 200, 90).brighter());
+                botonResubir.setCornerRadius(80);
+                botonResubir.setHeight(5);       
+                botonResubir.setShadowSize(5);
+                botonResubir.setShadowOpacity(0.4f);            
+                vistaCanciones.scrollPanel.add(botonResubir);
+
+                botonResubir.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (vistaCanciones.selectorArchivo.showOpenDialog(vistaCanciones) == JFileChooser.APPROVE_OPTION) {
+                            System.out.println(sistema.actualizarCancion(c, vistaCanciones.selectorArchivo.getSelectedFile().getAbsolutePath()));
+                            cargarCanciones(sistema, vistaCanciones, vistaMenu);
+                            vistaCanciones.scrollPanel.repaint();
+                        }
+                    }
+                });
                 i++;
                 continue;
             }

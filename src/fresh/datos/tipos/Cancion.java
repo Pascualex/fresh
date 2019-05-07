@@ -103,13 +103,12 @@ public class Cancion extends ElementoReproducible {
 
     /**
      * Devuelve una lista con la canción.
-     * @return Lista de canciones con la canción si no está bloqueada y una
-     * lista vacía si lo está.
+     * @return Lista de canciones con la canción
      */
     @Override
     public List<Cancion> getCanciones() {
         List<Cancion> canciones = new ArrayList<>();
-        if (!getBloqueado()) canciones.add(this);
+        canciones.add(this);
         return canciones;
     }
 
