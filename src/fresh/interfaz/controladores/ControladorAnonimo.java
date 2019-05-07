@@ -40,7 +40,7 @@ public class ControladorAnonimo {
                     vistaAnonimo.add(vistaResultadoAlbumes);
 
                     @SuppressWarnings("unused")
-                    ControladorResultadoAlbumes controladorResultadoAlbumes = new ControladorResultadoAlbumes(sistema, vistaResultadoAlbumes, entrada);
+                    ControladorResultadoAlbumes controladorResultadoAlbumes = new ControladorResultadoAlbumes(sistema, vistaResultadoAlbumes, vistaAnonimo, entrada);
                 
                     vistaResultadoAlbumes.setVisible(true);
                 } else {

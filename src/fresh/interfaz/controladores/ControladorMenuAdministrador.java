@@ -42,7 +42,7 @@ public class ControladorMenuAdministrador {
                     vistaMenuAdministrador.add(vistaResultadoAlbumes);
 
                     @SuppressWarnings("unused")
-                    ControladorResultadoAlbumes controladorResultadoAlbumes = new ControladorResultadoAlbumes(sistema, vistaResultadoAlbumes, entrada);
+                    ControladorResultadoAlbumes controladorResultadoAlbumes = new ControladorResultadoAlbumes(sistema, vistaResultadoAlbumes, vistaMenuAdministrador, entrada);
                 
                     vistaResultadoAlbumes.setVisible(true);
                 } else {

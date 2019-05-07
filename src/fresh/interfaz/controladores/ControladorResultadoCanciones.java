@@ -6,6 +6,7 @@ import fresh.datos.tipos.ListaReproduccion;
 import fresh.interfaz.Estilo;
 import fresh.interfaz.swing.*;
 import fresh.interfaz.vistas.VistaAnadirALista;
+import fresh.interfaz.vistas.VistaMenu;
 import fresh.interfaz.vistas.VistaReportar;
 import fresh.interfaz.vistas.VistaResultadoCanciones;
 
@@ -20,7 +21,7 @@ import javax.swing.JLabel;
 
 public class ControladorResultadoCanciones {
 
-    public ControladorResultadoCanciones(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, String entrada) {
+    public ControladorResultadoCanciones(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, VistaMenu vistaMenu, String entrada) {
         List<Cancion> canciones = sistema.buscarCanciones(entrada);
         
         if (canciones.size() == 0) {
@@ -28,10 +29,10 @@ public class ControladorResultadoCanciones {
             vistaResultadoCanciones.textoSinResultados.setVisible(true);
         }
 
-        cargarCanciones(sistema, vistaResultadoCanciones, canciones);
+        cargarCanciones(sistema, vistaResultadoCanciones, vistaMenu, canciones);
     }
 
-    private void cargarCanciones(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, List<Cancion> canciones) {
+    private void cargarCanciones(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, VistaMenu vistaMenu, List<Cancion> canciones) {
         vistaResultadoCanciones.scrollPanel.setPreferredSize(new Dimension(0, 15+canciones.size()*100));
         vistaResultadoCanciones.scrollFrame.revalidate();
         vistaResultadoCanciones.scrollFrame.repaint();
@@ -98,6 +99,8 @@ public class ControladorResultadoCanciones {
             botonReproducir.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    vistaMenu.botonReproducir.setVisible(false);
+                    vistaMenu.botonParar.setVisible(true);
                     sistema.reproducir(c);
                 }
             });

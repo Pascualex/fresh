@@ -1,5 +1,6 @@
 package fresh.interfaz.controladores;
 
+import fresh.sistema.ModoEjecucion;
 import fresh.sistema.Sistema;
 import fresh.datos.tipos.Album;
 import fresh.datos.tipos.ListaReproduccion;
@@ -7,6 +8,9 @@ import fresh.interfaz.Estilo;
 import fresh.interfaz.swing.*;
 import fresh.interfaz.vistas.VistaAnadirALista;
 import fresh.interfaz.vistas.VistaResultadoAlbumes;
+import fresh.interfaz.vistas.VistaMenu;
+import fresh.interfaz.vistas.VistaAnonimo;
+import fresh.interfaz.vistas.VistaMenuAdministrador;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,10 +20,11 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class ControladorResultadoAlbumes {
 
-    public ControladorResultadoAlbumes(Sistema sistema, VistaResultadoAlbumes vistaResultadoAlbumes, String entrada) {
+    public ControladorResultadoAlbumes(Sistema sistema, VistaResultadoAlbumes vistaResultadoAlbumes, JPanel vistaMenu, String entrada) {
         List<Album> albumes = sistema.buscarAlbumes(entrada);
         
         if (albumes.size() == 0) {
@@ -27,32 +32,39 @@ public class ControladorResultadoAlbumes {
             vistaResultadoAlbumes.textoSinResultados.setVisible(true);
         }
 
-        cargarCanciones(sistema, vistaResultadoAlbumes, albumes);
+        cargarCanciones(sistema, vistaResultadoAlbumes, vistaMenu, albumes);
     }
 
-    private void cargarCanciones(Sistema sistema, VistaResultadoAlbumes vistaResultadoAlbumes, List<Album> albumes) {
+    private void cargarCanciones(Sistema sistema, VistaResultadoAlbumes vistaResultadoAlbumes, JPanel vistaMenu, List<Album> albumes) {
         vistaResultadoAlbumes.scrollPanel.setPreferredSize(new Dimension(0, 15+albumes.size()*100));
         vistaResultadoAlbumes.scrollFrame.revalidate();
         vistaResultadoAlbumes.scrollFrame.repaint();
+        int posTextoDuracion;
+
+        if (sistema.getModoEjecucion() == ModoEjecucion.REGISTRADO) {
+            posTextoDuracion = 185;
+        } else {
+            posTextoDuracion = 115;
+        }
 
         int i = 0;
         for (Album a : albumes) {
             JLabel textoDuracion = new JLabel(String.valueOf(a.getDuracion()/60) + ":" + String.format("%02d", a.getDuracion()%60));
-            textoDuracion.setBounds(185, 15+100*i+20, 80, 40);
+            textoDuracion.setBounds(posTextoDuracion, 15+100*i+20, 80, 40);
             textoDuracion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoDuracion.setForeground(Estilo.colorTexto);
             textoDuracion.setHorizontalAlignment(JLabel.RIGHT);
             vistaResultadoAlbumes.scrollPanel.add(textoDuracion);
 
             JLabel textoNombreAlbum = new JLabel(a.getNombre());
-            textoNombreAlbum.setBounds(295, 15+100*i, 505, 40);
+            textoNombreAlbum.setBounds(posTextoDuracion+110, 15+100*i, 505, 40);
             textoNombreAlbum.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoNombreAlbum.setForeground(Estilo.colorTexto);
             textoNombreAlbum.setHorizontalAlignment(JLabel.LEFT);
             vistaResultadoAlbumes.scrollPanel.add(textoNombreAlbum);
 
             JLabel textoAnoYNombreAutor = new JLabel(a.getAno() + " - " + a.getAutor().getNombre());
-            textoAnoYNombreAutor.setBounds(295, 15+100*i+35, 505, 40);
+            textoAnoYNombreAutor.setBounds(posTextoDuracion+110, 15+100*i+35, 505, 40);
             textoAnoYNombreAutor.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
             textoAnoYNombreAutor.setForeground(Estilo.colorTexto);
             textoAnoYNombreAutor.setHorizontalAlignment(JLabel.LEFT);
@@ -70,33 +82,64 @@ public class ControladorResultadoAlbumes {
             botonReproducir.setShadowOpacity(0.4f);
             vistaResultadoAlbumes.scrollPanel.add(botonReproducir);
 
-            JCustomButton botonAnadirPlaylist = new JCustomButton("+");
-            botonAnadirPlaylist.setBounds(110, 15+100*i, 75, 75);
-            botonAnadirPlaylist.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
-            botonAnadirPlaylist.setForeground(Estilo.colorTexto);
-            botonAnadirPlaylist.setBackground(new Color(10, 200, 90));
-            botonAnadirPlaylist.setPressedBackgound(new Color(10, 200, 90).brighter());
-            botonAnadirPlaylist.setCornerRadius(80);
-            botonAnadirPlaylist.setHeight(5);       
-            botonAnadirPlaylist.setShadowSize(5);
-            botonAnadirPlaylist.setShadowOpacity(0.4f);
-            vistaResultadoAlbumes.scrollPanel.add(botonAnadirPlaylist);
+            if (sistema.getModoEjecucion() == ModoEjecucion.REGISTRADO) {
+                JCustomButton botonAnadirPlaylist = new JCustomButton("+");
+                botonAnadirPlaylist.setBounds(110, 15+100*i, 75, 75);
+                botonAnadirPlaylist.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+                botonAnadirPlaylist.setForeground(Estilo.colorTexto);
+                botonAnadirPlaylist.setBackground(new Color(10, 200, 90));
+                botonAnadirPlaylist.setPressedBackgound(new Color(10, 200, 90).brighter());
+                botonAnadirPlaylist.setCornerRadius(80);
+                botonAnadirPlaylist.setHeight(5);       
+                botonAnadirPlaylist.setShadowSize(5);
+                botonAnadirPlaylist.setShadowOpacity(0.4f);
+                vistaResultadoAlbumes.scrollPanel.add(botonAnadirPlaylist);
 
-            botonReproducir.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    sistema.reproducir(a);
-                }
-            });
+                botonAnadirPlaylist.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        VistaAnadirALista vistaAnadirALista = new VistaAnadirALista("el álbum");
+                        vistaResultadoAlbumes.add(vistaAnadirALista);
+                        cargarPlaylists(sistema, vistaResultadoAlbumes, vistaAnadirALista, a);
+                    }
+                });
+            }
 
-            botonAnadirPlaylist.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    VistaAnadirALista vistaAnadirALista = new VistaAnadirALista("el álbum");
-                    vistaResultadoAlbumes.add(vistaAnadirALista);
-                    cargarPlaylists(sistema, vistaResultadoAlbumes, vistaAnadirALista, a);
-                }
-            });
+            if (sistema.getModoEjecucion() == ModoEjecucion.REGISTRADO) {
+                botonReproducir.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        ((VistaMenu) vistaMenu).botonReproducir.setVisible(false);
+                        ((VistaMenu) vistaMenu).botonParar.setVisible(true);
+                        sistema.reproducir(a);
+                    }
+                });    
+            } else if (sistema.getModoEjecucion() == ModoEjecucion.ADMINISTRADOR) {
+                botonReproducir.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        ((VistaMenuAdministrador) vistaMenu).botonReproducir.setVisible(false);
+                        ((VistaMenuAdministrador) vistaMenu).botonParar.setVisible(true);
+                        sistema.reproducir(a);
+                    }
+                });
+            } else if (sistema.getModoEjecucion() == ModoEjecucion.ANONIMO) {
+                botonReproducir.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        ((VistaAnonimo) vistaMenu).botonReproducir.setVisible(false);
+                        ((VistaAnonimo) vistaMenu).botonParar.setVisible(true);
+                        sistema.reproducir(a);
+                    }
+                });
+            } else {
+                botonReproducir.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        sistema.reproducir(a);
+                    }
+                });
+            }
 
             i++;
         }

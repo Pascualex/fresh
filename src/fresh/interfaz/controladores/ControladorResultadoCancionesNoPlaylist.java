@@ -6,6 +6,8 @@ import fresh.datos.tipos.Cancion;
 import fresh.interfaz.Estilo;
 import fresh.interfaz.swing.*;
 import fresh.interfaz.vistas.VistaResultadoCanciones;
+import fresh.interfaz.vistas.VistaAnonimo;
+import fresh.interfaz.vistas.VistaMenuAdministrador;
 
 import javax.swing.*;
 import java.awt.Color;
@@ -74,6 +76,8 @@ public class ControladorResultadoCancionesNoPlaylist {
                 botonReproducir.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        ((VistaAnonimo) vistaMenu).botonReproducir.setVisible(false);
+                        ((VistaAnonimo) vistaMenu).botonParar.setVisible(true);
                         sistema.reproducir(c);
                         vistaMenu.remove(vistaResultadoCanciones);
                         vistaMenu.repaint();
@@ -82,7 +86,9 @@ public class ControladorResultadoCancionesNoPlaylist {
             } else {
                 botonReproducir.addActionListener(new ActionListener() {
                     @Override
-                    public void actionPerformed(ActionEvent e) {
+                    public void actionPerformed(ActionEvent e) {                        
+                        ((VistaMenuAdministrador) vistaMenu).botonReproducir.setVisible(false);
+                        ((VistaMenuAdministrador) vistaMenu).botonParar.setVisible(true);
                         sistema.reproducir(c);
                     }
                 });

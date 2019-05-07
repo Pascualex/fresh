@@ -89,7 +89,7 @@ public class ControladorCanciones {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (vistaCanciones.selectorArchivo.showOpenDialog(vistaCanciones) == JFileChooser.APPROVE_OPTION) {
-                            System.out.println(sistema.actualizarCancion(c, vistaCanciones.selectorArchivo.getSelectedFile().getAbsolutePath()));
+                            sistema.actualizarCancion(c, vistaCanciones.selectorArchivo.getSelectedFile().getAbsolutePath());
                             cargarCanciones(sistema, vistaCanciones, vistaMenu);
                             vistaCanciones.scrollPanel.repaint();
                         }

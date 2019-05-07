@@ -109,6 +109,8 @@ public class ControladorNuevasCanciones {
             botonReproducir.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    vistaMenuAdministrador.botonReproducir.setVisible(false);
+                    vistaMenuAdministrador.botonParar.setVisible(true);
                     sistema.reproducir(c);
                 }
             });

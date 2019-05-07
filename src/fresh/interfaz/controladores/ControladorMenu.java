@@ -66,7 +66,7 @@ public class ControladorMenu {
                     vistaMenu.add(vistaResultadoCanciones);
 
                     @SuppressWarnings("unused")
-                    ControladorResultadoCanciones controladorResultadoCanciones = new ControladorResultadoCanciones(sistema, vistaResultadoCanciones, entrada);
+                    ControladorResultadoCanciones controladorResultadoCanciones = new ControladorResultadoCanciones(sistema, vistaResultadoCanciones, vistaMenu, entrada);
                 
                     vistaResultadoCanciones.setVisible(true);
                 } else if (vistaMenu.seleccionModoBusqueda.getSelectedIndex() == 1) {
@@ -76,7 +76,7 @@ public class ControladorMenu {
                     vistaMenu.add(vistaResultadoAlbumes);
 
                     @SuppressWarnings("unused")
-                    ControladorResultadoAlbumes controladorResultadoAlbumes = new ControladorResultadoAlbumes(sistema, vistaResultadoAlbumes, entrada);
+                    ControladorResultadoAlbumes controladorResultadoAlbumes = new ControladorResultadoAlbumes(sistema, vistaResultadoAlbumes, vistaMenu, entrada);
                 
                     vistaResultadoAlbumes.setVisible(true);
                 } else {
