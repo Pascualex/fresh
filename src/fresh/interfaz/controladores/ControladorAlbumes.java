@@ -89,6 +89,27 @@ public class ControladorAlbumes {
                 }
             });
 
+            JCustomButton botonEliminar = new JCustomButton("Eliminar");
+            botonEliminar.setBounds(800, 15+100*i, 100, 75);
+            botonEliminar.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 20));
+            botonEliminar.setForeground(Estilo.colorTexto);
+            botonEliminar.setBackground(new Color(224, 62, 98));
+            botonEliminar.setPressedBackgound(new Color(224, 62, 98).brighter());
+            botonEliminar.setCornerRadius(80);
+            botonEliminar.setHeight(5);       
+            botonEliminar.setShadowSize(5);
+            botonEliminar.setShadowOpacity(0.4f);            
+            vistaAlbumes.scrollPanel.add(botonEliminar);
+
+            botonEliminar.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    sistema.eliminarAlbum(a);
+                    cargarAlbumes(sistema, vistaAlbumes, vistaMenu);
+                    vistaAlbumes.scrollPanel.repaint();
+                }
+            });
+
             i++;
         }
     }
