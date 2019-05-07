@@ -7,11 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fresh.interfaz.vistas.VistaMenu;
+import fresh.interfaz.vistas.VistaVentana;
 import fresh.interfaz.vistas.VistaPagarPremium;
 
 public class ControladorPagarPremium {
 	
-	public ControladorPagarPremium(Sistema sistema, VistaMenu vistaMenu, VistaPagarPremium vistaPagarPremium) {
+	public ControladorPagarPremium(Sistema sistema, VistaVentana vistaVentana, VistaMenu vistaMenu, VistaPagarPremium vistaPagarPremium) {
 		
 		vistaPagarPremium.botonOK.addActionListener(new ActionListener() {
             @Override
@@ -30,6 +31,7 @@ public class ControladorPagarPremium {
                 	
                 	sistema.getUsuarioActual().setPremium(true);
                 	vistaMenu.textoRegistradoUsuario.setVisible(false);
+                	vistaMenu.botonPagarPremium.setVisible(false);
                 	vistaMenu.textoPremiumUsuario.setVisible(true);
                 	vistaMenu.repaint();
                 	
@@ -69,13 +71,16 @@ public class ControladorPagarPremium {
 		
 		vistaPagarPremium.botonVolver.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {       
+            public void actionPerformed(ActionEvent e) {
             	
             	if (vistaPagarPremium.textoOK.isVisible()) {
             		vistaPagarPremium.remove(vistaPagarPremium.panelMensaje);
-            		@SuppressWarnings("unused")
-            		ControladorPagarPremium controladorPagarPremium = new ControladorPagarPremium(sistema, vistaMenu, vistaPagarPremium);
-					return;  
+            		if (vistaMenu.panelActual != null) {
+                        vistaMenu.remove(vistaMenu.panelActual);
+                        vistaMenu.panelActual = null;
+                    }
+            		vistaMenu.repaint();
+            		return;  
             	} else {
             		vistaPagarPremium.textoError.setVisible(false);
             		vistaPagarPremium.textoErrorEntrada.setVisible(false);
