@@ -5,7 +5,6 @@ import fresh.datos.tipos.Usuario;
 import fresh.interfaz.Estilo;
 import fresh.interfaz.swing.JCustomButton;
 import fresh.interfaz.vistas.VistaAutores;
-import fresh.interfaz.vistas.VistaMenu;
 
 import javax.swing.JLabel;
 
@@ -17,11 +16,11 @@ import java.awt.event.ActionListener;
 
 public class ControladorAutores {
 
-    public ControladorAutores(Sistema sistema, VistaAutores vistaAutores, VistaMenu vistaMenu) {
-        cargarAutores(sistema, vistaAutores, vistaMenu);
+    public ControladorAutores(Sistema sistema, VistaAutores vistaAutores) {
+        cargarAutores(sistema, vistaAutores);
     }
 
-    private void cargarAutores(Sistema sistema, VistaAutores vistaAutores, VistaMenu vistaMenu) {
+    private void cargarAutores(Sistema sistema, VistaAutores vistaAutores) {
         int numCanciones = sistema.getUsuarioActual().getAutoresSeguidos().size();
         vistaAutores.scrollPanel.setPreferredSize(new Dimension(0, 15+numCanciones*100));
         vistaAutores.scrollPanel.removeAll();
@@ -53,7 +52,7 @@ public class ControladorAutores {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     sistema.noSeguirAutor(a);
-                    cargarAutores(sistema, vistaAutores, vistaMenu);
+                    cargarAutores(sistema, vistaAutores);
                 }
             });
 

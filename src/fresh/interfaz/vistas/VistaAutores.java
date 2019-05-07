@@ -24,7 +24,7 @@ public class VistaAutores extends JPanel {
         setLayout(null);
         setVisible(false);     
         
-        textoAutoresSeguidos = new JLabel("Autores seguidos:");
+        textoAutoresSeguidos = new JLabel("Autores seguidos");
         textoAutoresSeguidos.setBounds(35, 15, 765, 40);
         textoAutoresSeguidos.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         textoAutoresSeguidos.setForeground(Estilo.colorTexto);

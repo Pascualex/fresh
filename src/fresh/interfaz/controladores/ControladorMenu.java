@@ -61,7 +61,7 @@ public class ControladorMenu {
                 }
 
                 if (vistaMenu.seleccionModoBusqueda.getSelectedIndex() == 0) {
-                    //Canciones
+                    // Canciones
                     VistaResultadoCanciones vistaResultadoCanciones = new VistaResultadoCanciones(entrada);
                     vistaMenu.panelActual = vistaResultadoCanciones;
                     vistaMenu.add(vistaResultadoCanciones);
@@ -71,7 +71,7 @@ public class ControladorMenu {
                 
                     vistaResultadoCanciones.setVisible(true);
                 } else if (vistaMenu.seleccionModoBusqueda.getSelectedIndex() == 1) {
-                    //Álbumes
+                    // Álbumes
                     VistaResultadoAlbumes vistaResultadoAlbumes = new VistaResultadoAlbumes(entrada);
                     vistaMenu.panelActual = vistaResultadoAlbumes;
                     vistaMenu.add(vistaResultadoAlbumes);
@@ -81,7 +81,7 @@ public class ControladorMenu {
                 
                     vistaResultadoAlbumes.setVisible(true);
                 } else {
-                    //Autores
+                    // Autores
                     VistaResultadoAutores vistaResultadoAutores = new VistaResultadoAutores(entrada);
                     vistaMenu.panelActual = vistaResultadoAutores;
                     vistaMenu.add(vistaResultadoAutores);
@@ -130,7 +130,7 @@ public class ControladorMenu {
                 vistaMenu.add(vistaAutores);
 
                 @SuppressWarnings("unused")
-                ControladorAutores controladorAutores = new ControladorAutores(sistema, vistaAutores, vistaMenu);
+                ControladorAutores controladorAutores = new ControladorAutores(sistema, vistaAutores);
 
                 vistaAutores.setVisible(true);
                 

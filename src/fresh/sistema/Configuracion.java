@@ -6,8 +6,8 @@ import java.util.Objects;
 import fresh.Status;
 
 /**
- * <p>Esta clase permite cargar el fichero de configuración, acceder fácilmente
- *    a sus datos y guardarlo cuando se modifica.</p>
+ * Esta clase permite cargar el fichero de configuración, acceder fácilmente a
+ * sus datos y guardarlo cuando se modifica.
  */
 public class Configuracion {
     private String ruta;
