@@ -11,10 +11,13 @@ import java.awt.Font;
 public class VistaReportar extends JPanel {
     private static final long serialVersionUID = 0;
 
-    public JCustomTextField entradaDescripcion;
-    public JCustomButton botonReportar;
     public JLabel textoReportar;
 
+    public JCustomPanel separador;
+
+    public JCustomTextField entradaDescripcion;
+    public JCustomButton botonReportar;
+    public JCustomButton botonCancelar;
 
     public VistaReportar() {
         setBounds(0, 0, Estilo.anchura-260, 540);
@@ -23,15 +26,21 @@ public class VistaReportar extends JPanel {
         setVisible(false);
 
         textoReportar = new JLabel("");
-        textoReportar.setBounds(15, 15, 685, 40);
+        textoReportar.setBounds(35, 15, 480, 40);
         textoReportar.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         textoReportar.setForeground(Estilo.colorTexto);
         textoReportar.setHorizontalAlignment(JLabel.LEFT);
         add(textoReportar);
 
+        separador = new JCustomPanel();
+        separador.setBounds(20, 77, Estilo.anchura-260-92, 3);
+        separador.setBackground(Estilo.colorPrimario.darker());
+        separador.setCornerRadius(5);
+        add(separador);
+
         entradaDescripcion = new JCustomTextField("", 10);
         entradaDescripcion.setPlaceholder("Describe el motivo del reporte...");
-        entradaDescripcion.setBounds(15, 100, Estilo.anchura-300, 200);
+        entradaDescripcion.setBounds(30, 100, Estilo.anchura-400, 80);
         entradaDescripcion.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
         entradaDescripcion.setForeground(Estilo.colorTexto);
         entradaDescripcion.setPlaceholderColor(Estilo.colorPlaceholder);
@@ -43,16 +52,27 @@ public class VistaReportar extends JPanel {
         add(entradaDescripcion);
 
         botonReportar = new JCustomButton("Reportar");
-        botonReportar.setBounds(15, 325, 160, 60);
+        botonReportar.setBounds(533, 0, 160, 60);
         botonReportar.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 20));
         botonReportar.setForeground(Estilo.colorTexto);
         botonReportar.setBackground(new Color(10, 200, 90));
         botonReportar.setPressedBackgound(new Color(10, 200, 90).brighter());
-        botonReportar.setCornerRadius(35);
+        botonReportar.setCornerRadius(25);
         botonReportar.setHeight(5);       
         botonReportar.setShadowSize(5);
         botonReportar.setShadowOpacity(0.4f);
-        add(botonReportar);        
+        add(botonReportar);
 
-    }    
+        botonCancelar = new JCustomButton("Cancelar");
+        botonCancelar.setBounds(708, 0, 160, 60);
+        botonCancelar.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 20));
+        botonCancelar.setForeground(Estilo.colorTexto);
+        botonCancelar.setBackground(new Color(245, 100, 100));
+        botonCancelar.setPressedBackgound(new Color(220, 50, 50).brighter());
+        botonCancelar.setCornerRadius(25);
+        botonCancelar.setHeight(5);       
+        botonCancelar.setShadowSize(5);
+        botonCancelar.setShadowOpacity(0.4f);
+        add(botonCancelar);
+    }
 }

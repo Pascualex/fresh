@@ -1,18 +1,22 @@
 package fresh.interfaz.controladores;
 
 import fresh.sistema.Sistema;
-
-import java.awt.Dimension;
-import java.awt.Font;
-import java.util.List;
-
-import javax.swing.JLabel;
-
 import fresh.datos.tipos.Notificacion;
 import fresh.datos.tipos.NotificacionCancion;
 import fresh.datos.tipos.TipoNotificacion;
 import fresh.interfaz.Estilo;
 import fresh.interfaz.vistas.VistaNotificaciones;
+import fresh.interfaz.swing.*;
+
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.Color;
+
+import java.util.List;
+
+import javax.swing.JLabel;
 
 public class ControladorNotificaciones {
 
@@ -32,59 +36,74 @@ public class ControladorNotificaciones {
         vistaNotificaciones.scrollFrame.revalidate();
         vistaNotificaciones.scrollFrame.repaint();
 
-        JLabel textoDescripcion;
-
         int i = 0;
-        for (Notificacion n : notificaciones) {
-            if (n.getTipoNotificacion() == TipoNotificacion.CANCION_BLOQUEADA_TEMPORAL) {
+        for (Notificacion n : notificaciones) {            
+            JLabel textoDescripcion1 = new JLabel();
+            textoDescripcion1.setBounds(115, 15+100*i, 735, 40);
+            textoDescripcion1.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            textoDescripcion1.setForeground(Estilo.colorTexto);
+            textoDescripcion1.setHorizontalAlignment(JLabel.LEFT);
+            vistaNotificaciones.scrollPanel.add(textoDescripcion1);
 
-                textoDescripcion = new JLabel("Tu canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + 
-                            "\" ha sido bloqueada temporalmente.");
-            } else if (n.getTipoNotificacion() == TipoNotificacion.CANCION_DESBLOQUEADA) {
+            JLabel textoDescripcion2 = new JLabel();
+            textoDescripcion2.setBounds(115, 15+100*i+30, 735, 40);
+            textoDescripcion2.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            textoDescripcion2.setForeground(Estilo.colorTexto);
+            textoDescripcion2.setHorizontalAlignment(JLabel.LEFT);
+            vistaNotificaciones.scrollPanel.add(textoDescripcion2);            
 
-                textoDescripcion = new JLabel("Tu canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + 
-                            "\" ha sido desbloqueada.");
-            } else if (n.getTipoNotificacion() == TipoNotificacion.CANCION_ELIMINADA) {
+            JCustomButton botonEliminar = new JCustomButton("✖");
+            botonEliminar.setBounds(25, 15+100*i, 75, 75);
+            botonEliminar.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            botonEliminar.setForeground(Estilo.colorTexto);
+            botonEliminar.setBackground(new Color(245, 100, 100));
+            botonEliminar.setPressedBackgound(new Color(245, 100, 100).brighter());
+            botonEliminar.setCornerRadius(80);
+            botonEliminar.setHeight(5);       
+            botonEliminar.setShadowSize(5);
+            botonEliminar.setShadowOpacity(0.4f);
+            vistaNotificaciones.scrollPanel.add(botonEliminar);
 
-                textoDescripcion = new JLabel("Tu canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + 
-                            "\" ha sido eliminada.");
-            } else if (n.getTipoNotificacion() == TipoNotificacion.CANCION_RECHAZADA) {
-
-                textoDescripcion = new JLabel("Tu canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + 
-                            "\" ha sido rechazada.");
-            } else if (n.getTipoNotificacion() == TipoNotificacion.CANCION_SEGUIDO) {
-
-                textoDescripcion = new JLabel("Tu canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + 
-                            "\" ha sido rechazada.");
-            } else if (n.getTipoNotificacion() == TipoNotificacion.CANCION_VALIDADA) {
-
-                textoDescripcion = new JLabel("Tu canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + 
-                            "\" ha sido validada.");
+            if (n.getTipoNotificacion() == TipoNotificacion.CANCION_VALIDADA) {
+                textoDescripcion1.setText("Tu canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + "\"");
+                textoDescripcion2.setText("Si no ha sido renovado puedes obtenerlo pagando la cuota.");
             } else if (n.getTipoNotificacion() == TipoNotificacion.CANCION_VALIDADA_EXPLICITA) {
-
-                textoDescripcion = new JLabel("Tu canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + 
-                            "\" ha sido validada con contenido explícito.");
+                textoDescripcion1.setText("Tu canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + "\"");
+                textoDescripcion2.setText("ha sido validada con contenido explícito.");
+            } else if (n.getTipoNotificacion() == TipoNotificacion.CANCION_BLOQUEADA_TEMPORAL) {
+                textoDescripcion1.setText("Tu canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + "\"");
+                textoDescripcion2.setText("ha sido bloqueada temporalmente.");
+            } else if (n.getTipoNotificacion() == TipoNotificacion.CANCION_DESBLOQUEADA) {
+                textoDescripcion1.setText("Tu canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + "\"");
+                textoDescripcion2.setText("ha sido desbloqueada.");
+            } else if (n.getTipoNotificacion() == TipoNotificacion.CANCION_ELIMINADA) {
+                textoDescripcion1.setText("Tu canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + "\"");
+                textoDescripcion2.setText("ha sido eliminada.");
+            } else if (n.getTipoNotificacion() == TipoNotificacion.CANCION_RECHAZADA) {
+                textoDescripcion1.setText("Tu canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + "\"");
+                textoDescripcion2.setText("ha sido rechazada, actualízala en \"Mis canciones\".");
+            } else if (n.getTipoNotificacion() == TipoNotificacion.CANCION_SEGUIDO) {
+                textoDescripcion1.setText("El autor al que sigues \"" + ((NotificacionCancion) n).getCancion().getAutor().getNombre() + "\"");
+                textoDescripcion2.setText("ha subido la canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + "\".");
             } else if (n.getTipoNotificacion() == TipoNotificacion.PREMIUM_CADUCADO) {
-
-                textoDescripcion = new JLabel("Tu pase premium ha caducado.");
+                textoDescripcion1.setText("Tu pase premium ha caducado.");
+                textoDescripcion2.setText("Si no ha sido renovado puedes obtenerlo pagando la cuota.");
             } else if (n.getTipoNotificacion() == TipoNotificacion.PREMIUM_GRATUITO) {
-
-                textoDescripcion = new JLabel("Tu cuenta ha obtenido premium de manera gratuita.");
+                textoDescripcion1.setText("Has recibido el servicio premium de manera gratuita.");
+                textoDescripcion2.setText("¡Te felicitamos por el éxito de tus canciones!");
             } else if (n.getTipoNotificacion() == TipoNotificacion.REPORTE_ACEPTADO) {
-
-                textoDescripcion = new JLabel("Uno de tus reportes a una canción ha sido aceptado.");
+                textoDescripcion1.setText("La canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + "\"");
+                textoDescripcion2.setText("que reportaste ha sido bloqueada.");
             } else {
-                
-                textoDescripcion = new JLabel("Error en el tipo de la notificación.");
-
                 throw new RuntimeException("Error en el tipo de la notificación.");
             }
-
-            textoDescripcion.setBounds(35, 15+100*i+20, 800, 40);
-            textoDescripcion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
-            textoDescripcion.setForeground(Estilo.colorTexto);
-            textoDescripcion.setHorizontalAlignment(JLabel.LEFT);
-            vistaNotificaciones.scrollPanel.add(textoDescripcion);
+		
+            botonEliminar.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Eliminar notificación
+                }
+            });
 
             i++;
         }

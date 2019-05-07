@@ -9,7 +9,7 @@ import fresh.interfaz.swing.*;
 import fresh.interfaz.vistas.VistaAnadirALista;
 import fresh.interfaz.vistas.VistaResultadoAlbumes;
 import fresh.interfaz.vistas.VistaMenu;
-import fresh.interfaz.vistas.VistaAnonimo;
+import fresh.interfaz.vistas.VistaMenuAnonimo;
 import fresh.interfaz.vistas.VistaMenuAdministrador;
 
 import java.awt.Color;
@@ -127,8 +127,8 @@ public class ControladorResultadoAlbumes {
                 botonReproducir.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        ((VistaAnonimo) vistaMenu).botonReproducir.setVisible(false);
-                        ((VistaAnonimo) vistaMenu).botonParar.setVisible(true);
+                        ((VistaMenuAnonimo) vistaMenu).botonReproducir.setVisible(false);
+                        ((VistaMenuAnonimo) vistaMenu).botonParar.setVisible(true);
                         sistema.reproducir(a);
                     }
                 });

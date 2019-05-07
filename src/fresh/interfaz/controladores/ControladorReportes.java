@@ -36,19 +36,31 @@ public class ControladorReportes {
 
         int i = 0;
         for (Reporte r : reportes) {
-            JLabel textoCancionReportada = new JLabel("Cancion reportada: " + r.getCancionReportada().getNombre() + " de " + r.getCancionReportada().getAutor().getNombre());
-            textoCancionReportada.setBounds(250, 35+i, 500, 40);
+            JLabel textoCancionReportada = new JLabel("\"" + r.getCancionReportada().getNombre() + "\" de \"" + r.getCancionReportada().getAutor().getNombre() + "\"");
+            textoCancionReportada.setBounds(285, 35+i, 565, 40);
             textoCancionReportada.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoCancionReportada.setForeground(Estilo.colorTexto);
-            textoCancionReportada.setHorizontalAlignment(JLabel.RIGHT);
+            textoCancionReportada.setHorizontalAlignment(JLabel.LEFT);
             vistaReportes.scrollPanel.add(textoCancionReportada);
 
-            JLabel textoDescripcion = new JLabel("\"" + r.getDescripcion() + "\"");
-            textoDescripcion.setBounds(35, 80+i, Estilo.anchura-360, 100);
+            JLabel textoDescripcion = new JLabel(r.getDescripcion());
+            textoDescripcion.setBounds(35, 35+i+35, Estilo.anchura-360, 100);
             textoDescripcion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoDescripcion.setForeground(Estilo.colorTexto);
             textoDescripcion.setHorizontalAlignment(JLabel.LEFT);
             vistaReportes.scrollPanel.add(textoDescripcion);
+
+            JCustomButton botonReproducir = new JCustomButton("▶");
+            botonReproducir.setBounds(25, 15+i, 75, 75);
+            botonReproducir.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
+            botonReproducir.setForeground(Estilo.colorTexto);
+            botonReproducir.setBackground(new Color(240, 240, 100));
+            botonReproducir.setPressedBackgound(new Color(220, 220, 95).brighter());
+            botonReproducir.setCornerRadius(80);
+            botonReproducir.setHeight(5);       
+            botonReproducir.setShadowSize(5);
+            botonReproducir.setShadowOpacity(0.4f);
+            vistaReportes.scrollPanel.add(botonReproducir);
 
             JCustomButton botonAceptarReporte = new JCustomButton("✅");
             botonAceptarReporte.setBounds(110, 15+i, 75, 75);
@@ -73,18 +85,6 @@ public class ControladorReportes {
             botonRechazarReporte.setShadowSize(5);
             botonRechazarReporte.setShadowOpacity(0.4f);
             vistaReportes.scrollPanel.add(botonRechazarReporte);
-
-            JCustomButton botonReproducir = new JCustomButton("▶");
-            botonReproducir.setBounds(25, 15+i, 75, 75);
-            botonReproducir.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
-            botonReproducir.setForeground(Estilo.colorTexto);
-            botonReproducir.setBackground(new Color(240, 240, 100));
-            botonReproducir.setPressedBackgound(new Color(220, 220, 95).brighter());
-            botonReproducir.setCornerRadius(80);
-            botonReproducir.setHeight(5);       
-            botonReproducir.setShadowSize(5);
-            botonReproducir.setShadowOpacity(0.4f);
-            vistaReportes.scrollPanel.add(botonReproducir);
 
             botonReproducir.addActionListener(new ActionListener() {
                 @Override

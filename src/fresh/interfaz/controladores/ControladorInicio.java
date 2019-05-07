@@ -102,7 +102,7 @@ public class ControladorInicio {
                 } else {
                     vistaVentana.remove(vistaInicio);
                     @SuppressWarnings("unused")
-                    ControladorAnonimo controladorAnonimo = new ControladorAnonimo(sistema, vistaVentana);
+                    ControladorMenuAnonimo controladorMenuAnonimo = new ControladorMenuAnonimo(sistema, vistaVentana);
                 }
             }
         });

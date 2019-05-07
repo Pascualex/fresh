@@ -25,7 +25,6 @@ public class ControladorMenuAdministrador {
                 }
 
                 if (vistaMenuAdministrador.seleccionModoBusqueda.getSelectedIndex() == 0) {
-                    System.out.println("Canciones");
                     // Canciones
                     VistaResultadoCanciones vistaResultadoCanciones = new VistaResultadoCanciones(entrada);
                     vistaMenuAdministrador.panelActual = vistaResultadoCanciones;

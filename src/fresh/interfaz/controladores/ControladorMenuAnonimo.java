@@ -7,100 +7,100 @@ import fresh.interfaz.vistas.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ControladorAnonimo {
-	public ControladorAnonimo (Sistema sistema, VistaVentana vistaVentana) {
-		VistaAnonimo vistaAnonimo = new VistaAnonimo();
-        vistaVentana.add(vistaAnonimo);
+public class ControladorMenuAnonimo {
+	public ControladorMenuAnonimo (Sistema sistema, VistaVentana vistaVentana) {
+		VistaMenuAnonimo vistaMenuAnonimo = new VistaMenuAnonimo();
+        vistaVentana.add(vistaMenuAnonimo);
         
-        vistaAnonimo.botonBuscar.addActionListener(new ActionListener() {
+        vistaMenuAnonimo.botonBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String entrada = vistaAnonimo.entradaBusqueda.getText();
+                String entrada = vistaMenuAnonimo.entradaBusqueda.getText();
                 if (entrada.length() == 0) return;
 
-                if (vistaAnonimo.panelActual != null) {
-                    vistaAnonimo.remove(vistaAnonimo.panelActual);
-                    vistaAnonimo.panelActual = null;
+                if (vistaMenuAnonimo.panelActual != null) {
+                    vistaMenuAnonimo.remove(vistaMenuAnonimo.panelActual);
+                    vistaMenuAnonimo.panelActual = null;
                 }
 
-                if (vistaAnonimo.seleccionModoBusqueda.getSelectedIndex() == 0) {
+                if (vistaMenuAnonimo.seleccionModoBusqueda.getSelectedIndex() == 0) {
                     //Canciones
                     VistaResultadoCanciones vistaResultadoCanciones = new VistaResultadoCanciones(entrada);
-                    vistaAnonimo.panelActual = vistaResultadoCanciones;
-                    vistaAnonimo.add(vistaResultadoCanciones);
+                    vistaMenuAnonimo.panelActual = vistaResultadoCanciones;
+                    vistaMenuAnonimo.add(vistaResultadoCanciones);
 
                     @SuppressWarnings("unused")
-                    ControladorResultadoCancionesNoPlaylist controladorResultadoCancionesNoPlaylist = new ControladorResultadoCancionesNoPlaylist(sistema, vistaResultadoCanciones, vistaAnonimo, entrada);
+                    ControladorResultadoCancionesNoPlaylist controladorResultadoCancionesNoPlaylist = new ControladorResultadoCancionesNoPlaylist(sistema, vistaResultadoCanciones, vistaMenuAnonimo, entrada);
                 
                     vistaResultadoCanciones.setVisible(true);
-                } else if (vistaAnonimo.seleccionModoBusqueda.getSelectedIndex() == 1) {
+                } else if (vistaMenuAnonimo.seleccionModoBusqueda.getSelectedIndex() == 1) {
                     //Álbumes
                     VistaResultadoAlbumes vistaResultadoAlbumes = new VistaResultadoAlbumes(entrada);
-                    vistaAnonimo.panelActual = vistaResultadoAlbumes;
-                    vistaAnonimo.add(vistaResultadoAlbumes);
+                    vistaMenuAnonimo.panelActual = vistaResultadoAlbumes;
+                    vistaMenuAnonimo.add(vistaResultadoAlbumes);
 
                     @SuppressWarnings("unused")
-                    ControladorResultadoAlbumes controladorResultadoAlbumes = new ControladorResultadoAlbumes(sistema, vistaResultadoAlbumes, vistaAnonimo, entrada);
+                    ControladorResultadoAlbumes controladorResultadoAlbumes = new ControladorResultadoAlbumes(sistema, vistaResultadoAlbumes, vistaMenuAnonimo, entrada);
                 
                     vistaResultadoAlbumes.setVisible(true);
                 } else {
                     //Autores
                 }
 
-                vistaAnonimo.repaint();
+                vistaMenuAnonimo.repaint();
             }
         });
         
-        vistaAnonimo.botonRegistrarse.addActionListener(new ActionListener() {
+        vistaMenuAnonimo.botonRegistrarse.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Status status = sistema.cerrarSesion();
                 if (status == Status.OK) {
-                    vistaVentana.remove(vistaAnonimo);
+                    vistaVentana.remove(vistaMenuAnonimo);
                     @SuppressWarnings("unused")
                     ControladorRegistro controladorRegistro= new ControladorRegistro(sistema, vistaVentana);
                 }
             }
         });
         
-        vistaAnonimo.botonCerrarSesion.addActionListener(new ActionListener() {
+        vistaMenuAnonimo.botonCerrarSesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Status status = sistema.cerrarSesion();
                 if (status == Status.OK) {
-                    vistaVentana.remove(vistaAnonimo);
+                    vistaVentana.remove(vistaMenuAnonimo);
                     @SuppressWarnings("unused")
                     ControladorInicio controladorInicio = new ControladorInicio(sistema, vistaVentana);
                 }
             }
         });
         
-        vistaAnonimo.botonAnterior.addActionListener(new ActionListener() {
+        vistaMenuAnonimo.botonAnterior.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sistema.retrocederCancion();
             }
         });
 
-        vistaAnonimo.botonReproducir.addActionListener(new ActionListener() {
+        vistaMenuAnonimo.botonReproducir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sistema.reanudarCancion();
-                vistaAnonimo.botonReproducir.setVisible(false);
-                vistaAnonimo.botonParar.setVisible(true);
+                vistaMenuAnonimo.botonReproducir.setVisible(false);
+                vistaMenuAnonimo.botonParar.setVisible(true);
             }
         });
 
-        vistaAnonimo.botonParar.addActionListener(new ActionListener() {
+        vistaMenuAnonimo.botonParar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sistema.pausarCancion();
-                vistaAnonimo.botonParar.setVisible(false);
-                vistaAnonimo.botonReproducir.setVisible(true);
+                vistaMenuAnonimo.botonParar.setVisible(false);
+                vistaMenuAnonimo.botonReproducir.setVisible(true);
             }
         });
 
-        vistaAnonimo.botonSiguiente.addActionListener(new ActionListener() {
+        vistaMenuAnonimo.botonSiguiente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sistema.avanzarCancion();

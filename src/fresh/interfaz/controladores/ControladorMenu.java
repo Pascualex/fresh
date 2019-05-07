@@ -2,14 +2,10 @@ package fresh.interfaz.controladores;
 
 import fresh.Status;
 import fresh.sistema.Sistema;
-import fresh.interfaz.Estilo;
 import fresh.interfaz.vistas.*;
 
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JLabel;
 
 public class ControladorMenu {
 
@@ -17,24 +13,17 @@ public class ControladorMenu {
         VistaMenu vistaMenu = new VistaMenu();
         vistaVentana.add(vistaMenu);
         
-        JLabel textoAutor = new JLabel(sistema.getUsuarioActual().getNombre());
-        textoAutor.setBounds(20, 550, 220, 80);
-        textoAutor.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 17));
-        textoAutor.setForeground(Estilo.colorTexto);
-        textoAutor.setHorizontalAlignment(JLabel.CENTER);
-        vistaMenu.panelLateral.add(textoAutor);
+        vistaMenu.textoNombreUsuario.setText(sistema.getUsuarioActual().getNombre());
         
-        boolean usuarioPremium = sistema.getUsuarioActual().getPremium();
-        
-        if (usuarioPremium) {
-        	vistaMenu.textoRegistradoUsuario.setVisible(false);
-        	vistaMenu.textoPremiumUsuario.setVisible(true);
+        if (sistema.getUsuarioActual().getPremium()) {
+        	vistaMenu.textoPremiumUsuario.setText("Usuario premium");
         	vistaMenu.botonPagarPremium.setVisible(false);
-        }else {
-        	vistaMenu.textoRegistradoUsuario.setVisible(true);
-        	vistaMenu.textoPremiumUsuario.setVisible(false);
+        } else {
+        	vistaMenu.textoPremiumUsuario.setText("Usuario no premium");
         	vistaMenu.botonPagarPremium.setVisible(true);
         }
+
+        vistaMenu.repaint();
         
         vistaMenu.seleccionModoBusqueda.addActionListener(new ActionListener() {
             @Override

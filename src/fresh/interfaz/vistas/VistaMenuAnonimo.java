@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.Font;
 import java.awt.Color;
 
-public class VistaAnonimo extends JPanel{
+public class VistaMenuAnonimo extends JPanel{
 	private static final long serialVersionUID = 0;
 	
 	public JPanel panelSuperior;
@@ -23,6 +23,7 @@ public class VistaAnonimo extends JPanel{
     public JCustomButton botonMisCanciones;
     public JCustomButton botonNotificaciones;
 	public JCustomButton botonRegistrarse;
+    public JLabel textoAnonimo;
 	public JCustomButton botonCerrarSesion;
 
     public JPanel panelActual;
@@ -33,7 +34,7 @@ public class VistaAnonimo extends JPanel{
     public JCustomButton botonAnterior;
     public JCustomButton botonSiguiente;
     
-    public VistaAnonimo() {
+    public VistaMenuAnonimo() {
         // Crea y configura el panel principal
         setBounds(0, 0, Estilo.anchura, Estilo.altura);
         setOpaque(false);
@@ -99,17 +100,24 @@ public class VistaAnonimo extends JPanel{
         textoNombreAplicacion.setHorizontalAlignment(JLabel.CENTER);
         panelLateral.add(textoNombreAplicacion);
         
-        botonRegistrarse = new JCustomButton("Registrate");
+        botonRegistrarse = new JCustomButton("Regístrate");
         botonRegistrarse.setBounds(20, 120, 220, 80);
         botonRegistrarse.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
         botonRegistrarse.setForeground(Estilo.colorTexto);
-        botonRegistrarse.setBackground(new Color(245, 100, 100));
-        botonRegistrarse.setPressedBackgound(new Color(220, 50, 50).brighter());
+        botonRegistrarse.setBackground(new Color(240, 240, 100));
+        botonRegistrarse.setPressedBackgound(new Color(220, 220, 95).brighter());
         botonRegistrarse.setCornerRadius(40);
         botonRegistrarse.setHeight(5);       
         botonRegistrarse.setShadowSize(5);
         botonRegistrarse.setShadowOpacity(0.4f);
         panelLateral.add(botonRegistrarse);
+        
+        textoAnonimo = new JLabel("Usuario anónimo");
+        textoAnonimo.setBounds(20, 645, 220, 80);
+        textoAnonimo.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
+        textoAnonimo.setForeground(Estilo.colorTexto);
+        textoAnonimo.setHorizontalAlignment(JLabel.CENTER);
+        panelLateral.add(textoAnonimo);
         
         botonCerrarSesion = new JCustomButton("Cerrar sesión");
         botonCerrarSesion.setBounds(20, 705, 220, 80);

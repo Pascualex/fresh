@@ -30,11 +30,11 @@ public class ControladorPagarPremium {
                 	vistaPagarPremium.panelMensaje.repaint();
                 	
                 	sistema.getUsuarioActual().setPremium(true);
-                	vistaMenu.textoRegistradoUsuario.setVisible(false);
+                	vistaMenu.textoPremiumUsuario.setText("Usuario premium");
                 	vistaMenu.botonPagarPremium.setVisible(false);
-                	vistaMenu.textoPremiumUsuario.setVisible(true);
-                	vistaMenu.repaint();
-                	
+					vistaMenu.textoPremiumUsuario.setVisible(true);
+					
+                	vistaMenu.repaint();                	
                 } else if (status == Status.OPERACION_INACCESIBLE) {
                 	vistaPagarPremium.textoOperacionInvalida.setVisible(true);
                 	vistaPagarPremium.panelMensaje.setVisible(true);

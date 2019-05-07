@@ -119,7 +119,7 @@ public class ControladorResultadoCanciones {
                 public void actionPerformed(ActionEvent e) {
                     VistaReportar vistaReportar = new VistaReportar();
                     vistaResultadoCanciones.add(vistaReportar);
-                    cargarReporte(sistema, vistaResultadoCanciones, vistaReportar, c);
+                    cargarReporte(sistema, vistaResultadoCanciones, vistaReportar, c, vistaMenu, canciones);
                 }
             });
 
@@ -193,14 +193,27 @@ public class ControladorResultadoCanciones {
         vistaAnadirALista.repaint();
     }
 
-    private void cargarReporte(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, VistaReportar vistaReportar, Cancion c) {        
-
+    private void cargarReporte(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, VistaReportar vistaReportar, Cancion c, VistaMenu vistaMenu, List<Cancion> canciones) {        
         vistaReportar.textoReportar.setText("Reportando " + c.getNombre() + " de " + c.getAutor().getNombre());
 
         vistaReportar.botonReportar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sistema.reportar(vistaReportar.entradaDescripcion.getText(), c);
+                vistaResultadoCanciones.remove(vistaReportar);
+
+                cargarCanciones(sistema, vistaResultadoCanciones, vistaMenu, canciones);
+                    
+                vistaResultadoCanciones.separador.setVisible(true);
+                vistaResultadoCanciones.scrollFrame.setVisible(true);
+
+                vistaResultadoCanciones.repaint();
+            }
+        });
+
+        vistaReportar.botonCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 vistaResultadoCanciones.remove(vistaReportar);
                     
                 vistaResultadoCanciones.separador.setVisible(true);

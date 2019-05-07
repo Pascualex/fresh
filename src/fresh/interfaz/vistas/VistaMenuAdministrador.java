@@ -22,6 +22,7 @@ public class VistaMenuAdministrador extends JPanel {
     public JCustomButton botonReportes;
     public JCustomButton botonNuevasCanciones;
     public JCustomButton botonConfiguracion;
+    public JLabel textoAdministrador;
     public JCustomButton botonCerrarSesion;
 
     public JPanel panelActual;
@@ -134,6 +135,13 @@ public class VistaMenuAdministrador extends JPanel {
         botonConfiguracion.setShadowSize(5);
         botonConfiguracion.setShadowOpacity(0.4f);
         panelLateral.add(botonConfiguracion);
+        
+        textoAdministrador = new JLabel("Administrador");
+        textoAdministrador.setBounds(20, 645, 220, 80);
+        textoAdministrador.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
+        textoAdministrador.setForeground(Estilo.colorTexto);
+        textoAdministrador.setHorizontalAlignment(JLabel.CENTER);
+        panelLateral.add(textoAdministrador);
 
         botonCerrarSesion = new JCustomButton("Cerrar sesión");
         botonCerrarSesion.setBounds(20, 705, 220, 80);
