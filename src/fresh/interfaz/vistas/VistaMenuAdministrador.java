@@ -59,7 +59,7 @@ public class VistaMenuAdministrador extends JPanel {
         entradaBusqueda.setShadowOpacity(0.2f);
         panelSuperior.add(entradaBusqueda);
 
-        String[] opciones = {"Canciones", "Álbumes", "Autores"};
+        String[] opciones = {"Canciones", "Álbumes"};
         seleccionModoBusqueda = new JCustomComboBox(opciones);
         seleccionModoBusqueda.setBounds(470, 30, 180, 80);
         seleccionModoBusqueda.setMainFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
