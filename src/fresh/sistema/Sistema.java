@@ -331,7 +331,10 @@ public class Sistema {
         if (!ModuloMP3.validar(fichero)) return Status.MP3_INVALIDO;
 
         fichero.renameTo(new File(rutaFicherosMP3 + cancion.getId()));
+
         cancion.setEstado(EstadoCancion.PENDIENTE_VALIDACION);
+        gestorEventos.cancelarEliminacionCancion(cancion);
+        baseDeDatos.anadirNuevaCancion(cancion);
 
         return Status.OK;
     }

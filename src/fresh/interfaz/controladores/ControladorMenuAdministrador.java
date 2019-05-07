@@ -74,6 +74,27 @@ public class ControladorMenuAdministrador {
             }
         });
 
+        vistaMenuAdministrador.botonNuevasCanciones.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (vistaMenuAdministrador.panelActual != null) {
+                    vistaMenuAdministrador.remove(vistaMenuAdministrador.panelActual);                    
+                    vistaMenuAdministrador.panelActual = null;
+                }
+                
+                VistaNuevasCanciones vistaNuevasCanciones = new VistaNuevasCanciones();
+                vistaMenuAdministrador.panelActual = vistaNuevasCanciones;
+                vistaMenuAdministrador.add(vistaNuevasCanciones);
+
+                @SuppressWarnings("unused")
+                ControladorNuevasCanciones controladorNuevasCanciones = new ControladorNuevasCanciones(sistema, vistaNuevasCanciones, vistaMenuAdministrador);
+
+                vistaNuevasCanciones.setVisible(true);
+
+                vistaMenuAdministrador.repaint();
+            }
+        });
+
         vistaMenuAdministrador.botonCerrarSesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

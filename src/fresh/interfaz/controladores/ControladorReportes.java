@@ -11,7 +11,6 @@ import java.util.List;
 
 import javax.swing.JLabel;
 
-import fresh.datos.tipos.EstadoCancion;
 import fresh.datos.tipos.Reporte;
 import fresh.interfaz.Estilo;
 import fresh.interfaz.swing.*;
@@ -90,9 +89,7 @@ public class ControladorReportes {
             botonReproducir.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    r.getCancionReportada().setEstado(EstadoCancion.VALIDADA);
                     sistema.reproducir(r.getCancionReportada());
-                    r.getCancionReportada().setEstado(EstadoCancion.BLOQUEADA_TEMPORAL);
                 }
             });
 
