@@ -1,11 +1,13 @@
 package fresh.interfaz.controladores;
 
+import fresh.sistema.ModoEjecucion;
 import fresh.sistema.Sistema;
 import fresh.datos.tipos.Cancion;
 import fresh.interfaz.Estilo;
 import fresh.interfaz.swing.*;
 import fresh.interfaz.vistas.VistaResultadoCanciones;
 
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -17,7 +19,7 @@ import javax.swing.JLabel;
 
 public class ControladorResultadoCancionesNoPlaylist {
 
-    public ControladorResultadoCancionesNoPlaylist(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, String entrada) {
+    public ControladorResultadoCancionesNoPlaylist(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, JPanel vistaMenu, String entrada) {
         List<Cancion> canciones = sistema.buscarCanciones(entrada);
         
         if (canciones.size() == 0) {
@@ -25,10 +27,10 @@ public class ControladorResultadoCancionesNoPlaylist {
             vistaResultadoCanciones.textoSinResultados.setVisible(true);
         }
 
-        cargarCanciones(sistema, vistaResultadoCanciones, canciones);
+        cargarCanciones(sistema, vistaResultadoCanciones, vistaMenu, canciones);
     }
 
-    private void cargarCanciones(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, List<Cancion> canciones) {
+    private void cargarCanciones(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, JPanel vistaMenu, List<Cancion> canciones) {
         vistaResultadoCanciones.scrollPanel.setPreferredSize(new Dimension(0, 15+canciones.size()*100));
         vistaResultadoCanciones.scrollFrame.revalidate();
         vistaResultadoCanciones.scrollFrame.repaint();
@@ -68,12 +70,23 @@ public class ControladorResultadoCancionesNoPlaylist {
             botonReproducir.setShadowOpacity(0.4f);
             vistaResultadoCanciones.scrollPanel.add(botonReproducir);
 
-            botonReproducir.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    sistema.reproducir(c);
-                }
-            });
+            if (sistema.getModoEjecucion() == ModoEjecucion.ANONIMO) {
+                botonReproducir.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        sistema.reproducir(c);
+                        vistaMenu.remove(vistaResultadoCanciones);
+                        vistaMenu.repaint();
+                    }
+                });
+            } else {
+                botonReproducir.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        sistema.reproducir(c);
+                    }
+                });
+            }
 
             i++;
         }

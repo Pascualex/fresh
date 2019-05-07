@@ -763,6 +763,14 @@ public class Sistema {
     }
 
     /**
+     * Devuelve el modo de ejecución del sistema
+     * @return Modo de ejecución del sistema
+     */
+    public ModoEjecucion getModoEjecucion() {
+        return modoEjecucion;
+    }
+
+    /**
      * Cierra el sistema, deteniendo los hilos paralelos de ejecución.
      */
     public void cerrarSistema() {

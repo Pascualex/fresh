@@ -32,7 +32,7 @@ public class ControladorMenuAdministrador {
                     vistaMenuAdministrador.add(vistaResultadoCanciones);
 
                     @SuppressWarnings("unused")
-                    ControladorResultadoCancionesNoPlaylist controladorResultadoCancionesNoPlaylist = new ControladorResultadoCancionesNoPlaylist(sistema, vistaResultadoCanciones, entrada);
+                    ControladorResultadoCancionesNoPlaylist controladorResultadoCancionesNoPlaylist = new ControladorResultadoCancionesNoPlaylist(sistema, vistaResultadoCanciones, vistaMenuAdministrador, entrada);
                 
                     vistaResultadoCanciones.setVisible(true);
                 } else if (vistaMenuAdministrador.seleccionModoBusqueda.getSelectedIndex() == 1) {
