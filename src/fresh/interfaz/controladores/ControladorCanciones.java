@@ -54,18 +54,32 @@ public class ControladorCanciones {
             vistaCanciones.scrollPanel.add(textoDuracion);
 
             JLabel textoNombreCancion = new JLabel(c.getNombre());
-            textoNombreCancion.setBounds(210, 15+100*i, 590, 40);
+            textoNombreCancion.setBounds(210, 15+100*i, 440, 40);
             textoNombreCancion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoNombreCancion.setForeground(Estilo.colorTexto);
             textoNombreCancion.setHorizontalAlignment(JLabel.LEFT);
             vistaCanciones.scrollPanel.add(textoNombreCancion);
 
             JLabel textoEstadoCancion = new JLabel(c.getEstado().aTexto());
-            textoEstadoCancion.setBounds(210, 15+100*i+35, 590, 40);
+            textoEstadoCancion.setBounds(210, 15+100*i+35, 440, 40);
             textoEstadoCancion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
             textoEstadoCancion.setForeground(Estilo.colorTexto);
             textoEstadoCancion.setHorizontalAlignment(JLabel.LEFT);
             vistaCanciones.scrollPanel.add(textoEstadoCancion);
+
+            JLabel textoNumeroReproducciones = new JLabel(String.valueOf(c.getReproduccionesMensuales()));
+            textoNumeroReproducciones.setBounds(700, 15+100*i, 125, 40);
+            textoNumeroReproducciones.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            textoNumeroReproducciones.setForeground(Estilo.colorTexto);
+            textoNumeroReproducciones.setHorizontalAlignment(JLabel.LEFT);
+            vistaCanciones.scrollPanel.add(textoNumeroReproducciones);
+
+            JLabel textoReproducciones = new JLabel("reproducciones");
+            textoReproducciones.setBounds(650, 15+100*i+35, 125, 40);
+            textoReproducciones.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 15));
+            textoReproducciones.setForeground(Estilo.colorTexto);
+            textoReproducciones.setHorizontalAlignment(JLabel.LEFT);
+            vistaCanciones.scrollPanel.add(textoReproducciones);
 
             if (c.getBloqueado() && c.getEstado() != EstadoCancion.RECHAZADA_REVISABLE) {
                 i++;
