@@ -26,7 +26,7 @@ public class ControladorMenuAdministrador {
 
                 if (vistaMenuAdministrador.seleccionModoBusqueda.getSelectedIndex() == 0) {
                     System.out.println("Canciones");
-                    //Canciones
+                    // Canciones
                     VistaResultadoCanciones vistaResultadoCanciones = new VistaResultadoCanciones(entrada);
                     vistaMenuAdministrador.panelActual = vistaResultadoCanciones;
                     vistaMenuAdministrador.add(vistaResultadoCanciones);
@@ -36,7 +36,7 @@ public class ControladorMenuAdministrador {
                 
                     vistaResultadoCanciones.setVisible(true);
                 } else if (vistaMenuAdministrador.seleccionModoBusqueda.getSelectedIndex() == 1) {
-                    //Álbumes
+                    // Álbumes
                     VistaResultadoAlbumes vistaResultadoAlbumes = new VistaResultadoAlbumes(entrada);
                     vistaMenuAdministrador.panelActual = vistaResultadoAlbumes;
                     vistaMenuAdministrador.add(vistaResultadoAlbumes);
@@ -46,7 +46,15 @@ public class ControladorMenuAdministrador {
                 
                     vistaResultadoAlbumes.setVisible(true);
                 } else {
-                    //Autores
+                    // Autores
+                    VistaResultadoAutores vistaResultadoAutores = new VistaResultadoAutores(entrada);
+                    vistaMenuAdministrador.panelActual = vistaResultadoAutores;
+                    vistaMenuAdministrador.add(vistaResultadoAutores);
+
+                    @SuppressWarnings("unused")
+                    ControladorResultadoAutores controladorResultadoAutores = new ControladorResultadoAutores(sistema, vistaResultadoAutores, entrada);
+                
+                    vistaResultadoAutores.setVisible(true);
                 }
 
                 vistaMenuAdministrador.repaint();
@@ -90,6 +98,27 @@ public class ControladorMenuAdministrador {
                 ControladorNuevasCanciones controladorNuevasCanciones = new ControladorNuevasCanciones(sistema, vistaNuevasCanciones, vistaMenuAdministrador);
 
                 vistaNuevasCanciones.setVisible(true);
+
+                vistaMenuAdministrador.repaint();
+            }
+        });
+
+        vistaMenuAdministrador.botonConfiguracion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (vistaMenuAdministrador.panelActual != null) {
+                    vistaMenuAdministrador.remove(vistaMenuAdministrador.panelActual);                    
+                    vistaMenuAdministrador.panelActual = null;
+                }
+                
+                VistaConfiguracion vistaConfiguracion = new VistaConfiguracion();
+                vistaMenuAdministrador.panelActual = vistaConfiguracion;
+                vistaMenuAdministrador.add(vistaConfiguracion);
+
+                @SuppressWarnings("unused")
+                ControladorConfiguracion controladorConfiguracion = new ControladorConfiguracion(sistema, vistaConfiguracion);
+
+                vistaConfiguracion.setVisible(true);
 
                 vistaMenuAdministrador.repaint();
             }

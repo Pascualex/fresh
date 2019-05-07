@@ -637,23 +637,52 @@ public class Sistema {
     }
 
     /**
-     * Modifica el archivo de configuración, estableciendo unos nuevos
-     * credenciales para iniciar sesión como administrador.
+     * Modifica el archivo de configuración, estableciendo un nuevo nombre de
+     * administrador.
      * @param nombre Nuevo nombre del administrador
-     * @param contrasena Nueva contraseña del administrador
      * @return "OPERACION_INACCESIBLE" si la sesión no es de administrador.
-     * "NOMBRE_INVALIDO" si este no tiene el número mínimo de caracteres.
-     * "CONTRASENA_INVALIDA" si esta no tiene el número mínimo de caracteres.
      * "OK" si no se da ninguna de las anteriores.
      */
-    public Status modificarCredencialesAdministrador(String nombre, String contrasena) {
+    public Status modificarNombreAdministrador(String nombre) {
         if (modoEjecucion != ModoEjecucion.ADMINISTRADOR) return Status.OPERACION_INACCESIBLE;
 
-        if (nombre.length() < configuracion.getCaracteresMinimos()) return Status.NOMBRE_INVALIDO;
-        if (contrasena.length() < configuracion.getCaracteresMinimos()) return Status.CONTRASENA_INVALIDA;
-
         configuracion.setNombreAdministrador(nombre);
+        configuracion.guardarConfiguracion();
+
+        return Status.OK;
+    }
+
+    /**
+     * Modifica el archivo de configuración, estableciendo una nueva contraseña
+     * de administrador.
+     * @param contrasena Nueva contraseña del administrador
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de administrador.
+     * "OK" si no se da ninguna de las anteriores.
+     */
+    public Status modificarContrasenaAdministrador(String contrasena) {
+        if (modoEjecucion != ModoEjecucion.ADMINISTRADOR) return Status.OPERACION_INACCESIBLE;
+
         configuracion.setContrasenaAdministrador(contrasena);
+        configuracion.guardarConfiguracion();
+
+        return Status.OK;
+    }
+    
+    /**
+     * Modifica el archivo de configuración, estableciendo una nueva edad
+     * mínima para poder registrarse
+     * @param edadMinima Nueva edad mínima para poder registrarse
+     * @return "OPERACION_INACCESIBLE" si la sesión no es de administrador.
+     * "CONFIGURACION_INVALIDA" si el nuevo límite es menor o igual a 0.
+     * "OK" si no se da ninguna de las anteriores.
+     */
+    public Status modificarEdadMinima(int edadMinima) {
+        if (modoEjecucion != ModoEjecucion.ADMINISTRADOR) return Status.OPERACION_INACCESIBLE;
+
+        if (edadMinima <= 0) return Status.CONFIGURACION_INVALIDA;
+
+        configuracion.setEdadMinima(edadMinima);
+        configuracion.guardarConfiguracion();
 
         return Status.OK;
     }
@@ -752,6 +781,14 @@ public class Sistema {
         configuracion.guardarConfiguracion();
 
         return Status.OK;
+    }
+
+    /**
+     * Devuelve la configuración actual del sistema.
+     * @return Configuración actual del sistema.
+     */
+    public Configuracion obtenerConfiguracion() {
+        return configuracion;
     }
 
     /**
