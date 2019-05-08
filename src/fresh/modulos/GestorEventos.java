@@ -96,7 +96,13 @@ public class GestorEventos implements Runnable, Serializable {
                     baseDeDatos.eliminarPremiumUsuarios();
                     
                     for (Usuario usuario : baseDeDatos.obtenerUsuarios()) {
-                        if (usuario.getReproduccionesMensuales() >= configuracion.getMinReproduccionesPremium()) {
+                        
+                        int reproduccionesUsuario = 0;
+                        for (Cancion c : usuario.getCanciones()) {
+                            reproduccionesUsuario += c.getReproduccionesMensuales();
+                        }
+
+                        if (reproduccionesUsuario >= configuracion.getMinReproduccionesPremium()) {
                             usuario.setPremium(true);
                             usuario.anadirNotificacion(new Notificacion(TipoNotificacion.PREMIUM_GRATUITO));
                         }
