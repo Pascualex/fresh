@@ -85,13 +85,14 @@ public class GestorEventos implements Runnable, Serializable {
                 GregorianCalendar fecha_actual = new GregorianCalendar();
                 
                 if (fecha_actual.getTimeInMillis()-ultimoDiaComprobado.getTimeInMillis() < msDia) {
+                    if (Sistema.modoPrueba) break;
                     TimeUnit.SECONDS.sleep(5*60+(fecha_actual.getTimeInMillis()-msDia)/1000);
                     if (parar) break;
                 }
                 
                 fecha_actual = new GregorianCalendar();
                 
-                if (fecha_actual.get(GregorianCalendar.MONTH) != ultimoDiaComprobado.get(GregorianCalendar.MONTH)) {                        
+                if (fecha_actual.get(GregorianCalendar.MONTH) != ultimoDiaComprobado.get(GregorianCalendar.MONTH) || Sistema.modoPrueba) {                        
                     baseDeDatos.eliminarPremiumUsuarios();
                     
                     for (Usuario usuario : baseDeDatos.obtenerUsuarios()) {
@@ -105,7 +106,7 @@ public class GestorEventos implements Runnable, Serializable {
 
                 Set<ParCancionFecha> canciones = new HashSet<>();
                 for (ParCancionFecha par : cancionesAEliminar) {
-                    if (fecha_actual.getTimeInMillis()-par.fecha.getTimeInMillis() > 3*msDia) {
+                    if (fecha_actual.getTimeInMillis()-par.fecha.getTimeInMillis() > 3*msDia || Sistema.modoPrueba) {
                         baseDeDatos.eliminarCancion(par.cancion);
                         NotificacionCancion notificacion = new NotificacionCancion(TipoNotificacion.CANCION_ELIMINADA, par.cancion);
                         par.cancion.getAutor().anadirNotificacion(notificacion);
@@ -118,7 +119,7 @@ public class GestorEventos implements Runnable, Serializable {
 
                 Set<ParUsuarioFecha> usuarios = new HashSet<>();
                 for (ParUsuarioFecha par : usuariosADesbloquear) {
-                    if (fecha_actual.getTimeInMillis()-par.fecha.getTimeInMillis() > 30*msDia) {
+                    if (fecha_actual.getTimeInMillis()-par.fecha.getTimeInMillis() > 30*msDia || Sistema.modoPrueba) {
                         par.usuario.setBloqueado(false);
                         usuarios.add(par);
                     } else break;
