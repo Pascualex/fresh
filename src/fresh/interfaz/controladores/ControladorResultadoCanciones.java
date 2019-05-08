@@ -38,7 +38,6 @@ public class ControladorResultadoCanciones {
         
         vistaResultadoCanciones.scrollPanel.setPreferredSize(new Dimension(0, 15+canciones.size()*100));
         vistaResultadoCanciones.scrollFrame.revalidate();
-        vistaResultadoCanciones.scrollFrame.repaint();
 
         int i = 0;
         for (Cancion c : canciones) {
@@ -75,9 +74,9 @@ public class ControladorResultadoCanciones {
             botonReproducir.setShadowOpacity(0.4f);
             vistaResultadoCanciones.scrollPanel.add(botonReproducir);
 
-            JCustomButton botonAnadirPlaylist = new JCustomButton("+");
+            JCustomButton botonAnadirPlaylist = new JCustomButton("🞦");
             botonAnadirPlaylist.setBounds(110, 15+100*i, 75, 75);
-            botonAnadirPlaylist.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            botonAnadirPlaylist.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 25));
             botonAnadirPlaylist.setForeground(Estilo.colorTexto);
             botonAnadirPlaylist.setBackground(new Color(10, 200, 90));
             botonAnadirPlaylist.setPressedBackgound(new Color(10, 200, 90).brighter());
@@ -87,9 +86,9 @@ public class ControladorResultadoCanciones {
             botonAnadirPlaylist.setShadowOpacity(0.4f);
             vistaResultadoCanciones.scrollPanel.add(botonAnadirPlaylist);
 
-            JCustomButton botonReportar = new JCustomButton("⚠️");
+            JCustomButton botonReportar = new JCustomButton("⚠");
             botonReportar.setBounds(790, 15+100*i, 75, 75);
-            botonReportar.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 25));
+            botonReportar.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 30));
             botonReportar.setForeground(Estilo.colorTexto);
             botonReportar.setBackground(new Color(245, 100, 100));
             botonReportar.setPressedBackgound(new Color(220, 50, 50).brighter());
@@ -111,7 +110,7 @@ public class ControladorResultadoCanciones {
             botonAnadirPlaylist.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    VistaAnadirALista vistaAnadirALista = new VistaAnadirALista("la canción");
+                    VistaAnadirALista vistaAnadirALista = new VistaAnadirALista("esta canción");
                     vistaResultadoCanciones.add(vistaAnadirALista);
                     cargarPlaylists(sistema, vistaResultadoCanciones, vistaAnadirALista, c);
                 }
@@ -146,9 +145,9 @@ public class ControladorResultadoCanciones {
             nombrePlaylist.setHorizontalAlignment(JLabel.LEFT);
             vistaAnadirALista.scrollPanel.add(nombrePlaylist);
 
-            JCustomButton botonAnadir = new JCustomButton("+");
+            JCustomButton botonAnadir = new JCustomButton("🞦");
             botonAnadir.setBounds(25, 15+100*i, 75, 75);
-            botonAnadir.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            botonAnadir.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 25));
             botonAnadir.setForeground(Estilo.colorTexto);
             botonAnadir.setBackground(new Color(240, 240, 100));
             botonAnadir.setPressedBackgound(new Color(220, 220, 95).brighter());

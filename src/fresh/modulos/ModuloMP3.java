@@ -139,9 +139,11 @@ public class ModuloMP3 implements Runnable {
 
     /**
      * Avanza a la siguiente canción.
+     * @return "NO_PUEDE_REPRODUCIR" si no hay nada que reproducir.
+     * "OK" en caso contrario.
      */
-    public void avanzar() {
-        if (posicionActual >= canciones.size()-1) return;
+    public Status avanzar() {
+        if (posicionActual >= canciones.size()-1) return Status.NO_PUEDE_REPRODUCIR;
 
         reproduciendo = false;
         nuevaCancion = true;
@@ -149,13 +151,17 @@ public class ModuloMP3 implements Runnable {
         synchronized (posicionActual) {        
             posicionActual++;
         }
+
+        return Status.OK;
     }
 
     /**
      * Retrocede a la anterior canción.
+     * @return "NO_PUEDE_REPRODUCIR" si no hay nada que reproducir.
+     * "OK" en caso contrario.
      */
-    public void retroceder() {
-        if (posicionActual <= 0) return;
+    public Status retroceder() {
+        if (posicionActual <= 0) return Status.NO_PUEDE_REPRODUCIR;
 
         reproduciendo = false;
         nuevaCancion = true;
@@ -163,6 +169,8 @@ public class ModuloMP3 implements Runnable {
         synchronized (posicionActual) {        
             posicionActual--;
         }
+
+        return Status.OK;
     }
 
     /**

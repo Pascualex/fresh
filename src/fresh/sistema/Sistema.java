@@ -190,16 +190,20 @@ public class Sistema {
     
     /**
      * Avanza, si es posible, a la siguiente canción del reproductor.
+     * @return "NO_PUEDE_REPRODUCIR" si no hay nada que reproducir.
+     * "OK" en caso contrario.
      */
-    public void avanzarCancion() {
-        moduloMP3.avanzar();
+    public Status avanzarCancion() {
+        return moduloMP3.avanzar();
     }
 
     /**
      * Retrocede, si es posible, a la anterior canción del reproductor.
+     * @return "NO_PUEDE_REPRODUCIR" si no hay nada que reproducir.
+     * "OK" en caso contrario.
      */
-    public void retrocederCancion() {
-        moduloMP3.retroceder();
+    public Status retrocederCancion() {
+        return moduloMP3.retroceder();
     }
 
     /**

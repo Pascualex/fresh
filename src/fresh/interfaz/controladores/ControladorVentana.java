@@ -21,7 +21,7 @@ public class ControladorVentana {
     public ControladorVentana(Sistema sistema) {
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("noto-emoji-regular.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("open-sans-emoji.ttf")));
         } catch(IOException e) {
             System.out.println("No se ha encontrado el archivo de la fuente.");
         } catch(Exception e) {

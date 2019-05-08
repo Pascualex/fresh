@@ -60,7 +60,7 @@ public class VistaMenuAnonimo extends JPanel{
         entradaBusqueda.setShadowOpacity(0.2f);
         panelSuperior.add(entradaBusqueda);
         
-        String[] opciones = {"Canciones", "Álbumes"};
+        String[] opciones = {"Canciones", "Álbumes", "Autores"};
         seleccionModoBusqueda = new JCustomComboBox(opciones);
         seleccionModoBusqueda.setBounds(470, 30, 180, 80);
         seleccionModoBusqueda.setMainFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
@@ -142,7 +142,7 @@ public class VistaMenuAnonimo extends JPanel{
 
         botonAnterior = new JCustomButton("⏪");
         botonAnterior.setBounds((Estilo.anchura-260-100)/2-100, 20, 100, 80);
-        botonAnterior.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 35));
+        botonAnterior.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 35));
         botonAnterior.setForeground(Estilo.colorTexto);
         botonAnterior.setBackground(new Color(240, 240, 100));
         botonAnterior.setPressedBackgound(new Color(220, 220, 95).brighter());
@@ -154,7 +154,7 @@ public class VistaMenuAnonimo extends JPanel{
 
         botonReproducir = new JCustomButton("▶");
         botonReproducir.setBounds((Estilo.anchura-260-100)/2, 20, 100, 80);
-        botonReproducir.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 35));
+        botonReproducir.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 35));
         botonReproducir.setForeground(Estilo.colorTexto);
         botonReproducir.setBackground(new Color(240, 240, 100));
         botonReproducir.setPressedBackgound(new Color(220, 220, 95).brighter());
@@ -164,9 +164,9 @@ public class VistaMenuAnonimo extends JPanel{
         botonReproducir.setShadowOpacity(0.4f);
         panelInferior.add(botonReproducir);
 
-        botonParar = new JCustomButton("‖");
+        botonParar = new JCustomButton("⏸");
         botonParar.setBounds((Estilo.anchura-260-100)/2, 20, 100, 80);
-        botonParar.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 35));
+        botonParar.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 35));
         botonParar.setForeground(Estilo.colorTexto);
         botonParar.setBackground(new Color(240, 240, 100));
         botonParar.setPressedBackgound(new Color(220, 220, 95).brighter());
@@ -179,7 +179,7 @@ public class VistaMenuAnonimo extends JPanel{
 
         botonSiguiente = new JCustomButton("⏩");
         botonSiguiente.setBounds((Estilo.anchura-260-100)/2+100, 20, 100, 80);
-        botonSiguiente.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 35));
+        botonSiguiente.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 35));
         botonSiguiente.setForeground(Estilo.colorTexto);
         botonSiguiente.setBackground(new Color(240, 240, 100));
         botonSiguiente.setPressedBackgound(new Color(220, 220, 95).brighter());

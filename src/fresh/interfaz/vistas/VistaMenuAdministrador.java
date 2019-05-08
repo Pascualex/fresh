@@ -60,7 +60,7 @@ public class VistaMenuAdministrador extends JPanel {
         entradaBusqueda.setShadowOpacity(0.2f);
         panelSuperior.add(entradaBusqueda);
 
-        String[] opciones = {"Canciones", "Álbumes"};
+        String[] opciones = {"Canciones", "Álbumes", "Autores"};
         seleccionModoBusqueda = new JCustomComboBox(opciones);
         seleccionModoBusqueda.setBounds(470, 30, 180, 80);
         seleccionModoBusqueda.setMainFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
@@ -188,7 +188,7 @@ public class VistaMenuAdministrador extends JPanel {
         botonReproducir.setShadowOpacity(0.4f);
         panelInferior.add(botonReproducir);
 
-        botonParar = new JCustomButton("‖");
+        botonParar = new JCustomButton("⏸");
         botonParar.setBounds((Estilo.anchura-260-100)/2, 20, 100, 80);
         botonParar.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 35));
         botonParar.setForeground(Estilo.colorTexto);

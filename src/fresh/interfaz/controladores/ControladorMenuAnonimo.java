@@ -45,6 +45,14 @@ public class ControladorMenuAnonimo {
                     vistaResultadoAlbumes.setVisible(true);
                 } else {
                     //Autores
+                    VistaResultadoAutores vistaResultadoAutores = new VistaResultadoAutores(entrada);
+                    vistaMenuAnonimo.panelActual = vistaResultadoAutores;
+                    vistaMenuAnonimo.add(vistaResultadoAutores);
+
+                    @SuppressWarnings("unused")
+                    ControladorResultadoAutores controladorResultadoAutores = new ControladorResultadoAutores(sistema, vistaResultadoAutores, vistaMenuAnonimo, entrada);
+                
+                    vistaResultadoAutores.setVisible(true);
                 }
 
                 vistaMenuAnonimo.repaint();
@@ -82,10 +90,19 @@ public class ControladorMenuAnonimo {
             }
         });
 
+        vistaMenuAnonimo.botonAnterior.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (sistema.retrocederCancion() != Status.OK) return;
+                vistaMenuAnonimo.botonReproducir.setVisible(false);
+                vistaMenuAnonimo.botonParar.setVisible(true);
+            }
+        });
+
         vistaMenuAnonimo.botonReproducir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sistema.reanudarCancion();
+                if (sistema.reanudarCancion() != Status.OK) return;
                 vistaMenuAnonimo.botonReproducir.setVisible(false);
                 vistaMenuAnonimo.botonParar.setVisible(true);
             }
@@ -97,13 +114,6 @@ public class ControladorMenuAnonimo {
                 sistema.pausarCancion();
                 vistaMenuAnonimo.botonParar.setVisible(false);
                 vistaMenuAnonimo.botonReproducir.setVisible(true);
-            }
-        });
-
-        vistaMenuAnonimo.botonSiguiente.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sistema.avanzarCancion();
             }
         });
         

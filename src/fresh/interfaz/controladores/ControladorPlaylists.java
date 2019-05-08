@@ -54,22 +54,45 @@ public class ControladorPlaylists {
         int i = 0;
         for (ListaReproduccion l : sistema.getUsuarioActual().getListasReproducion()) {
             JLabel textoDuracion = new JLabel(String.valueOf(l.getDuracion()/60) + ":" + String.format("%02d", l.getDuracion()%60));
-            textoDuracion.setBounds(185, 15+100*i+20, 80, 40);
+            textoDuracion.setBounds(270, 15+100*i+20, 80, 40);
             textoDuracion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoDuracion.setForeground(Estilo.colorTexto);
             textoDuracion.setHorizontalAlignment(JLabel.RIGHT);
             vistaPlaylists.scrollPanel.add(textoDuracion);
 
             JLabel textoNombrePlayList = new JLabel(l.getNombre());
-            textoNombrePlayList.setBounds(295, 15+100*i+20, 505, 40);
+            textoNombrePlayList.setBounds(390, 15+100*i+20, 460, 40);
             textoNombrePlayList.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoNombrePlayList.setForeground(Estilo.colorTexto);
             textoNombrePlayList.setHorizontalAlignment(JLabel.LEFT);
             vistaPlaylists.scrollPanel.add(textoNombrePlayList);
 
-            JCustomButton botonAnadirPlaylist = new JCustomButton("+");
+            if (!l.getBloqueado()) {
+                JCustomButton botonReproducir = new JCustomButton("▶");
+                botonReproducir.setBounds(25, 15+100*i, 75, 75);
+                botonReproducir.setFont(new Font(Estilo.fuenteEmojis, Font.PLAIN, 25));
+                botonReproducir.setForeground(Estilo.colorTexto);
+                botonReproducir.setBackground(new Color(240, 240, 100));
+                botonReproducir.setPressedBackgound(new Color(220, 220, 95).brighter());
+                botonReproducir.setCornerRadius(80);
+                botonReproducir.setHeight(5);       
+                botonReproducir.setShadowSize(5);
+                botonReproducir.setShadowOpacity(0.4f);            
+                vistaPlaylists.scrollPanel.add(botonReproducir);
+    
+                botonReproducir.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        vistaMenu.botonReproducir.setVisible(false);
+                        vistaMenu.botonParar.setVisible(true);
+                        sistema.reproducir(l);
+                    }
+                });
+            }
+
+            JCustomButton botonAnadirPlaylist = new JCustomButton("🞦");
             botonAnadirPlaylist.setBounds(110, 15+100*i, 75, 75);
-            botonAnadirPlaylist.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            botonAnadirPlaylist.setFont(new Font(Estilo.fuenteEmojis, Font.PLAIN, 25));
             botonAnadirPlaylist.setForeground(Estilo.colorTexto);
             botonAnadirPlaylist.setBackground(new Color(10, 200, 90));
             botonAnadirPlaylist.setPressedBackgound(new Color(10, 200, 90).brighter());
@@ -82,35 +105,30 @@ public class ControladorPlaylists {
             botonAnadirPlaylist.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    VistaAnadirALista vistaAnadirALista = new VistaAnadirALista("el álbum");
+                    VistaAnadirALista vistaAnadirALista = new VistaAnadirALista("esta playlist");
                     vistaPlaylists.add(vistaAnadirALista);
                     cargarAnadirAPlaylists(sistema, vistaPlaylists, vistaAnadirALista, l, vistaMenu);
                 }
-            });
+            });            
 
-            if (l.getBloqueado()) {
-                i++;
-                continue;
-            }
+            JCustomButton botonEliminar = new JCustomButton("✖");
+            botonEliminar.setBounds(195, 15+100*i, 75, 75);
+            botonEliminar.setFont(new Font(Estilo.fuenteEmojis, Font.PLAIN, 25));
+            botonEliminar.setForeground(Estilo.colorTexto);
+            botonEliminar.setBackground(new Color(224, 62, 98));
+            botonEliminar.setPressedBackgound(new Color(224, 62, 98).brighter());
+            botonEliminar.setCornerRadius(80);
+            botonEliminar.setHeight(5);       
+            botonEliminar.setShadowSize(5);
+            botonEliminar.setShadowOpacity(0.4f);
+            vistaPlaylists.scrollPanel.add(botonEliminar);
 
-            JCustomButton botonReproducir = new JCustomButton("▶");
-            botonReproducir.setBounds(25, 15+100*i, 75, 75);
-            botonReproducir.setFont(new Font(Estilo.fuenteEmojis, Font.PLAIN, 25));
-            botonReproducir.setForeground(Estilo.colorTexto);
-            botonReproducir.setBackground(new Color(240, 240, 100));
-            botonReproducir.setPressedBackgound(new Color(220, 220, 95).brighter());
-            botonReproducir.setCornerRadius(80);
-            botonReproducir.setHeight(5);       
-            botonReproducir.setShadowSize(5);
-            botonReproducir.setShadowOpacity(0.4f);            
-            vistaPlaylists.scrollPanel.add(botonReproducir);
-
-            botonReproducir.addActionListener(new ActionListener() {
+            botonEliminar.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    vistaMenu.botonReproducir.setVisible(false);
-                    vistaMenu.botonParar.setVisible(true);
-                    sistema.reproducir(l);
+                    sistema.eliminarListaReproduccion(l);
+                    cargarPlaylists(sistema, vistaPlaylists, vistaMenu);
+                    vistaPlaylists.scrollPanel.repaint();
                 }
             });
 
@@ -134,9 +152,9 @@ public class ControladorPlaylists {
             nombrePlaylist.setHorizontalAlignment(JLabel.LEFT);
             vistaAnadirALista.scrollPanel.add(nombrePlaylist);
 
-            JCustomButton botonAnadir = new JCustomButton("+");
+            JCustomButton botonAnadir = new JCustomButton("🞦");
             botonAnadir.setBounds(25, 15+100*i, 75, 75);
-            botonAnadir.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            botonAnadir.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 25));
             botonAnadir.setForeground(Estilo.colorTexto);
             botonAnadir.setBackground(new Color(240, 240, 100));
             botonAnadir.setPressedBackgound(new Color(220, 220, 95).brighter());

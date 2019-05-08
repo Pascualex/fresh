@@ -26,8 +26,8 @@ public class VistaAnadirALista extends JPanel {
         setLayout(null);
         setVisible(false);
         
-        textoEligePlaylist = new JLabel("Selecciona la playlist a la que añadir " + tipoElemento + ":");
-        textoEligePlaylist.setBounds(35, 10, 600, 40);
+        textoEligePlaylist = new JLabel("Selecciona la playlist a la que añadir " + tipoElemento);
+        textoEligePlaylist.setBounds(35, 25, 600, 40);
         textoEligePlaylist.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         textoEligePlaylist.setForeground(Estilo.colorTexto);
         textoEligePlaylist.setHorizontalAlignment(JLabel.LEFT);

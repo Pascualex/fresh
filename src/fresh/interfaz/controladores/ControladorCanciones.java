@@ -29,7 +29,7 @@ public class ControladorCanciones {
                 if (nombreCancion.length() == 0) return;
 
                 if (vistaCanciones.selectorArchivo.showOpenDialog(vistaCanciones) == JFileChooser.APPROVE_OPTION) {
-                    System.out.println(sistema.subirCancion(nombreCancion, vistaCanciones.selectorArchivo.getSelectedFile().getAbsolutePath()));
+                    sistema.subirCancion(nombreCancion, vistaCanciones.selectorArchivo.getSelectedFile().getAbsolutePath());
                     cargarCanciones(sistema, vistaCanciones, vistaMenu);
                     vistaCanciones.scrollPanel.repaint();
                 }
@@ -57,49 +57,65 @@ public class ControladorCanciones {
         int i = 0;
         for (Cancion c : sistema.getUsuarioActual().getCanciones()) {
             JLabel textoDuracion = new JLabel(String.valueOf(c.getDuracion()/60) + ":" + String.format("%02d", c.getDuracion()%60));
-            textoDuracion.setBounds(100, 15+100*i+20, 80, 40);
+            textoDuracion.setBounds(185, 15+100*i+20, 80, 40);
             textoDuracion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoDuracion.setForeground(Estilo.colorTexto);
             textoDuracion.setHorizontalAlignment(JLabel.RIGHT);
             vistaCanciones.scrollPanel.add(textoDuracion);
 
             JLabel textoNombreCancion = new JLabel(c.getNombre());
-            textoNombreCancion.setBounds(210, 15+100*i, 440, 40);
+            textoNombreCancion.setBounds(295, 15+100*i, 450, 40);
             textoNombreCancion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoNombreCancion.setForeground(Estilo.colorTexto);
             textoNombreCancion.setHorizontalAlignment(JLabel.LEFT);
             vistaCanciones.scrollPanel.add(textoNombreCancion);
 
             JLabel textoEstadoCancion = new JLabel(c.getEstado().aTexto());
-            textoEstadoCancion.setBounds(210, 15+100*i+35, 440, 40);
+            textoEstadoCancion.setBounds(295, 15+100*i+35, 450, 40);
             textoEstadoCancion.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
             textoEstadoCancion.setForeground(Estilo.colorTexto);
             textoEstadoCancion.setHorizontalAlignment(JLabel.LEFT);
             vistaCanciones.scrollPanel.add(textoEstadoCancion);
 
             JLabel textoNumeroReproducciones = new JLabel(String.valueOf(c.getReproduccionesMensuales()));
-            textoNumeroReproducciones.setBounds(700, 15+100*i, 125, 40);
+            textoNumeroReproducciones.setBounds(750, 15+100*i+5, 120, 40);
             textoNumeroReproducciones.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoNumeroReproducciones.setForeground(Estilo.colorTexto);
-            textoNumeroReproducciones.setHorizontalAlignment(JLabel.LEFT);
+            textoNumeroReproducciones.setHorizontalAlignment(JLabel.CENTER);
             vistaCanciones.scrollPanel.add(textoNumeroReproducciones);
 
             JLabel textoReproducciones = new JLabel("reproducciones");
-            textoReproducciones.setBounds(650, 15+100*i+35, 125, 40);
+            textoReproducciones.setBounds(750, 15+100*i+25, 120, 40);
             textoReproducciones.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 15));
             textoReproducciones.setForeground(Estilo.colorTexto);
-            textoReproducciones.setHorizontalAlignment(JLabel.LEFT);
+            textoReproducciones.setHorizontalAlignment(JLabel.CENTER);
             vistaCanciones.scrollPanel.add(textoReproducciones);
 
-            if (c.getBloqueado() && c.getEstado() != EstadoCancion.RECHAZADA_REVISABLE) {
-                i++;
-                continue;
-            }
+            if (!c.getBloqueado()) {
+                JCustomButton botonReproducir = new JCustomButton("▶");
+                botonReproducir.setBounds(25, 15+100*i, 75, 75);
+                botonReproducir.setFont(new Font(Estilo.fuenteEmojis, Font.PLAIN, 25));
+                botonReproducir.setForeground(Estilo.colorTexto);
+                botonReproducir.setBackground(new Color(240, 240, 100));
+                botonReproducir.setPressedBackgound(new Color(220, 220, 95).brighter());
+                botonReproducir.setCornerRadius(80);
+                botonReproducir.setHeight(5);       
+                botonReproducir.setShadowSize(5);
+                botonReproducir.setShadowOpacity(0.4f);            
+                vistaCanciones.scrollPanel.add(botonReproducir);
 
-            if (c.getEstado() == EstadoCancion.RECHAZADA_REVISABLE) {
-                JCustomButton botonResubir = new JCustomButton("R");
+                botonReproducir.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        vistaMenu.botonReproducir.setVisible(false);
+                        vistaMenu.botonParar.setVisible(true);
+                        sistema.reproducir(c);
+                    }
+                });                
+            } else if (c.getEstado() == EstadoCancion.RECHAZADA_REVISABLE) {
+                JCustomButton botonResubir = new JCustomButton("🔄");
                 botonResubir.setBounds(25, 15+100*i, 75, 75);
-                botonResubir.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
+                botonResubir.setFont(new Font(Estilo.fuenteEmojis, Font.PLAIN, 25));
                 botonResubir.setForeground(Estilo.colorTexto);
                 botonResubir.setBackground(new Color(10, 200, 90));
                 botonResubir.setPressedBackgound(new Color(10, 200, 90).brighter());
@@ -119,35 +135,11 @@ public class ControladorCanciones {
                         }
                     }
                 });
-                
-                i++;
-                continue;
             }
 
-            JCustomButton botonReproducir = new JCustomButton("▶");
-            botonReproducir.setBounds(25, 15+100*i, 75, 75);
-            botonReproducir.setFont(new Font(Estilo.fuenteEmojis, Font.PLAIN, 25));
-            botonReproducir.setForeground(Estilo.colorTexto);
-            botonReproducir.setBackground(new Color(240, 240, 100));
-            botonReproducir.setPressedBackgound(new Color(220, 220, 95).brighter());
-            botonReproducir.setCornerRadius(80);
-            botonReproducir.setHeight(5);       
-            botonReproducir.setShadowSize(5);
-            botonReproducir.setShadowOpacity(0.4f);            
-            vistaCanciones.scrollPanel.add(botonReproducir);
-
-            botonReproducir.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    vistaMenu.botonReproducir.setVisible(false);
-                    vistaMenu.botonParar.setVisible(true);
-                    sistema.reproducir(c);
-                }
-            });
-
-            JCustomButton botonEliminar = new JCustomButton("Eliminar");
-            botonEliminar.setBounds(800, 15+100*i, 100, 75);
-            botonEliminar.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 20));
+            JCustomButton botonEliminar = new JCustomButton("✖");
+            botonEliminar.setBounds(110, 15+100*i, 75, 75);
+            botonEliminar.setFont(new Font(Estilo.fuenteEmojis, Font.PLAIN, 25));
             botonEliminar.setForeground(Estilo.colorTexto);
             botonEliminar.setBackground(new Color(224, 62, 98));
             botonEliminar.setPressedBackgound(new Color(224, 62, 98).brighter());

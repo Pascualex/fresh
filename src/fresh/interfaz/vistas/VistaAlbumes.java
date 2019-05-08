@@ -72,7 +72,7 @@ public class VistaAlbumes extends JPanel {
         separador.setCornerRadius(5);
         add(separador);
         
-        textoSinAlbumes = new JLabel("Todavía no has creado ningún álbum.");
+        textoSinAlbumes = new JLabel("Todavía no has creado ningún álbum");
         textoSinAlbumes.setBounds(35, 90, 765, 40);
         textoSinAlbumes.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         textoSinAlbumes.setForeground(Estilo.colorTexto);

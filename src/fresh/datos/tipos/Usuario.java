@@ -198,6 +198,20 @@ public class Usuario implements Serializable {
 	public List<Cancion> getCanciones(){
 		return Collections.unmodifiableList(canciones);
 	}
+	
+	/**
+	 * Devuelve la lista de canciones no bloqueadas del usuario.
+	 * @return Lista de canciones no bloqueadas del usuario.
+	 */
+	public List<Cancion> getCancionesValidas(){
+		List<Cancion> cancionesValidas = new LinkedList<>();
+
+		for (Cancion c : canciones) {
+			if (!c.getBloqueado()) cancionesValidas.add(c);
+		}
+
+		return cancionesValidas;
+	}
 
 	/**
 	 * Añade una cancion a la lista de canciones del usuario.

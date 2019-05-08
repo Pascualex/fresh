@@ -63,7 +63,7 @@ public class VistaCanciones extends JPanel {
         separador.setCornerRadius(5);
         add(separador);
         
-        textoSinCanciones = new JLabel("Todavía no has subido ninguna canción.");
+        textoSinCanciones = new JLabel("Todavía no has subido ninguna canción");
         textoSinCanciones.setBounds(35, 90, 765, 40);
         textoSinCanciones.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         textoSinCanciones.setForeground(Estilo.colorTexto);

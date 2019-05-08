@@ -75,7 +75,7 @@ public class ControladorMenu {
                     vistaMenu.add(vistaResultadoAutores);
 
                     @SuppressWarnings("unused")
-                    ControladorResultadoAutores controladorResultadoAutores = new ControladorResultadoAutores(sistema, vistaResultadoAutores, entrada);
+                    ControladorResultadoAutores controladorResultadoAutores = new ControladorResultadoAutores(sistema, vistaResultadoAutores, vistaMenu, entrada);
                 
                     vistaResultadoAutores.setVisible(true);
                 }
@@ -225,7 +225,7 @@ public class ControladorMenu {
         vistaMenu.botonAnterior.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sistema.retrocederCancion();
+                if (sistema.retrocederCancion() != Status.OK) return;
                 vistaMenu.botonReproducir.setVisible(false);
                 vistaMenu.botonParar.setVisible(true);
             }
@@ -252,7 +252,7 @@ public class ControladorMenu {
         vistaMenu.botonSiguiente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sistema.avanzarCancion();
+                if (sistema.avanzarCancion() != Status.OK) return;
                 vistaMenu.botonReproducir.setVisible(false);
                 vistaMenu.botonParar.setVisible(true);
             }

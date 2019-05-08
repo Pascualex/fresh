@@ -38,7 +38,7 @@ public class VistaAutores extends JPanel {
         separador.setCornerRadius(5);
         add(separador);
         
-        textoSinAutores = new JLabel("Todavía no sigues a ningún autor.");
+        textoSinAutores = new JLabel("Todavía no sigues a ningún autor");
         textoSinAutores.setBounds(35, 90, 765, 40);
         textoSinAutores.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         textoSinAutores.setForeground(Estilo.colorTexto);

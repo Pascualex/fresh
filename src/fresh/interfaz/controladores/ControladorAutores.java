@@ -40,15 +40,15 @@ public class ControladorAutores {
         int i = 0;
         for (Usuario a : sistema.getUsuarioActual().getAutoresSeguidos()) {
             JLabel textoNombre = new JLabel(a.getNombreAutor());
-            textoNombre.setBounds(240, 15+100*i+20, 560, 40);
+            textoNombre.setBounds(115, 15+100*i+20, 685, 40);
             textoNombre.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoNombre.setForeground(Estilo.colorTexto);
             textoNombre.setHorizontalAlignment(JLabel.LEFT);
             vistaAutores.scrollPanel.add(textoNombre);
 
-            JCustomButton botonNoSeguir = new JCustomButton("No seguir");
-            botonNoSeguir.setBounds(25, 15+100*i, 200, 75);
-            botonNoSeguir.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
+            JCustomButton botonNoSeguir = new JCustomButton("✖");
+            botonNoSeguir.setBounds(25, 15+100*i, 75, 75);
+            botonNoSeguir.setFont(new Font(Estilo.fuenteEmojis, Font.PLAIN, 25));
             botonNoSeguir.setForeground(Estilo.colorTexto);
             botonNoSeguir.setBackground(new Color(245, 100, 100));
             botonNoSeguir.setPressedBackgound(new Color(220, 50, 50).brighter());

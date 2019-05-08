@@ -51,7 +51,7 @@ public class ControladorMenuAdministrador {
                     vistaMenuAdministrador.add(vistaResultadoAutores);
 
                     @SuppressWarnings("unused")
-                    ControladorResultadoAutores controladorResultadoAutores = new ControladorResultadoAutores(sistema, vistaResultadoAutores, entrada);
+                    ControladorResultadoAutores controladorResultadoAutores = new ControladorResultadoAutores(sistema, vistaResultadoAutores, vistaMenuAdministrador, entrada);
                 
                     vistaResultadoAutores.setVisible(true);
                 }
@@ -142,10 +142,19 @@ public class ControladorMenuAdministrador {
             }
         });
 
+        vistaMenuAdministrador.botonAnterior.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (sistema.retrocederCancion() != Status.OK) return;
+                vistaMenuAdministrador.botonReproducir.setVisible(false);
+                vistaMenuAdministrador.botonParar.setVisible(true);
+            }
+        });
+
         vistaMenuAdministrador.botonReproducir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sistema.reanudarCancion();
+                if (sistema.reanudarCancion() != Status.OK) return;
                 vistaMenuAdministrador.botonReproducir.setVisible(false);
                 vistaMenuAdministrador.botonParar.setVisible(true);
             }
@@ -157,13 +166,6 @@ public class ControladorMenuAdministrador {
                 sistema.pausarCancion();
                 vistaMenuAdministrador.botonParar.setVisible(false);
                 vistaMenuAdministrador.botonReproducir.setVisible(true);
-            }
-        });
-
-        vistaMenuAdministrador.botonSiguiente.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sistema.avanzarCancion();
             }
         });
         

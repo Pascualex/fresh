@@ -6,8 +6,8 @@ public class Estilo {
     public static final int anchura = 1200;
     public static final int altura = 800;
 
-    public static final String fuentePredeterminada = "Helvetica";
-    public static final String fuenteEmojis = "Noto Emoji";
+    public static final String fuentePredeterminada = "Arial";
+    public static final String fuenteEmojis = "Open Sans Emoji";
     
     public static final Color colorPrimario = new Color(35, 168, 225);
     public static final Color colorSecundario = new Color(86, 199, 247);

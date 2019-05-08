@@ -26,7 +26,7 @@ public class VistaReportar extends JPanel {
         setVisible(false);
 
         textoReportar = new JLabel("");
-        textoReportar.setBounds(35, 15, 480, 40);
+        textoReportar.setBounds(35, 25, 480, 40);
         textoReportar.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         textoReportar.setForeground(Estilo.colorTexto);
         textoReportar.setHorizontalAlignment(JLabel.LEFT);
