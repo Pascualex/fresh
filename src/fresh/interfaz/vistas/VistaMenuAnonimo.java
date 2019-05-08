@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.Font;
 import java.awt.Color;
 
+/**
+ * Esta vista define el menu de los usuarios anónimos
+ */
 public class VistaMenuAnonimo extends JPanel{
 	private static final long serialVersionUID = 0;
 	

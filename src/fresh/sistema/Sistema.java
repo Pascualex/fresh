@@ -28,6 +28,7 @@ import java.lang.Thread;
  */
 public class Sistema {
     public static final long numeroVersion = 1;
+    public static Boolean modoPrueba;
 
     private static final String rutaBaseDeDatos = "./baseDeDatos.ser";
     private static final String rutaGestorEventos = "./gestorEventos.ser";
@@ -49,6 +50,23 @@ public class Sistema {
      * el fichero de configuración, por lo que no recibe argumentos.
      */
     public Sistema() {
+        Sistema.modoPrueba = false;
+        configuracion = new Configuracion(rutaConfiguracion);
+        baseDeDatos = BaseDeDatos.cargarBaseDeDatos(rutaBaseDeDatos);        
+        gestorEventos = GestorEventos.cargarGestorEventos(baseDeDatos, configuracion, rutaGestorEventos);
+        hiloGestorEventos = new Thread(gestorEventos);
+        hiloGestorEventos.start();
+        moduloMP3 = new ModuloMP3(rutaFicherosMP3, configuracion);
+        hiloModuloMP3 = new Thread(moduloMP3);
+        hiloModuloMP3.start();
+        modoEjecucion = ModoEjecucion.DESCONECTADO;
+    }
+
+    /**
+     * Crea el sistema, estableciendo si se quiere realizar una prueba en el sistema
+     */
+    public Sistema(Boolean modoPrueba) {
+        Sistema.modoPrueba = modoPrueba;
         configuracion = new Configuracion(rutaConfiguracion);
         baseDeDatos = BaseDeDatos.cargarBaseDeDatos(rutaBaseDeDatos);        
         gestorEventos = GestorEventos.cargarGestorEventos(baseDeDatos, configuracion, rutaGestorEventos);

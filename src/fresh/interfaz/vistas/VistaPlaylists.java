@@ -9,6 +9,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
+/**
+ * Esta vista define la pestaña de playlists de los usuarios registrados
+ */
 public class VistaPlaylists extends JPanel {
     private static final long serialVersionUID = 0;
 

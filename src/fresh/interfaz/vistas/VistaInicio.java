@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.Font;
 import java.awt.Color;
 
+/**
+ * Esta vista define la pestaña inicial de la aplicación, donde se puede iniciar sesión
+ */
 public class VistaInicio extends JPanel {
     private static final long serialVersionUID = 0;
     

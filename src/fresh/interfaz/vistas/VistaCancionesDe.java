@@ -11,6 +11,9 @@ import java.awt.Font;
 import fresh.interfaz.*;
 import fresh.interfaz.swing.*;
 
+/**
+ * Esta vista permite ver las canciones de un autor o de un álbum
+ */
 public class VistaCancionesDe extends JPanel {
     private static final long serialVersionUID = 0;
 

@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Font;
 
+/**
+ * Esta vista aparece en la pestaña reportes del administrador
+ */
 public class VistaReportes extends JPanel {
     private static final long serialVersionUID = 0;
 

@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  * Gestiona los eventos del sistema, realizando operaciones en la base de datos.
  */
 public class GestorEventos implements Runnable, Serializable {
-    private static final long serialVersionUID = Sistema.numeroVersion;
+    private static final long serialVersionUID = 2;
     
     private String ruta;
     private GregorianCalendar ultimoDiaComprobado;
@@ -85,17 +85,23 @@ public class GestorEventos implements Runnable, Serializable {
                 GregorianCalendar fecha_actual = new GregorianCalendar();
                 
                 if (fecha_actual.getTimeInMillis()-ultimoDiaComprobado.getTimeInMillis() < msDia) {
-                    TimeUnit.SECONDS.sleep(5*60+(fecha_actual.getTimeInMillis()-msDia)/1000);
+                    if (!Sistema.modoPrueba) TimeUnit.SECONDS.sleep(5*60+(fecha_actual.getTimeInMillis()-msDia)/1000);
                     if (parar) break;
                 }
                 
                 fecha_actual = new GregorianCalendar();
                 
-                if (fecha_actual.get(GregorianCalendar.MONTH) != ultimoDiaComprobado.get(GregorianCalendar.MONTH)) {                        
+                if (fecha_actual.get(GregorianCalendar.MONTH) != ultimoDiaComprobado.get(GregorianCalendar.MONTH) || Sistema.modoPrueba) {                        
                     baseDeDatos.eliminarPremiumUsuarios();
                     
                     for (Usuario usuario : baseDeDatos.obtenerUsuarios()) {
-                        if (usuario.getReproduccionesMensuales() >= configuracion.getMinReproduccionesPremium()) {
+
+                        int reproduccionesUsuario = 0;
+                        for (Cancion c : usuario.getCanciones()) {
+                            reproduccionesUsuario += c.getReproduccionesMensuales();
+                        }
+
+                        if (reproduccionesUsuario >= configuracion.getMinReproduccionesPremium()) {
                             usuario.setPremium(true);
                             usuario.anadirNotificacion(new Notificacion(TipoNotificacion.PREMIUM_GRATUITO));
                         }
@@ -105,11 +111,11 @@ public class GestorEventos implements Runnable, Serializable {
 
                 Set<ParCancionFecha> canciones = new HashSet<>();
                 for (ParCancionFecha par : cancionesAEliminar) {
-                    if (fecha_actual.getTimeInMillis()-par.fecha.getTimeInMillis() > 3*msDia) {
+                    if (fecha_actual.getTimeInMillis()-par.fecha.getTimeInMillis() > 3*msDia || Sistema.modoPrueba) {
                         baseDeDatos.eliminarCancion(par.cancion);
                         NotificacionCancion notificacion = new NotificacionCancion(TipoNotificacion.CANCION_ELIMINADA, par.cancion);
                         par.cancion.getAutor().anadirNotificacion(notificacion);
-                        cancionesAEliminar.add(par);
+                        canciones.add(par);
                     } else break;
                 }
                 for (ParCancionFecha par : canciones) {
@@ -118,7 +124,7 @@ public class GestorEventos implements Runnable, Serializable {
 
                 Set<ParUsuarioFecha> usuarios = new HashSet<>();
                 for (ParUsuarioFecha par : usuariosADesbloquear) {
-                    if (fecha_actual.getTimeInMillis()-par.fecha.getTimeInMillis() > 30*msDia) {
+                    if (fecha_actual.getTimeInMillis()-par.fecha.getTimeInMillis() > 30*msDia || Sistema.modoPrueba) {
                         par.usuario.setBloqueado(false);
                         usuarios.add(par);
                     } else break;

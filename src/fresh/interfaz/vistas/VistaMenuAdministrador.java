@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.Font;
 import java.awt.Color;
 
+/**
+ * Esta vista define el menu del administrador
+ */
 public class VistaMenuAdministrador extends JPanel {
 	
 	private static final long serialVersionUID = 0;

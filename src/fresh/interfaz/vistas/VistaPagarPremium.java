@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.Font;
 
+/**
+ * Esta vista define la pestaña para pagar premium de los usuarios registrados
+ */
 public class VistaPagarPremium extends JPanel{
     private static final long serialVersionUID = 0;	
     

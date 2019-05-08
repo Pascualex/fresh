@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.Font;
 import java.awt.Color;
 
+/**
+ * Esta vista define la pestaña de configuración del administrador
+ */
 public class VistaConfiguracion extends JPanel {
     private static final long serialVersionUID = 0;
 

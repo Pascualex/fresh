@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Font;
 
+/**
+ * Esta vista aparece cuando se buscan albumes
+ */
 public class VistaResultadoAlbumes extends JPanel {
     private static final long serialVersionUID = 0;
 

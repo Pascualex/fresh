@@ -8,6 +8,9 @@ import java.awt.Font;
 import fresh.interfaz.*;
 import fresh.interfaz.swing.*;
 
+/**
+ * Esta vista define la pestaña de autores seguidos por el usuario
+ */
 public class VistaAutores extends JPanel {
     private static final long serialVersionUID = 0;
     
