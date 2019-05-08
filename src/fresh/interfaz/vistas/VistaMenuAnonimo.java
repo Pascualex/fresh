@@ -76,7 +76,7 @@ public class VistaMenuAnonimo extends JPanel{
         
         botonBuscar = new JCustomButton("🔎");
         botonBuscar.setBounds(665, 30, 80, 80);
-        botonBuscar.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
+        botonBuscar.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 20));
         botonBuscar.setForeground(Estilo.colorTexto);
         botonBuscar.setBackground(new Color(240, 240, 100));
         botonBuscar.setPressedBackgound(new Color(220, 220, 95).brighter());

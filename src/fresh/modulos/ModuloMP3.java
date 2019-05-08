@@ -69,7 +69,7 @@ public class ModuloMP3 implements Runnable {
                         if (modoEjecucion == ModoEjecucion.REGISTRADO) {
                             int reproduccionesMensuales = usuarioActual.getReproduccionesMensuales();
                             if (!usuarioActual.getPremium()) {
-                                /* DESACTIVADO PARA LAS PRUEBAS // if (reproduccionesMensuales >= configuracion.getMaxReproduccionesRegistrado()) continue;*/
+                                if (reproduccionesMensuales >= configuracion.getMaxReproduccionesRegistrado()) continue;
                             }
                             usuarioActual.setReproduccionesMensuales(reproduccionesMensuales+1);
                         } else if (modoEjecucion == ModoEjecucion.ANONIMO) {

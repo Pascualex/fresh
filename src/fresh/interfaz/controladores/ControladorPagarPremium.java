@@ -27,71 +27,64 @@ public class ControladorPagarPremium {
                 	vistaPagarPremium.textoOK.setVisible(true);
                 	vistaPagarPremium.panelMensaje.setVisible(true);
                 	vistaPagarPremium.panelPagarPremium.setVisible(false);
-                	vistaPagarPremium.panelMensaje.repaint();
+                	vistaPagarPremium.repaint();
                 	
                 	sistema.getUsuarioActual().setPremium(true);
                 	vistaMenu.textoPremiumUsuario.setText("Usuario premium");
                 	vistaMenu.botonPagarPremium.setVisible(false);
-					vistaMenu.textoPremiumUsuario.setVisible(true);
 					
-                	vistaMenu.repaint();                	
+                	vistaMenu.repaint();
                 } else if (status == Status.OPERACION_INACCESIBLE) {
                 	vistaPagarPremium.textoOperacionInvalida.setVisible(true);
                 	vistaPagarPremium.panelMensaje.setVisible(true);
                 	vistaPagarPremium.panelPagarPremium.setVisible(false);
-                	vistaPagarPremium.panelMensaje.repaint();
                 } else if (status == Status.YA_ES_PREMIUM) {
                 	vistaPagarPremium.textoYaPremium.setVisible(true);
                 	vistaPagarPremium.panelMensaje.setVisible(true);
                 	vistaPagarPremium.panelPagarPremium.setVisible(false);
-                	vistaPagarPremium.panelMensaje.repaint();
                 } else if (status == Status.TARJETA_INVALIDA) {
                 	vistaPagarPremium.textoTarjetaInvalida.setVisible(true);
                 	vistaPagarPremium.panelMensaje.setVisible(true);
                 	vistaPagarPremium.panelPagarPremium.setVisible(false);
-                	vistaPagarPremium.panelMensaje.repaint();
                 } else if (status == Status.FALLO_INTERNET) {
                 	vistaPagarPremium.textoFalloInternet.setVisible(true);
                 	vistaPagarPremium.panelMensaje.setVisible(true);
                 	vistaPagarPremium.panelPagarPremium.setVisible(false);
-                	vistaPagarPremium.panelMensaje.repaint();
                 } else if (status == Status.PAGO_RECHAZADO) {
                 	vistaPagarPremium.textoPagoRechazado.setVisible(true);
                 	vistaPagarPremium.panelMensaje.setVisible(true);
                 	vistaPagarPremium.panelPagarPremium.setVisible(false);
-                	vistaPagarPremium.panelMensaje.repaint();
                 } else {
                 	vistaPagarPremium.textoError.setVisible(true);
                 	vistaPagarPremium.panelMensaje.setVisible(true);
                 	vistaPagarPremium.panelPagarPremium.setVisible(false);
-                	vistaPagarPremium.panelMensaje.repaint();
-                }
+				}
+				
+				vistaPagarPremium.repaint();
             }
         });
 		
 		vistaPagarPremium.botonVolver.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
-            	
-            	if (vistaPagarPremium.textoOK.isVisible()) {
-            		vistaPagarPremium.remove(vistaPagarPremium.panelMensaje);
+            public void actionPerformed(ActionEvent e) {            	
+            	if (sistema.getUsuarioActual().getPremium()) {
             		if (vistaMenu.panelActual != null) {
                         vistaMenu.remove(vistaMenu.panelActual);
                         vistaMenu.panelActual = null;
-                    }
+					}
+					
             		vistaMenu.repaint();
-            		return;  
             	} else {
+            		vistaPagarPremium.textoOK.setVisible(false);
             		vistaPagarPremium.textoError.setVisible(false);
             		vistaPagarPremium.textoErrorEntrada.setVisible(false);
             		vistaPagarPremium.textoFalloInternet.setVisible(false);
-            		vistaPagarPremium.textoOK.setVisible(false);
             		vistaPagarPremium.textoOperacionInvalida.setVisible(false);
-            		vistaPagarPremium.textoPagarPremium.setVisible(false);
             		vistaPagarPremium.textoPagoRechazado.setVisible(false);
             		vistaPagarPremium.textoTarjetaInvalida.setVisible(false);
             		vistaPagarPremium.textoYaPremium.setVisible(false);
-            		vistaPagarPremium.panelMensaje.setVisible(false);
+					vistaPagarPremium.panelMensaje.setVisible(false);
+					
             		vistaPagarPremium.panelPagarPremium.setVisible(true);
             	}
             }

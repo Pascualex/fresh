@@ -149,7 +149,7 @@ public class VistaRegistro extends JPanel {
         botonRegistrarseInicio.setShadowOpacity(0.4f);
         panelRegistrarse.add(botonRegistrarseInicio);
 
-        botonVolver = new JCustomButton("Volver ↩");
+        botonVolver = new JCustomButton("Volver");
         botonVolver.setBounds(Estilo.anchura-820, 600, 200, 80);
         botonVolver.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         botonVolver.setForeground(Estilo.colorTexto);

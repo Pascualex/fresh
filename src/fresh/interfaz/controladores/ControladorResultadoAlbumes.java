@@ -306,6 +306,8 @@ public class ControladorResultadoAlbumes {
                 botonReproducir.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        vistaMenu.remove(vistaResultadoAlbumes);
+                        vistaMenu.repaint();
                         ((VistaMenuAnonimo) vistaMenu).botonReproducir.setVisible(false);
                         ((VistaMenuAnonimo) vistaMenu).botonParar.setVisible(true);
                         sistema.reproducir(c);

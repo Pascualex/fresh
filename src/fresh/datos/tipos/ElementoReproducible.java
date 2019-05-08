@@ -28,7 +28,7 @@ public abstract class ElementoReproducible implements Serializable {
 
     /**
      * Devuelve el nombre del elemento reproducible.
-     * @return Nombre del elemento reproducible
+     * @return Nombre del elemento reproducible.
      */
     public String getNombre() {
         return nombre;
@@ -36,7 +36,7 @@ public abstract class ElementoReproducible implements Serializable {
 
     /** 
      * Devuelve la duración en segundos del elemento reproducible.
-     * @return Duración en segundos del elemento reproducible
+     * @return Duración en segundos del elemento reproducible.
      */
     public long getDuracion() {
         return duracion;
@@ -58,14 +58,14 @@ public abstract class ElementoReproducible implements Serializable {
 
     /**
      * Devuelve una lista con las canciones del elemento reproducible.
-     * @return Lista con las canciones del elemento reproducible
+     * @return Lista con las canciones del elemento reproducible.
      */
     public abstract List<Cancion> getCanciones();
 
     /**
      * Devuelve una lista con las canciones del elemento reproducible.
      * @param elementosExcluidos Conjunto de elementos que se deben excluir
-     * @return Lista con las canciones del elemento reproducible
+     * @return Lista con las canciones del elemento reproducible.
      */
     public abstract List<Cancion> getCanciones(Set<ElementoReproducible> elementosExcluidos);
 }

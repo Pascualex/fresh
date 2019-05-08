@@ -3,7 +3,7 @@ package fresh.datos.tipos;
 import fresh.sistema.Sistema;
 
 import java.util.List;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -14,7 +14,7 @@ import java.util.HashSet;
 public class ListaReproduccion extends ElementoReproducible {
     private static final long serialVersionUID = Sistema.numeroVersion;
     
-    private List<ElementoReproducible> elementos = new ArrayList<>();
+    private List<ElementoReproducible> elementos = new LinkedList<>();
 
     /**
      * Crea una lista de reproducción dadas sus características.
@@ -101,15 +101,31 @@ public class ListaReproduccion extends ElementoReproducible {
      */
     @Override
     public List<Cancion> getCanciones(Set<ElementoReproducible> elementosExcluidos) {
-        if (elementosExcluidos.contains(this)) return new ArrayList<>();
+        if (elementosExcluidos.contains(this)) return new LinkedList<>();
         elementosExcluidos.add(this);
         
-        List<Cancion> canciones = new ArrayList<>();
+        List<Cancion> canciones = new LinkedList<>();
         for (ElementoReproducible e : elementos) {        	
-            canciones.addAll(e.getCanciones());
+            canciones.addAll(e.getCanciones(elementosExcluidos));
         }
 
         return canciones;        
+    }
+
+    /** 
+     * Devuelve la duración en segundos de la lista de reproducción
+     * @return Duración en segundos de la lista de reproducción.
+     */
+    @Override
+    public long getDuracion() {
+        List<Cancion> canciones = getCanciones();
+
+        long duracionTotal = 0;
+        for (Cancion c : canciones) {
+            duracionTotal += c.getDuracion();
+        }
+
+        return duracionTotal;
     }
 
     /**

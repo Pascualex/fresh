@@ -9,12 +9,11 @@ import java.awt.Color;
 import java.awt.Font;
 
 public class VistaPagarPremium extends JPanel{
-    private static final long serialVersionUID = 0;
-	
-    public JCustomPanel separador;
+    private static final long serialVersionUID = 0;	
     
     public JPanel panelPagarPremium;
 	public JLabel textoPagarPremium;
+    public JCustomPanel separador;
 	public JCustomTextField entradaTarjeta;
 	public JCustomButton botonOK;
 	
@@ -30,37 +29,36 @@ public class VistaPagarPremium extends JPanel{
     public JLabel textoOK;
     public JLabel textoError;
 	
-	public VistaPagarPremium() {
-		
+	public VistaPagarPremium() {		
 		setBounds(260, 140, Estilo.anchura-260, 540);
 		setOpaque(false);
 		setLayout(null);
 		setVisible(false);
 		
 		// Crea y configura el panel de inicio de sesión
-		panelPagarPremium = new JPanel();
-		panelPagarPremium.setBounds(0, 75, Estilo.anchura, Estilo.altura-75);
+        panelPagarPremium = new JPanel();
+        panelPagarPremium.setBounds(0, 0, Estilo.anchura-260, 540);
 		panelPagarPremium.setOpaque(false);
 		panelPagarPremium.setLayout(null);
 		panelPagarPremium.setVisible(true);
         add(panelPagarPremium);
 		
-		separador = new JCustomPanel();
-		separador.setBounds(20, 0, Estilo.anchura-260-92, 3);
-		separador.setBackground(Estilo.colorPrimario.darker());
-		separador.setCornerRadius(5);
-		add(separador);
-		
-		textoPagarPremium = new JLabel("Introduce tus datos: ");
-		textoPagarPremium.setBounds(270, 70, 765, 40);
+		textoPagarPremium = new JLabel("Introduce tu tarjeta de crédito");
+        textoPagarPremium.setBounds(35, 25, 480, 40);
 		textoPagarPremium.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
 		textoPagarPremium.setForeground(Estilo.colorTexto);
 		textoPagarPremium.setHorizontalAlignment(JLabel.LEFT);
 		panelPagarPremium.add(textoPagarPremium);
+		
+		separador = new JCustomPanel();
+        separador.setBounds(20, 77, Estilo.anchura-260-92, 3);
+		separador.setBackground(Estilo.colorPrimario.darker());
+		separador.setCornerRadius(5);
+		panelPagarPremium.add(separador);
         
         entradaTarjeta = new JCustomTextField("", 10);
         entradaTarjeta.setPlaceholder("Tarjeta de crédito...");
-        entradaTarjeta.setBounds(200, 150, Estilo.anchura-760, 80);
+        entradaTarjeta.setBounds(30, 100, Estilo.anchura-400, 80);
         entradaTarjeta.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
         entradaTarjeta.setForeground(Estilo.colorTexto);
         entradaTarjeta.setPlaceholderColor(Estilo.colorPlaceholder);
@@ -71,8 +69,8 @@ public class VistaPagarPremium extends JPanel{
         entradaTarjeta.setShadowOpacity(0.2f);
         panelPagarPremium.add(entradaTarjeta);
         
-        botonOK = new JCustomButton("OK");
-        botonOK.setBounds(370, 250, 100, 80);
+        botonOK = new JCustomButton("Pagar");
+        botonOK.setBounds(708, 0, 160, 60);
         botonOK.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         botonOK.setForeground(Estilo.colorTexto);
         botonOK.setBackground(new Color(240, 240, 100));
