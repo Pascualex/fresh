@@ -52,7 +52,7 @@ public class ControladorReportes {
 
             JCustomButton botonReproducir = new JCustomButton("▶");
             botonReproducir.setBounds(25, 15+i, 75, 75);
-            botonReproducir.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
+            botonReproducir.setFont(new Font(Estilo.fuenteEmojis, Font.PLAIN, 25));
             botonReproducir.setForeground(Estilo.colorTexto);
             botonReproducir.setBackground(new Color(240, 240, 100));
             botonReproducir.setPressedBackgound(new Color(220, 220, 95).brighter());
@@ -64,7 +64,7 @@ public class ControladorReportes {
 
             JCustomButton botonAceptarReporte = new JCustomButton("✅");
             botonAceptarReporte.setBounds(110, 15+i, 75, 75);
-            botonAceptarReporte.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            botonAceptarReporte.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 25));
             botonAceptarReporte.setForeground(Estilo.colorTexto);
             botonAceptarReporte.setBackground(new Color(10, 200, 90));
             botonAceptarReporte.setPressedBackgound(new Color(10, 200, 90).brighter());
@@ -76,7 +76,7 @@ public class ControladorReportes {
 
             JCustomButton botonRechazarReporte = new JCustomButton("✖");
             botonRechazarReporte.setBounds(195, 15+i, 75, 75);
-            botonRechazarReporte.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            botonRechazarReporte.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 25));
             botonRechazarReporte.setForeground(Estilo.colorTexto);
             botonRechazarReporte.setBackground(new Color(245, 100, 100));
             botonRechazarReporte.setPressedBackgound(new Color(245, 100, 100).brighter());

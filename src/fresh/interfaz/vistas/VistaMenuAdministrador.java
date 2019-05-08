@@ -76,7 +76,7 @@ public class VistaMenuAdministrador extends JPanel {
 
         botonBuscar = new JCustomButton("🔎");
         botonBuscar.setBounds(665, 30, 80, 80);
-        botonBuscar.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 20));
+        botonBuscar.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 20));
         botonBuscar.setForeground(Estilo.colorTexto);
         botonBuscar.setBackground(new Color(240, 240, 100));
         botonBuscar.setPressedBackgound(new Color(220, 220, 95).brighter());
@@ -166,7 +166,7 @@ public class VistaMenuAdministrador extends JPanel {
 
         botonAnterior = new JCustomButton("⏪");
         botonAnterior.setBounds((Estilo.anchura-260-100)/2-100, 20, 100, 80);
-        botonAnterior.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 35));
+        botonAnterior.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 35));
         botonAnterior.setForeground(Estilo.colorTexto);
         botonAnterior.setBackground(new Color(240, 240, 100));
         botonAnterior.setPressedBackgound(new Color(220, 220, 95).brighter());
@@ -178,7 +178,7 @@ public class VistaMenuAdministrador extends JPanel {
 
         botonReproducir = new JCustomButton("▶");
         botonReproducir.setBounds((Estilo.anchura-260-100)/2, 20, 100, 80);
-        botonReproducir.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 35));
+        botonReproducir.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 35));
         botonReproducir.setForeground(Estilo.colorTexto);
         botonReproducir.setBackground(new Color(240, 240, 100));
         botonReproducir.setPressedBackgound(new Color(220, 220, 95).brighter());
@@ -190,7 +190,7 @@ public class VistaMenuAdministrador extends JPanel {
 
         botonParar = new JCustomButton("‖");
         botonParar.setBounds((Estilo.anchura-260-100)/2, 20, 100, 80);
-        botonParar.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 35));
+        botonParar.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 35));
         botonParar.setForeground(Estilo.colorTexto);
         botonParar.setBackground(new Color(240, 240, 100));
         botonParar.setPressedBackgound(new Color(220, 220, 95).brighter());
@@ -203,7 +203,7 @@ public class VistaMenuAdministrador extends JPanel {
 
         botonSiguiente = new JCustomButton("⏩");
         botonSiguiente.setBounds((Estilo.anchura-260-100)/2+100, 20, 100, 80);
-        botonSiguiente.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 35));
+        botonSiguiente.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 35));
         botonSiguiente.setForeground(Estilo.colorTexto);
         botonSiguiente.setBackground(new Color(240, 240, 100));
         botonSiguiente.setPressedBackgound(new Color(220, 220, 95).brighter());

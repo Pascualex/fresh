@@ -60,7 +60,7 @@ public class ControladorNotificaciones {
 
             JCustomButton botonEliminar = new JCustomButton("✖");
             botonEliminar.setBounds(25, tamanoTotal-100*(i+1), 75, 75);
-            botonEliminar.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            botonEliminar.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 25));
             botonEliminar.setForeground(Estilo.colorTexto);
             botonEliminar.setBackground(new Color(245, 100, 100));
             botonEliminar.setPressedBackgound(new Color(245, 100, 100).brighter());

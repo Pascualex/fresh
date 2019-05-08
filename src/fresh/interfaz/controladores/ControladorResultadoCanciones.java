@@ -65,7 +65,7 @@ public class ControladorResultadoCanciones {
 
             JCustomButton botonReproducir = new JCustomButton("▶");
             botonReproducir.setBounds(25, 15+100*i, 75, 75);
-            botonReproducir.setFont(new Font(Estilo.fuentePredeterminada, Font.PLAIN, 25));
+            botonReproducir.setFont(new Font(Estilo.fuenteEmojis, Font.PLAIN, 25));
             botonReproducir.setForeground(Estilo.colorTexto);
             botonReproducir.setBackground(new Color(240, 240, 100));
             botonReproducir.setPressedBackgound(new Color(220, 220, 95).brighter());
@@ -87,9 +87,9 @@ public class ControladorResultadoCanciones {
             botonAnadirPlaylist.setShadowOpacity(0.4f);
             vistaResultadoCanciones.scrollPanel.add(botonAnadirPlaylist);
 
-            JCustomButton botonReportar = new JCustomButton("R");
+            JCustomButton botonReportar = new JCustomButton("⚠️");
             botonReportar.setBounds(790, 15+100*i, 75, 75);
-            botonReportar.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+            botonReportar.setFont(new Font(Estilo.fuenteEmojis, Font.BOLD, 25));
             botonReportar.setForeground(Estilo.colorTexto);
             botonReportar.setBackground(new Color(245, 100, 100));
             botonReportar.setPressedBackgound(new Color(220, 50, 50).brighter());
