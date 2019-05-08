@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  * Gestiona los eventos del sistema, realizando operaciones en la base de datos.
  */
 public class GestorEventos implements Runnable, Serializable {
-    private static final long serialVersionUID = Sistema.numeroVersion;
+    private static final long serialVersionUID = 2;
     
     private String ruta;
     private GregorianCalendar ultimoDiaComprobado;
@@ -85,8 +85,7 @@ public class GestorEventos implements Runnable, Serializable {
                 GregorianCalendar fecha_actual = new GregorianCalendar();
                 
                 if (fecha_actual.getTimeInMillis()-ultimoDiaComprobado.getTimeInMillis() < msDia) {
-                    if (Sistema.modoPrueba) break;
-                    TimeUnit.SECONDS.sleep(5*60+(fecha_actual.getTimeInMillis()-msDia)/1000);
+                    if (!Sistema.modoPrueba) TimeUnit.SECONDS.sleep(5*60+(fecha_actual.getTimeInMillis()-msDia)/1000);
                     if (parar) break;
                 }
                 
@@ -96,7 +95,7 @@ public class GestorEventos implements Runnable, Serializable {
                     baseDeDatos.eliminarPremiumUsuarios();
                     
                     for (Usuario usuario : baseDeDatos.obtenerUsuarios()) {
-                        
+
                         int reproduccionesUsuario = 0;
                         for (Cancion c : usuario.getCanciones()) {
                             reproduccionesUsuario += c.getReproduccionesMensuales();
@@ -116,7 +115,7 @@ public class GestorEventos implements Runnable, Serializable {
                         baseDeDatos.eliminarCancion(par.cancion);
                         NotificacionCancion notificacion = new NotificacionCancion(TipoNotificacion.CANCION_ELIMINADA, par.cancion);
                         par.cancion.getAutor().anadirNotificacion(notificacion);
-                        cancionesAEliminar.add(par);
+                        canciones.add(par);
                     } else break;
                 }
                 for (ParCancionFecha par : canciones) {
