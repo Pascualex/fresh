@@ -15,6 +15,7 @@ public class VistaAutores extends JPanel {
 
     public JCustomPanel separador;
 
+    public JLabel textoSinAutores;
     public JPanel scrollPanel;
     public JCustomScrollPane scrollFrame;
 
@@ -22,10 +23,10 @@ public class VistaAutores extends JPanel {
         setBounds(260, 140, Estilo.anchura-260, 540);
         setOpaque(false);
         setLayout(null);
-        setVisible(false);     
+        setVisible(false);
         
         textoAutoresSeguidos = new JLabel("Autores seguidos");
-        textoAutoresSeguidos.setBounds(35, 15, 765, 40);
+        textoAutoresSeguidos.setBounds(35, 25, 765, 40);
         textoAutoresSeguidos.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         textoAutoresSeguidos.setForeground(Estilo.colorTexto);
         textoAutoresSeguidos.setHorizontalAlignment(JLabel.LEFT);
@@ -36,6 +37,14 @@ public class VistaAutores extends JPanel {
         separador.setBackground(Estilo.colorPrimario.darker());
         separador.setCornerRadius(5);
         add(separador);
+        
+        textoSinAutores = new JLabel("Todavía no sigues a ningún autor.");
+        textoSinAutores.setBounds(35, 90, 765, 40);
+        textoSinAutores.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+        textoSinAutores.setForeground(Estilo.colorTexto);
+        textoSinAutores.setHorizontalAlignment(JLabel.LEFT);
+        textoSinAutores.setVisible(false);
+        add(textoSinAutores);
 
         scrollPanel = new JPanel();
         scrollPanel.setPreferredSize(new Dimension(0, 0));

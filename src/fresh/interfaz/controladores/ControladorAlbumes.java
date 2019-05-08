@@ -35,6 +35,16 @@ public class ControladorAlbumes {
 
     private void cargarAlbumes(Sistema sistema, VistaAlbumes vistaAlbumes, VistaMenu vistaMenu) {
         int numAlbumes = sistema.getUsuarioActual().getAlbumes().size();
+
+        if (numAlbumes == 0) {
+            vistaAlbumes.scrollFrame.setVisible(false);
+            vistaAlbumes.textoSinAlbumes.setVisible(true);
+            return;
+        }
+
+        vistaAlbumes.textoSinAlbumes.setVisible(false);
+        vistaAlbumes.scrollFrame.setVisible(true);
+
         vistaAlbumes.scrollPanel.setPreferredSize(new Dimension(0, 15+numAlbumes*100));
         vistaAlbumes.scrollPanel.removeAll();
         vistaAlbumes.scrollFrame.revalidate();
@@ -242,13 +252,15 @@ public class ControladorAlbumes {
                 }
             });
 
-            vistaAlbumes.scrollFrame.setVisible(false);
             vistaAlbumes.entradaNombreAlbum.setVisible(false);
             vistaAlbumes.entradaAno.setVisible(false);
             vistaAlbumes.botonCrearAlbum.setVisible(false);
+            vistaAlbumes.textoSinAlbumes.setVisible(false);
+            vistaAlbumes.scrollFrame.setVisible(false);
             vistaAlbumes.separador.setVisible(false);
-            vistaCrearAlbum.setVisible(true);
+
             vistaAlbumes.add(vistaCrearAlbum);
+            vistaCrearAlbum.setVisible(true);
             vistaAlbumes.repaint();
         } catch (NumberFormatException exception) {
             return;

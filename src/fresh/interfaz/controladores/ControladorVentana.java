@@ -9,11 +9,25 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.Font;
 import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
+
+import java.io.File;
+import java.io.IOException;
 
 public class ControladorVentana {
 
     public ControladorVentana(Sistema sistema) {
+        try {
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("open-sans-emoji.ttf")));
+        } catch(IOException e) {
+            System.out.println("No se ha encontrado el archivo de la fuente.");
+        } catch(Exception e) {
+            System.out.println("Se ha producido un error al registrar la fuente.");
+        }
+
         VistaVentana vistaVentana = new VistaVentana();
 
         @SuppressWarnings("unused")

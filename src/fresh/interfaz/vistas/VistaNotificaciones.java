@@ -11,10 +11,11 @@ import java.awt.Font;
 public class VistaNotificaciones extends JPanel {
     private static final long serialVersionUID = 0;
 
+    public JLabel textoNotificaciones;
+
     public JCustomPanel separador;
 
     public JLabel textoSinNotificaciones;
-
     public JCustomScrollPane scrollFrame;
     public JPanel scrollPanel;
 
@@ -23,15 +24,22 @@ public class VistaNotificaciones extends JPanel {
         setOpaque(false);
         setLayout(null);
         setVisible(false);
+        
+        textoNotificaciones = new JLabel("Notificaciones");
+        textoNotificaciones.setBounds(35, 25, 765, 40);
+        textoNotificaciones.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+        textoNotificaciones.setForeground(Estilo.colorTexto);
+        textoNotificaciones.setHorizontalAlignment(JLabel.LEFT);
+        add(textoNotificaciones);
 
         separador = new JCustomPanel();
-        separador.setBounds(20, 0, Estilo.anchura-260-92, 3);
+        separador.setBounds(20, 77, Estilo.anchura-260-92, 3);
         separador.setBackground(Estilo.colorPrimario.darker());
         separador.setCornerRadius(5);
         add(separador);
         
-        textoSinNotificaciones = new JLabel("Sin notificaciones");
-        textoSinNotificaciones.setBounds(35, 10, 765, 40);
+        textoSinNotificaciones = new JLabel("Sin notificaciones, nada nuevo por aquí.");
+        textoSinNotificaciones.setBounds(35, 90, 765, 40);
         textoSinNotificaciones.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         textoSinNotificaciones.setForeground(Estilo.colorTexto);
         textoSinNotificaciones.setHorizontalAlignment(JLabel.LEFT);
@@ -44,7 +52,7 @@ public class VistaNotificaciones extends JPanel {
         scrollPanel.setLayout(null);
         
         scrollFrame = new JCustomScrollPane(scrollPanel);
-        scrollFrame.setBounds(0, 3, Estilo.anchura-270, 537);
+        scrollFrame.setBounds(0, 80, Estilo.anchura-270, 460);
         scrollFrame.setThumbColor(Estilo.colorSecundario.brighter());
         scrollFrame.setTrackColor(Estilo.colorPrimario.darker());
         scrollFrame.setBehindColor(Estilo.colorPrimario);

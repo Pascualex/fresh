@@ -22,17 +22,20 @@ import javax.swing.JLabel;
 public class ControladorResultadoCanciones {
 
     public ControladorResultadoCanciones(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, VistaMenu vistaMenu, String entrada) {
+        cargarCanciones(sistema, vistaResultadoCanciones, vistaMenu, entrada);
+    }
+
+    private void cargarCanciones(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, VistaMenu vistaMenu, String entrada) {
+        vistaResultadoCanciones.scrollPanel.removeAll();
+        
         List<Cancion> canciones = sistema.buscarCanciones(entrada);
         
         if (canciones.size() == 0) {
             vistaResultadoCanciones.scrollFrame.setVisible(false);
             vistaResultadoCanciones.textoSinResultados.setVisible(true);
+            return;
         }
-
-        cargarCanciones(sistema, vistaResultadoCanciones, vistaMenu, canciones);
-    }
-
-    private void cargarCanciones(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, VistaMenu vistaMenu, List<Cancion> canciones) {
+        
         vistaResultadoCanciones.scrollPanel.setPreferredSize(new Dimension(0, 15+canciones.size()*100));
         vistaResultadoCanciones.scrollFrame.revalidate();
         vistaResultadoCanciones.scrollFrame.repaint();
@@ -119,7 +122,7 @@ public class ControladorResultadoCanciones {
                 public void actionPerformed(ActionEvent e) {
                     VistaReportar vistaReportar = new VistaReportar();
                     vistaResultadoCanciones.add(vistaReportar);
-                    cargarReporte(sistema, vistaResultadoCanciones, vistaReportar, c, vistaMenu, canciones);
+                    cargarReporte(sistema, vistaResultadoCanciones, vistaReportar, c, vistaMenu, entrada);
                 }
             });
 
@@ -193,16 +196,16 @@ public class ControladorResultadoCanciones {
         vistaAnadirALista.repaint();
     }
 
-    private void cargarReporte(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, VistaReportar vistaReportar, Cancion c, VistaMenu vistaMenu, List<Cancion> canciones) {        
+    private void cargarReporte(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, VistaReportar vistaReportar, Cancion c, VistaMenu vistaMenu, String entrada) {        
         vistaReportar.textoReportar.setText("Reportando " + c.getNombre() + " de " + c.getAutor().getNombre());
 
         vistaReportar.botonReportar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sistema.reportar(vistaReportar.entradaDescripcion.getText(), c);
-                vistaResultadoCanciones.remove(vistaReportar);
+                cargarCanciones(sistema, vistaResultadoCanciones, vistaMenu, entrada);
 
-                cargarCanciones(sistema, vistaResultadoCanciones, vistaMenu, canciones);
+                vistaResultadoCanciones.remove(vistaReportar);
                     
                 vistaResultadoCanciones.separador.setVisible(true);
                 vistaResultadoCanciones.scrollFrame.setVisible(true);

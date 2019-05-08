@@ -21,8 +21,18 @@ public class ControladorAutores {
     }
 
     private void cargarAutores(Sistema sistema, VistaAutores vistaAutores) {
-        int numCanciones = sistema.getUsuarioActual().getAutoresSeguidos().size();
-        vistaAutores.scrollPanel.setPreferredSize(new Dimension(0, 15+numCanciones*100));
+        int numAutores = sistema.getUsuarioActual().getAutoresSeguidos().size();
+
+        if (numAutores == 0) {
+            vistaAutores.scrollFrame.setVisible(false);
+            vistaAutores.textoSinAutores.setVisible(true);
+            return;
+        }
+
+        vistaAutores.textoSinAutores.setVisible(false);
+        vistaAutores.scrollFrame.setVisible(true);
+
+        vistaAutores.scrollPanel.setPreferredSize(new Dimension(0, 15+numAutores*100));
         vistaAutores.scrollPanel.removeAll();
         vistaAutores.scrollFrame.revalidate();
         vistaAutores.scrollFrame.repaint();

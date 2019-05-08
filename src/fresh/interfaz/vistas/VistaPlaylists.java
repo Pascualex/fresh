@@ -17,6 +17,7 @@ public class VistaPlaylists extends JPanel {
 
     public JCustomPanel separador;
 
+    public JLabel textoSinPlaylists;
     public JCustomScrollPane scrollFrame;
     public JPanel scrollPanel;
 
@@ -56,6 +57,14 @@ public class VistaPlaylists extends JPanel {
         separador.setBackground(Estilo.colorPrimario.darker());
         separador.setCornerRadius(5);
         add(separador);
+        
+        textoSinPlaylists = new JLabel("Todavía no has creado ninguna playlist.");
+        textoSinPlaylists.setBounds(35, 90, 765, 40);
+        textoSinPlaylists.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+        textoSinPlaylists.setForeground(Estilo.colorTexto);
+        textoSinPlaylists.setHorizontalAlignment(JLabel.LEFT);
+        textoSinPlaylists.setVisible(false);
+        add(textoSinPlaylists);
 
         scrollPanel = new JPanel();
         scrollPanel.setPreferredSize(new Dimension(0, 0));

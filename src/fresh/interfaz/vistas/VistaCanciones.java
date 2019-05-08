@@ -1,16 +1,14 @@
 package fresh.interfaz.vistas;
 
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import fresh.interfaz.*;
+import fresh.interfaz.swing.*;
+
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-
-import fresh.interfaz.*;
-import fresh.interfaz.swing.*;
 
 public class VistaCanciones extends JPanel {
     private static final long serialVersionUID = 0;
@@ -21,6 +19,7 @@ public class VistaCanciones extends JPanel {
     
     public JCustomPanel separador;
 
+    public JLabel textoSinCanciones;
     public JPanel scrollPanel;
     public JCustomScrollPane scrollFrame;
 
@@ -29,7 +28,7 @@ public class VistaCanciones extends JPanel {
         setOpaque(false);
         setLayout(null);
         setVisible(false);
-
+        
         entradaNombreCancion = new JCustomTextField("", 10);
         entradaNombreCancion.setPlaceholder("Nombre cancion...");
         entradaNombreCancion.setBounds(35, 0, 400, 60);
@@ -63,6 +62,14 @@ public class VistaCanciones extends JPanel {
         separador.setBackground(Estilo.colorPrimario.darker());
         separador.setCornerRadius(5);
         add(separador);
+        
+        textoSinCanciones = new JLabel("Todavía no has subido ninguna canción.");
+        textoSinCanciones.setBounds(35, 90, 765, 40);
+        textoSinCanciones.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+        textoSinCanciones.setForeground(Estilo.colorTexto);
+        textoSinCanciones.setHorizontalAlignment(JLabel.LEFT);
+        textoSinCanciones.setVisible(false);
+        add(textoSinCanciones);
 
         scrollPanel = new JPanel();
         scrollPanel.setPreferredSize(new Dimension(0, 0));

@@ -39,6 +39,16 @@ public class ControladorCanciones {
 
     private void cargarCanciones(Sistema sistema, VistaCanciones vistaCanciones, VistaMenu vistaMenu) {
         int numCanciones = sistema.getUsuarioActual().getCanciones().size();
+        
+        if (numCanciones == 0) {
+            vistaCanciones.scrollFrame.setVisible(false);
+            vistaCanciones.textoSinCanciones.setVisible(true);
+            return;
+        }
+
+        vistaCanciones.textoSinCanciones.setVisible(false);
+        vistaCanciones.scrollFrame.setVisible(true);
+        
         vistaCanciones.scrollPanel.setPreferredSize(new Dimension(0, 15+numCanciones*100));
         vistaCanciones.scrollPanel.removeAll();
         vistaCanciones.scrollFrame.revalidate();

@@ -22,38 +22,44 @@ public class ControladorNotificaciones {
 
     public ControladorNotificaciones(Sistema sistema, VistaNotificaciones vistaNotificaciones) {
         List<Notificacion> notificaciones = sistema.getUsuarioActual().getNotificaciones();
-        
-        if (notificaciones.size() == 0) {
-            vistaNotificaciones.scrollFrame.setVisible(false);
-            vistaNotificaciones.textoSinNotificaciones.setVisible(true);
-        }
 
         cargarNotificaciones(sistema, vistaNotificaciones, notificaciones);
     }
 
     private void cargarNotificaciones(Sistema sistema, VistaNotificaciones vistaNotificaciones, List<Notificacion> notificaciones) {
-        vistaNotificaciones.scrollPanel.setPreferredSize(new Dimension(0, 15+notificaciones.size()*100));
+        if (notificaciones.size() == 0) {
+            vistaNotificaciones.scrollFrame.setVisible(false);
+            vistaNotificaciones.textoSinNotificaciones.setVisible(true);
+            return;
+        }
+
+        vistaNotificaciones.textoSinNotificaciones.setVisible(false);
+        vistaNotificaciones.scrollFrame.setVisible(true);
+        
+        int tamanoTotal = 15+notificaciones.size()*100;
+        
+        vistaNotificaciones.scrollPanel.setPreferredSize(new Dimension(0, tamanoTotal));
         vistaNotificaciones.scrollFrame.revalidate();
         vistaNotificaciones.scrollFrame.repaint();
 
         int i = 0;
         for (Notificacion n : notificaciones) {            
             JLabel textoDescripcion1 = new JLabel();
-            textoDescripcion1.setBounds(115, 15+100*i, 735, 40);
+            textoDescripcion1.setBounds(115, tamanoTotal-100*(i+1), 735, 40);
             textoDescripcion1.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoDescripcion1.setForeground(Estilo.colorTexto);
             textoDescripcion1.setHorizontalAlignment(JLabel.LEFT);
             vistaNotificaciones.scrollPanel.add(textoDescripcion1);
 
             JLabel textoDescripcion2 = new JLabel();
-            textoDescripcion2.setBounds(115, 15+100*i+30, 735, 40);
+            textoDescripcion2.setBounds(115, tamanoTotal-100*(i+1)+30, 735, 40);
             textoDescripcion2.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             textoDescripcion2.setForeground(Estilo.colorTexto);
             textoDescripcion2.setHorizontalAlignment(JLabel.LEFT);
             vistaNotificaciones.scrollPanel.add(textoDescripcion2);            
 
             JCustomButton botonEliminar = new JCustomButton("✖");
-            botonEliminar.setBounds(25, 15+100*i, 75, 75);
+            botonEliminar.setBounds(25, tamanoTotal-100*(i+1), 75, 75);
             botonEliminar.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
             botonEliminar.setForeground(Estilo.colorTexto);
             botonEliminar.setBackground(new Color(245, 100, 100));
@@ -66,7 +72,7 @@ public class ControladorNotificaciones {
 
             if (n.getTipoNotificacion() == TipoNotificacion.CANCION_VALIDADA) {
                 textoDescripcion1.setText("Tu canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + "\"");
-                textoDescripcion2.setText("Si no ha sido renovado puedes obtenerlo pagando la cuota.");
+                textoDescripcion2.setText("ha sido ha sido validada.");
             } else if (n.getTipoNotificacion() == TipoNotificacion.CANCION_VALIDADA_EXPLICITA) {
                 textoDescripcion1.setText("Tu canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + "\"");
                 textoDescripcion2.setText("ha sido validada con contenido explícito.");
@@ -101,7 +107,9 @@ public class ControladorNotificaciones {
             botonEliminar.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // Eliminar notificación
+                    sistema.getUsuarioActual().eliminarNotificacion(n);
+                    cargarNotificaciones(sistema, vistaNotificaciones, notificaciones);
+                    vistaNotificaciones.repaint();
                 }
             });
 

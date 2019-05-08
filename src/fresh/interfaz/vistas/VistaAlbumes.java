@@ -1,7 +1,6 @@
 package fresh.interfaz.vistas;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,7 +17,8 @@ public class VistaAlbumes extends JPanel {
     public JCustomButton botonCrearAlbum;
     
     public JCustomPanel separador;
-
+    
+    public JLabel textoSinAlbumes;
     public JPanel scrollPanel;
     public JCustomScrollPane scrollFrame;
 
@@ -71,6 +71,14 @@ public class VistaAlbumes extends JPanel {
         separador.setBackground(Estilo.colorPrimario.darker());
         separador.setCornerRadius(5);
         add(separador);
+        
+        textoSinAlbumes = new JLabel("Todavía no has creado ningún álbum.");
+        textoSinAlbumes.setBounds(35, 90, 765, 40);
+        textoSinAlbumes.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
+        textoSinAlbumes.setForeground(Estilo.colorTexto);
+        textoSinAlbumes.setHorizontalAlignment(JLabel.LEFT);
+        textoSinAlbumes.setVisible(false);
+        add(textoSinAlbumes);
 
         scrollPanel = new JPanel();
         scrollPanel.setPreferredSize(new Dimension(0, 0));

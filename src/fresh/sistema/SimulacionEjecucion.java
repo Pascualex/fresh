@@ -72,11 +72,8 @@ public class SimulacionEjecucion {
         for (Cancion cancion : nuevasCanciones) {
             nuevaCancion = cancion;
         }
-        if (sistema.cambiarEstadoCancion(nuevaCancion, EstadoCancion.VALIDADA) != Status.OK) {
-            System.out.println("Error");
-            sistema.cerrarSistema();
-            return;
-        }
+        
+        sistema.cambiarEstadoCancion(nuevaCancion, EstadoCancion.VALIDADA);
         
         System.out.println("Cierra la sesión.");
         if (sistema.cerrarSesion() != Status.OK) {

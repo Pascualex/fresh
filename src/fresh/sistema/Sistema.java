@@ -332,9 +332,7 @@ public class Sistema {
 
         fichero.renameTo(new File(rutaFicherosMP3 + cancion.getId()));
 
-        cancion.setEstado(EstadoCancion.PENDIENTE_VALIDACION);
-        gestorEventos.cancelarEliminacionCancion(cancion);
-        baseDeDatos.anadirNuevaCancion(cancion);
+        cambiarEstadoCancion(cancion, EstadoCancion.PENDIENTE_VALIDACION);
 
         return Status.OK;
     }
@@ -388,14 +386,6 @@ public class Sistema {
         usuarioActual.eliminarAlbum(album);
 
         return Status.OK;
-    }
-
-    /**
-     * Devuelve las listas de reproducción del usuario actual.
-     * @return Listas de reproducción del usuario actual.
-     */
-    public List<ListaReproduccion> obtenerListasReproduccion() {
-        return usuarioActual.getListasReproducion();
     }
 
     /**
@@ -461,17 +451,6 @@ public class Sistema {
 
         return Status.OK;
     }
-
-    /**
-     * Devuelve la lista de notificaciones del usuario actual.
-     * @return La lista de notifcaciones del usuario actual si la sesión es de 
-     * usuario registrado y "null" en caso contrario.
-     */
-    public List<Notificacion> obtenerNotificaciones() {
-        if (modoEjecucion != ModoEjecucion.REGISTRADO) return null;
-        
-        return usuarioActual.getNotificaciones();
-    }
     
     /**
      * Devuelve la lista de las canciones pendientes de validar.
@@ -490,12 +469,8 @@ public class Sistema {
      * a los seguidores del autor.
      * @param cancion Canción cuyo estado se ha de modificar
      * @param estado Nuevo estado de la canción
-     * @return "OPERACION_INACCESIBLE" si la sesión no es de administrador.
-     * "OK" en caso contrario.
      */
-    public Status cambiarEstadoCancion(Cancion cancion, EstadoCancion estado) {
-        if (modoEjecucion != ModoEjecucion.ADMINISTRADOR) return Status.OPERACION_INACCESIBLE;
-
+    public void cambiarEstadoCancion(Cancion cancion, EstadoCancion estado) {
         cancion.setEstado(estado);
         gestorEventos.cancelarEliminacionCancion(cancion);
         
@@ -524,8 +499,6 @@ public class Sistema {
             NotificacionCancion notificacion = new NotificacionCancion(TipoNotificacion.CANCION_BLOQUEADA_TEMPORAL, cancion);
             cancion.getAutor().anadirNotificacion(notificacion);
         }
-
-        return Status.OK;
     }
 
     /**
@@ -554,9 +527,9 @@ public class Sistema {
 
         Reporte reporte = new Reporte(descripcion, usuarioActual, cancion);
         if (cancion.getEstado() == EstadoCancion.VALIDADA) {
-            cancion.setEstado(EstadoCancion.BLOQUEADA_TEMPORAL);
+            cambiarEstadoCancion(cancion, EstadoCancion.BLOQUEADA_TEMPORAL);
         } else {
-            cancion.setEstado(EstadoCancion.BLOQUEADA_TEMPORAL_EXPLICITA);
+            cambiarEstadoCancion(cancion, EstadoCancion.BLOQUEADA_TEMPORAL_EXPLICITA);
         }
         
         baseDeDatos.anadirReporte(reporte);

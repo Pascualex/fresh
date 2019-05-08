@@ -36,6 +36,16 @@ public class ControladorPlaylists {
 
     private void cargarPlaylists(Sistema sistema, VistaPlaylists vistaPlaylists, VistaMenu vistaMenu) {
         int numListasReproduccion = sistema.getUsuarioActual().getListasReproducion().size();
+        
+        if (numListasReproduccion == 0) {
+            vistaPlaylists.scrollFrame.setVisible(false);
+            vistaPlaylists.textoSinPlaylists.setVisible(true);
+            return;
+        }
+
+        vistaPlaylists.textoSinPlaylists.setVisible(false);
+        vistaPlaylists.scrollFrame.setVisible(true);
+        
         vistaPlaylists.scrollPanel.setPreferredSize(new Dimension(0, numListasReproduccion*100));
         vistaPlaylists.scrollPanel.removeAll();
         vistaPlaylists.scrollFrame.revalidate();
