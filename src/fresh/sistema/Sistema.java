@@ -482,6 +482,7 @@ public class Sistema {
             baseDeDatos.anadirNuevaCancion(cancion);
         } else if (estado == EstadoCancion.VALIDADA || estado == EstadoCancion.VALIDADA_EXPLICITA) {
             baseDeDatos.eliminarNuevaCancion(cancion);
+            
             NotificacionCancion notificacionAutor;
             if (estado == EstadoCancion.VALIDADA) {
                 notificacionAutor = new NotificacionCancion(TipoNotificacion.CANCION_VALIDADA, cancion);

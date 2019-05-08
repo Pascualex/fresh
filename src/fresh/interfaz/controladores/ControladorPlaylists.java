@@ -16,6 +16,11 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Este controlador carga las listas de reproducción creadas por el usuario,
+ * permitiéndole escucharlas, eliminarlas o añadirlas a otra lista de
+ * reproducción.
+ */
 public class ControladorPlaylists {
 
     public ControladorPlaylists(Sistema sistema, VistaPlaylists vistaPlaylists, VistaMenu vistaMenu) {

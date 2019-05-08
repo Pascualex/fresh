@@ -12,6 +12,10 @@ import java.awt.AlphaComposite;
 import java.awt.RenderingHints;
 import java.awt.Font;
 
+/**
+ * Esta clase extiende el selector de Swing y permite añadirle esquinas
+ * redondeadas y sombra.
+ */
 public class JCustomComboBox extends JComboBox<Object> {
     private static final long serialVersionUID = 0;
 

@@ -10,6 +10,10 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ * Este controlador carga la funcionalidad necesaria para permitir al usuario
+ * registrarse en la aplicación.
+ */
 public class ControladorRegistro {
 	
 	public ControladorRegistro(Sistema sistema, VistaVentana vistaVentana) {

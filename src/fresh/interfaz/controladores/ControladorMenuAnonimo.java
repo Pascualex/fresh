@@ -7,6 +7,9 @@ import fresh.interfaz.vistas.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Este controlador carga la funcionalidad del menú de los usuarios anónimos.
+ */
 public class ControladorMenuAnonimo {
 	public ControladorMenuAnonimo (Sistema sistema, VistaVentana vistaVentana) {
 		VistaMenuAnonimo vistaMenuAnonimo = new VistaMenuAnonimo();

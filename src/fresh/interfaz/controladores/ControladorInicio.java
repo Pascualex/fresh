@@ -8,6 +8,10 @@ import fresh.interfaz.vistas.VistaInicio;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Este controlador carga la funcionalidad necesaria para que el usuario pueda
+ * iniciar sesión en los diferentes modos disponibles y se pueda registrar.
+ */
 public class ControladorInicio {
 
     public ControladorInicio(Sistema sistema, VistaVentana vistaVentana) {

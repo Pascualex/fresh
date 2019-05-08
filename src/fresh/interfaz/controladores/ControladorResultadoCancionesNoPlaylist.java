@@ -19,6 +19,10 @@ import java.util.List;
 
 import javax.swing.JLabel;
 
+/**
+ * Este controlador carga las canciones que contienen la entrada especificada,
+ * permitiendo al usuario anónimo reproducirlas.
+ */
 public class ControladorResultadoCancionesNoPlaylist {
 
     public ControladorResultadoCancionesNoPlaylist(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, JPanel vistaMenu, String entrada) {

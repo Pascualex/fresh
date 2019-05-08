@@ -7,6 +7,10 @@ import fresh.interfaz.vistas.VistaConfiguracion;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Este controlador carga los valores actuales de los parámetros del fichero de
+ * configuración y permite modificarlos.
+ */
 public class ControladorConfiguracion {
     
     public ControladorConfiguracion(Sistema sistema, VistaConfiguracion vistaConfiguracion) {

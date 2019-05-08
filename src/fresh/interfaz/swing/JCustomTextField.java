@@ -9,6 +9,10 @@ import java.awt.Graphics2D;
 import java.awt.AlphaComposite;
 import java.awt.RenderingHints;
 
+/**
+ * Esta clase extiende el campo de contraseña de Swing y permite añadirle
+ * esquinas redondeadas, sombra y un placeholder.
+ */
 public class JCustomTextField extends JTextField {
     private static final long serialVersionUID = 0;
     

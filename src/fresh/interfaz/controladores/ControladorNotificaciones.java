@@ -18,6 +18,10 @@ import java.util.List;
 
 import javax.swing.JLabel;
 
+/**
+ * Este controlador carga las notificaciones recibidas por el usuario, 
+ * mostrándoselas y permitiéndole eliminarlas.
+ */
 public class ControladorNotificaciones {
 
     public ControladorNotificaciones(Sistema sistema, VistaNotificaciones vistaNotificaciones) {
@@ -101,6 +105,9 @@ public class ControladorNotificaciones {
             } else if (n.getTipoNotificacion() == TipoNotificacion.REPORTE_ACEPTADO) {
                 textoDescripcion1.setText("La canción \"" + ((NotificacionCancion) n).getCancion().getNombre() + "\"");
                 textoDescripcion2.setText("que reportaste ha sido bloqueada.");
+            } else if (n.getTipoNotificacion() == TipoNotificacion.LIMITE_REPRODUCCIONES) {
+                textoDescripcion1.setText("Has alcanzado el límite mensual de reproducciones.");
+                textoDescripcion2.setText("Podrás escuchar sin límites con el servicio premium.");
             } else {
                 throw new RuntimeException("Error en el tipo de la notificación.");
             }

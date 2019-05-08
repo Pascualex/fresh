@@ -16,6 +16,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * Este controlador carga los autores que contengan la entrada especificada,
+ * permitiendo al usuario seguirles, dejar de seguirles y buscar las canciones
+ * subidas por ellos.
+ */
 public class ControladorResultadoAutores {
 
     public ControladorResultadoAutores(Sistema sistema, VistaResultadoAutores vistaResultadoAutores, JPanel vistaMenu, String entrada) {

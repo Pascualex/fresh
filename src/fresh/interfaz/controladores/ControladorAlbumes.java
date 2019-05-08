@@ -20,6 +20,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.GregorianCalendar;
 
+/**
+ * Este controlador carga los álbumes creados por el usuario, permitiéndole
+ * escucharlos, borrarlos o crear nuevos.
+ */
 public class ControladorAlbumes {
 
     public ControladorAlbumes(Sistema sistema, VistaAlbumes vistaAlbumes, VistaMenu vistaMenu) {

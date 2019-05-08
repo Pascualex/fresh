@@ -10,6 +10,10 @@ import fresh.interfaz.vistas.VistaMenu;
 import fresh.interfaz.vistas.VistaVentana;
 import fresh.interfaz.vistas.VistaPagarPremium;
 
+/**
+ * Este controlador carga la funcionalidad necesaria para permitir al usuario
+ * pagar por el servicio premium.
+ */
 public class ControladorPagarPremium {
 	
 	public ControladorPagarPremium(Sistema sistema, VistaVentana vistaVentana, VistaMenu vistaMenu, VistaPagarPremium vistaPagarPremium) {

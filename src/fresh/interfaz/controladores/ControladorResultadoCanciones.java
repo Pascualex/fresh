@@ -19,6 +19,11 @@ import java.util.List;
 
 import javax.swing.JLabel;
 
+/**
+ * Este controlador carga las canciones que contienen la entrada especificada,
+ * permitiendo al usuario reproducirlas, añadirlas a una lista de reproducción
+ * y reportarlas. 
+ */
 public class ControladorResultadoCanciones {
 
     public ControladorResultadoCanciones(Sistema sistema, VistaResultadoCanciones vistaResultadoCanciones, VistaMenu vistaMenu, String entrada) {

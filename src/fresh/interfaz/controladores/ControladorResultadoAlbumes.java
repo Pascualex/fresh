@@ -17,6 +17,11 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Este controlador carga los álbumes que contengan la entrada especificada,
+ * permitiendo al usuario reproducirlos, añadirlos a una lista de reproducción
+ * y buscar las canciones que pertenecen a este.
+ */
 public class ControladorResultadoAlbumes {
 
     public ControladorResultadoAlbumes(Sistema sistema, VistaResultadoAlbumes vistaResultadoAlbumes, JPanel vistaMenu, String entrada) {

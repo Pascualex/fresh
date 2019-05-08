@@ -63,5 +63,10 @@ public enum TipoNotificacion {
      * Notifica la publicación de una nueva canción por parte de uno de los
      * autores seguidos por el usuario.
      */
-    CANCION_SEGUIDO
+    CANCION_SEGUIDO,
+
+    /**
+     * Notifica la llegada del usuario al límite de reproducciones mensuales.
+     */
+    LIMITE_REPRODUCCIONES
 }

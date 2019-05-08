@@ -11,6 +11,10 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 
+/**
+ * Esta clase extiende el scroll de Swing y permite añadirle colores
+ * personalizados y esquinas redondeadas.
+ */
 public class JCustomScrollPane extends JScrollPane {
     private static final long serialVersionUID = 0;
 

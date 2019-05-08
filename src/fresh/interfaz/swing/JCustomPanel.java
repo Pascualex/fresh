@@ -6,6 +6,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
+/**
+ * Esta clase extiende el panel de Swing y permite añadirle esquinas
+ * redondeadas.
+ */
 public class JCustomPanel extends JPanel {
     private static final long serialVersionUID = 0;
 

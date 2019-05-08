@@ -17,6 +17,9 @@ import fresh.interfaz.swing.*;
 import fresh.interfaz.vistas.VistaMenuAdministrador;
 import fresh.interfaz.vistas.VistaReportes;
 
+/**
+ * Este controlador carga la funcionalidad necesaria 
+ */
 public class ControladorReportes {
 
     public ControladorReportes(Sistema sistema, VistaReportes vistaReportes, VistaMenuAdministrador vistaMenuAdministrador) {

@@ -7,6 +7,9 @@ import fresh.interfaz.vistas.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Este controlador carga la funcionalidad del menú del administrador.
+ */
 public class ControladorMenuAdministrador {
 	
 	public ControladorMenuAdministrador(Sistema sistema, VistaVentana vistaVentana) {

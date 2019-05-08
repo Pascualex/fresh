@@ -16,6 +16,10 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Este controlador carga la funcionalidad básica de la ventana de la
+ * aplicación, permitiendo al usuario moverla, minimizarla y cerrarla.
+ */
 public class ControladorVentana {
 
     public ControladorVentana(Sistema sistema) {

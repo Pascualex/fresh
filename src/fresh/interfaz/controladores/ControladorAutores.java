@@ -14,6 +14,10 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Este controlador carga los autores seguidos por el usuario, permitiéndole
+ * dejar de seguirles.
+ */
 public class ControladorAutores {
 
     public ControladorAutores(Sistema sistema, VistaAutores vistaAutores) {

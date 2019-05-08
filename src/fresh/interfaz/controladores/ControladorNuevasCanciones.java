@@ -18,6 +18,10 @@ import fresh.interfaz.swing.*;
 import fresh.interfaz.vistas.VistaMenuAdministrador;
 import fresh.interfaz.vistas.VistaNuevasCanciones;
 
+/**
+ * Este controlador carga las nuevas canciones pendientes de validación, 
+ * permitiendo al administrador validarlas o rechazarlas.
+ */
 public class ControladorNuevasCanciones {
 
     public ControladorNuevasCanciones(Sistema sistema, VistaNuevasCanciones vistaNuevasCanciones, VistaMenuAdministrador vistaMenuAdministrador) {

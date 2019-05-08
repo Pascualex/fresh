@@ -9,6 +9,7 @@ import javazoom.jl.decoder.Header;
 import javazoom.jl.player.Player;
 
 import java.util.List;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,7 +43,7 @@ public class ModuloMP3 implements Runnable {
     public ModuloMP3(String ruta, Configuracion configuracion) {
         this.ruta = ruta;
         this.configuracion = configuracion;
-        canciones = new LinkedList<>();
+        canciones = Collections.synchronizedList(new LinkedList<>());
         posicionActual = 0;
         reproduciendo = false;
         nuevaCancion = false;
@@ -53,7 +54,7 @@ public class ModuloMP3 implements Runnable {
     public void run() {
         try {        	
             while (!parar) {
-            	System.out.print(""); // Medida temporal para evitar "optimizaciones" de Java
+            	System.out.print("");
                 if (reproduciendo) {
                     if (!player.play(1)) {
                         reproduciendo = false;
@@ -68,9 +69,15 @@ public class ModuloMP3 implements Runnable {
                     if (nuevaCancion && posicionActual < canciones.size()) {
                         if (modoEjecucion == ModoEjecucion.REGISTRADO) {
                             int reproduccionesMensuales = usuarioActual.getReproduccionesMensuales();
+                            
                             if (!usuarioActual.getPremium()) {
-                                if (reproduccionesMensuales >= configuracion.getMaxReproduccionesRegistrado()) continue;
+                                if (reproduccionesMensuales >= configuracion.getMaxReproduccionesRegistrado()) {
+                                    continue;
+                                } else if (reproduccionesMensuales+1 == configuracion.getMaxReproduccionesRegistrado()) {
+                                    usuarioActual.anadirNotificacion(new Notificacion(TipoNotificacion.LIMITE_REPRODUCCIONES));
+                                }
                             }
+
                             usuarioActual.setReproduccionesMensuales(reproduccionesMensuales+1);
                         } else if (modoEjecucion == ModoEjecucion.ANONIMO) {
                             if (reproduccionesSesion >= configuracion.getMaxReproduccionesAnonimo()) continue;
@@ -79,10 +86,11 @@ public class ModuloMP3 implements Runnable {
                         
                         cancionActual = canciones.get(posicionActual);
 
-                        cancionActual.setReproduccionesMensuales(cancionActual.getReproduccionesMensuales()+1);
-                        cancionActual.getAutor().setReproduccionesMensuales(cancionActual.getAutor().getReproduccionesMensuales()+1);
+                        if (!usuarioActual.equals(cancionActual.getAutor())) {
+                            cancionActual.setReproduccionesMensuales(cancionActual.getReproduccionesMensuales()+1);
+                        }
 
-                        String rutaCancion = ruta + cancionActual.getId() + ".mp3";
+                        String rutaCancion = ruta + canciones.get(posicionActual).getId() + ".mp3";
                         player = new Player(new FileInputStream(rutaCancion));
                         nuevaCancion = false;
                         reproduciendo = true;
@@ -212,6 +220,7 @@ public class ModuloMP3 implements Runnable {
         Bitstream bitstream;
         Header h = null;
         long tn = 0;
+
         try {
         	fis = new FileInputStream(fichero);
         	bitstream = new Bitstream(fis);
@@ -220,6 +229,7 @@ public class ModuloMP3 implements Runnable {
         } catch (Exception e) {
 
         }
+        
         return (long) h.total_ms((int) tn)/1000;
     }
     
@@ -229,7 +239,8 @@ public class ModuloMP3 implements Runnable {
      * @return "true" si el archivo de audio es correcto y "false" si no lo es.
      */
     public static boolean validar(File fichero) {
-    	AudioFileFormat fileFormat;
+        AudioFileFormat fileFormat;
+        
     	try {
     		fileFormat = AudioSystem.getAudioFileFormat(fichero);
     	} catch (IOException e) {

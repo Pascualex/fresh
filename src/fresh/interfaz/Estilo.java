@@ -2,6 +2,9 @@ package fresh.interfaz;
 
 import java.awt.Color;
 
+/**
+ * Esta clase define las constantes utilizadas en el diseño de la interfaz.
+ */
 public class Estilo {
     public static final int anchura = 1200;
     public static final int altura = 800;

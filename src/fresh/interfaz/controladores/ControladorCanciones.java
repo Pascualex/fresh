@@ -17,6 +17,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 
+/**
+ * Este controlador carga las canciones subidas por el usuario, permitiéndole
+ * reproducirlas, eliminarlas y actualizarlas en caso de ser necesario, así como
+ * subir nuevas.
+ */
 public class ControladorCanciones {
 
     public ControladorCanciones(Sistema sistema, VistaCanciones vistaCanciones, VistaMenu vistaMenu) {

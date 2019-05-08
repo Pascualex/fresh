@@ -3,6 +3,8 @@ package fresh.interfaz.vistas;
 import fresh.interfaz.Estilo;
 import fresh.interfaz.swing.*;
 
+import java.awt.Font;
+
 import javax.swing.*;
 
 public class VistaVentana extends JFrame {
@@ -33,8 +35,9 @@ public class VistaVentana extends JFrame {
         barraSuperior.setLayout(null);
         add(barraSuperior);
 
-        botonMinimizarAplicacion = new JCustomButton("-");
+        botonMinimizarAplicacion = new JCustomButton("━");
         botonMinimizarAplicacion.setBounds(Estilo.anchura-125, 10, 50, 55);
+        botonMinimizarAplicacion.setFont(new Font(Estilo.fuenteEmojis, Font.PLAIN, 20));
         botonMinimizarAplicacion.setBackground(Estilo.colorBotonMinimizar);
         botonMinimizarAplicacion.setPressedBackgound(Estilo.colorBotonMinimizar.brighter());
         botonMinimizarAplicacion.setCornerRadius(70);
@@ -45,6 +48,7 @@ public class VistaVentana extends JFrame {
 
         botonCerrarAplicacion = new JCustomButton("✖");
         botonCerrarAplicacion.setBounds(Estilo.anchura-65, 10, 50, 55);
+        botonCerrarAplicacion.setFont(new Font(Estilo.fuenteEmojis, Font.PLAIN, 20));
         botonCerrarAplicacion.setBackground(Estilo.colorBotonCerrar);
         botonCerrarAplicacion.setPressedBackgound(Estilo.colorBotonCerrar.brighter());
         botonCerrarAplicacion.setCornerRadius(70);

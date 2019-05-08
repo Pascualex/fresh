@@ -6,6 +6,10 @@ import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * Esta clase extiende el botón de Swing y permite añadirle esquinas
+ * redondeadas, diferente color a estar pulsado, altura y sombra.
+ */
 public class JCustomButton extends JButton {
     private static final long serialVersionUID = 0;
 

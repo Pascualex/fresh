@@ -102,7 +102,7 @@ public class VistaInicio extends JPanel {
         panelInicioSesion.add(botonRegistrarseInicio);
 
         botonAnonimo = new JCustomButton("Entrar como anónimo");
-        botonAnonimo.setBounds(380, 530, 285, 80);
+        botonAnonimo.setBounds(380, 530, 340, 80);
         botonAnonimo.setFont(new Font(Estilo.fuentePredeterminada, Font.BOLD, 25));
         botonAnonimo.setForeground(Estilo.colorTexto);
         botonAnonimo.setBackground(new Color(224, 62, 98));
