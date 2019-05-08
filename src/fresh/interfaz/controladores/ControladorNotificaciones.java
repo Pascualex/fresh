@@ -33,6 +33,7 @@ public class ControladorNotificaciones {
             return;
         }
 
+        vistaNotificaciones.scrollPanel.removeAll();
         vistaNotificaciones.textoSinNotificaciones.setVisible(false);
         vistaNotificaciones.scrollFrame.setVisible(true);
         
