@@ -9,6 +9,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
+
+/**
+ * Esta vista aparece cuendo se quiere añadir un elemento a una playlist
+ */
 public class VistaAnadirALista extends JPanel {
     private static final long serialVersionUID = 0;
     

@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Font;
 
+/**
+ * Esta vista define la pestaña de nuevas canciones del administrador
+ */
 public class VistaNuevasCanciones extends JPanel {
     private static final long serialVersionUID = 0;
 

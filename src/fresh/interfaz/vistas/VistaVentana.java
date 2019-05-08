@@ -5,6 +5,9 @@ import fresh.interfaz.swing.*;
 
 import javax.swing.*;
 
+/**
+ * Esta vista gestiona el comportamiente principal de la venta de la aplicación
+ */
 public class VistaVentana extends JFrame {
     private static final long serialVersionUID = 0;
     

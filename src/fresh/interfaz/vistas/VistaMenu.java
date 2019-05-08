@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.Font;
 import java.awt.Color;
 
+/**
+ * Esta vista define el menu principal de los usuarios registrados
+ */
 public class VistaMenu extends JPanel {
     private static final long serialVersionUID = 0;
 

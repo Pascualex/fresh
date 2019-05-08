@@ -8,6 +8,9 @@ import java.awt.Font;
 
 import javax.swing.*;
 
+/**
+ * Esta vista permite registrarse a los usuarios
+ */
 public class VistaRegistro extends JPanel {
     private static final long serialVersionUID = 0;
     

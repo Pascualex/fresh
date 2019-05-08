@@ -11,6 +11,9 @@ import java.awt.Font;
 import fresh.interfaz.*;
 import fresh.interfaz.swing.*;
 
+/**
+ * Esta vista define la creación de albumes del usuario
+ */
 public class VistaCrearAlbum extends JPanel {
     private static final long serialVersionUID = 0;
 

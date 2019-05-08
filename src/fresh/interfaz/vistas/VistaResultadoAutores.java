@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Font;
 
+/**
+ * Esta vista aparece cuando se buscan autores
+ */
 public class VistaResultadoAutores extends JPanel {
     private static final long serialVersionUID = 0;
 

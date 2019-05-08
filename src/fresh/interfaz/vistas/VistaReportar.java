@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.Font;
 
+/**
+ * Esta vista aparece cuando se reporta una canción
+ */
 public class VistaReportar extends JPanel {
     private static final long serialVersionUID = 0;
 
