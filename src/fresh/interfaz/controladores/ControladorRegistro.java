@@ -92,17 +92,26 @@ public class ControladorRegistro {
                 	vistaRegistro.panelRegistrarse.setVisible(false);
                 	vistaRegistro.panelMensaje.repaint();
                 } else {
-                	int dia = Integer.parseInt(vistaRegistro.entradaFechaNacimientoDia.getText());
-                	int mes = Integer.parseInt(vistaRegistro.entradaFechaNacimientoMes.getText());
-                	int ano = Integer.parseInt(vistaRegistro.entradaFechaNacimientoAno.getText());
+                	int dia = -1;
+                	int mes = -1;
+                	int ano = -1;
+                	
+                	try {
+                    	dia = Integer.parseInt(vistaRegistro.entradaFechaNacimientoDia.getText());
+                    	mes = Integer.parseInt(vistaRegistro.entradaFechaNacimientoMes.getText());
+                    	ano = Integer.parseInt(vistaRegistro.entradaFechaNacimientoAno.getText());                		
+                	} catch (NumberFormatException ex) {
+                    	vistaRegistro.textoFechaIncorrecta.setVisible(true);
+                    	vistaRegistro.panelMensaje.setVisible(true);
+                    	vistaRegistro.panelRegistrarse.setVisible(false);
+                    	vistaRegistro.panelMensaje.repaint();
+                    	return;
+                	}
                 	
                 	Calendar c = new GregorianCalendar();
                 	c.set(ano, mes, dia);
                 	
-                    Status status = sistema.registrarse(vistaRegistro.entradaNombreInicio.getText(), 
-        													vistaRegistro.entradaNombreAutor.getText(), 
-        														String.valueOf(vistaRegistro.entradaContrasenaInicio.getPassword()), 
-        																c);
+                    Status status = sistema.registrarse(vistaRegistro.entradaNombreInicio.getText(), vistaRegistro.entradaNombreAutor.getText(), String.valueOf(vistaRegistro.entradaContrasenaInicio.getPassword()), c);
                     if (status == Status.OK) {
                     	//Pasa al login
                     	vistaRegistro.textoRegistroCorrecto.setVisible(true);

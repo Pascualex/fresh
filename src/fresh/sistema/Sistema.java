@@ -63,7 +63,9 @@ public class Sistema {
     }
 
     /**
-     * Crea el sistema, estableciendo si se quiere realizar una prueba en el sistema
+     * Crea el sistema, estableciendo si se quiere realizar una prueba en el
+     * sistema.
+     * @param modoPrueba Indica si se ejecuta en modo prueba o no
      */
     public Sistema(Boolean modoPrueba) {
         Sistema.modoPrueba = modoPrueba;

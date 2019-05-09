@@ -71,7 +71,7 @@ public class VistaCancionesDe extends JPanel {
         scrollPanel.setLayout(null);
 
         scrollFrame = new JCustomScrollPane(scrollPanel);
-        scrollFrame.setBounds(0, 100, Estilo.anchura-270, 440);
+        scrollFrame.setBounds(0, 80, Estilo.anchura-270, 460);
         scrollFrame.setThumbColor(Estilo.colorSecundario.brighter());
         scrollFrame.setTrackColor(Estilo.colorPrimario.darker());
         scrollFrame.setBehindColor(Estilo.colorPrimario);
